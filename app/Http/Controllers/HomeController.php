@@ -23,6 +23,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('customer_home');
+    }
+
+    public function request_meeting(Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'password' => 'required|min:5',
+            'email' => 'required|email|unique:users'
+        ], [
+            'name.required' => 'Name is required',
+            'password.required' => 'Password is required'
+        ]);
+
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+
+        return back()->with('success', 'User created successfully.'); 
     }
 }
