@@ -34,9 +34,17 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="">Simple Date &amp; Time</label>
-                            <input type="text" class="datepicker" />
-                          </div>
+                            <label for="">Request Date:</label>
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' class="form-control datepicker" placeholder="dd/mm/yyyy"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Time:</label>
+                            <div class='input-group date' id='datetimepicker1'>
+                                {!! Form::time('timee', null, ['class' => 'form-control']) !!}
+                            </div>
+                        </div>
                     
                
                         <div class="form-group">
@@ -53,6 +61,8 @@
 @section('additional_script')
 <script>
     
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({
+        minDate:3
+    });
 </script>
 @endsection
