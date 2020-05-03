@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\MeetingRequests;
 
 class HomeController extends Controller
 {
@@ -29,17 +30,28 @@ class HomeController extends Controller
     public function request_meeting(Request $request) {
         $request->validate([
             'name' => 'required',
-            'password' => 'required|min:5',
-            'email' => 'required|email|unique:users'
+            'project-name' => 'required',
+            'datepicker' => 'required',
+            'time' => 'required'
         ], [
             'name.required' => 'Name is required',
-            'password.required' => 'Password is required'
+            'project-name.required' => 'Password is required',
+            'datepicker.required' => 'Request Date is required',
+            'time.required' => 'Time is required'
         ]);
-
+        
+        
         $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
+        $req_meeting = new MeetingRequests();
+        $req_meeting->customer_name = $input['name'];
+        $req_meeting->project_name = $input['project-name'];
+        $request_date = $input['datepicker'];
+        $request_time = $input['time'];
+        $combinedDT = date('Y-m-d H:i:s', strtotime("$request_date $request_time"));
+        $req_meeting->request_date = $combinedDT;
+        $req_meeting->approved = 0;
+        $req_meeting->save();
 
-        return back()->with('success', 'User created successfully.'); 
+        return back()->with('success',  'Request Meeting has been saved'); 
     }
 }

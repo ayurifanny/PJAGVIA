@@ -35,14 +35,14 @@
                         </div>
                         <div class="form-group">
                             <label for="">Request Date:</label>
-                            <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control datepicker" placeholder="dd/mm/yyyy"/>
+                            <div class='input-group date' id='datepicker'>
+                                <input type='text' class="form-control datepicker"  name="datepicker" placeholder="mm/dd/yyyy"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="">Time:</label>
-                            <div class='input-group date' id='datetimepicker1'>
-                                {!! Form::time('timee', null, ['class' => 'form-control']) !!}
+                            <div class='input-group date' id='timepicker' name="time">
+                                {!! Form::time('time', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                     
