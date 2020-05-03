@@ -30,21 +30,21 @@ class HomeController extends Controller
     public function request_meeting(Request $request) {
         $request->validate([
             'name' => 'required',
-            'project-name' => 'required',
+            'project_name' => 'required',
             'datepicker' => 'required',
             'time' => 'required'
         ], [
             'name.required' => 'Name is required',
-            'project-name.required' => 'Password is required',
+            'project_name.required' => 'Project Name is required',
             'datepicker.required' => 'Request Date is required',
-            'time.required' => 'Time is required'
+            'time.required' => 'Request Time is required'
         ]);
         
         
         $input = $request->all();
         $req_meeting = new MeetingRequests();
         $req_meeting->customer_name = $input['name'];
-        $req_meeting->project_name = $input['project-name'];
+        $req_meeting->project_name = $input['project_name'];
         $request_date = $input['datepicker'];
         $request_time = $input['time'];
         $combinedDT = date('Y-m-d H:i:s', strtotime("$request_date $request_time"));
