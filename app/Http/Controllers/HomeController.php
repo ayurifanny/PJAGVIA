@@ -24,12 +24,18 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('customer_home');
+        if (auth()->user()->hasRole('customer')) {
+            return view('request_meeting');
+        }
+        else if (auth()->user()->hasRole('inspector')) {
+            return view('customer_home');
+        }
+        
     }
 
     public function history_meeting()
     {
-        return view('customer_home');
+        return view('request_meeting');
     }
 
 
