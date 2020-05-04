@@ -35,7 +35,8 @@ class HomeController extends Controller
 
     public function history_meeting()
     {
-        return view('request_meeting');
+        $meeting_history = MeetingRequests::where('user_id', \Auth::id())->get();
+        return view('history', compact('meeting_history'));
     }
 
 
