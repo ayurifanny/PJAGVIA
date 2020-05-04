@@ -19,14 +19,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('request_meeting');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/history_meeting', 'HomeController@history_meeting')->name('history');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('meetings/request_meeting', 'HomeController@request_meeting');

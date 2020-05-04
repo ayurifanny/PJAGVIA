@@ -27,6 +27,12 @@ class HomeController extends Controller
         return view('customer_home');
     }
 
+    public function history_meeting()
+    {
+        return view('customer_home');
+    }
+
+
     public function request_meeting(Request $request) {
         $request->validate([
             'name' => 'required',

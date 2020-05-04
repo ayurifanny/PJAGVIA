@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'PJA Group Virtual Inspection App') }}</title>
 
     <!-- Scripts -->
     
@@ -36,7 +36,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home">Request Meeting</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/history_meeting">History</a>
+                          </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
