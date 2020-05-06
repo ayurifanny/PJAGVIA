@@ -84,8 +84,7 @@ class HomeController extends Controller
         if (auth()->user()->hasRole('inspector')) {
             $input = $request->all();
             $meeting_request = MeetingRequests::findOrFail($input['id']);
-            $meeting_request->approved = 1;
-            $meeting_request->save();
+            
 
             $meeting = new Meetings();
             $meeting->user_id = $meeting_request->user_id;
@@ -98,6 +97,8 @@ class HomeController extends Controller
             $meeting->approved_date = now();
             $meeting->save();
 
+            $meeting_request->approved = 1;
+            $meeting_request->save();
             return back()->with('success',  'Request Meeting has been saved');
 
         }
