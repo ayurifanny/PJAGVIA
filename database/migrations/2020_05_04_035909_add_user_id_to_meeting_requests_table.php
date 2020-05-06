@@ -27,6 +27,8 @@ class AddUserIdToMeetingRequestsTable extends Migration
     public function down()
     {
         Schema::table('meeting_requests', function (Blueprint $table) {
+            $table->dropForeign('meeting_requests_user_id_foreign');
+
             $table->dropColumn('user_id');
         });
     }

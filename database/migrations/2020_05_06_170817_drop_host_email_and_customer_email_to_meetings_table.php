@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropHostEmailToMeetingsTable extends Migration
+class DropHostEmailAndCustomerEmailToMeetingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,6 @@ class DropHostEmailToMeetingsTable extends Migration
         Schema::table('meetings', function (Blueprint $table) {
             $table->dropColumn('host_email');
             $table->dropColumn('customer_email');
-            $table->unsignedBigInteger('host_id')->after('meeting_date');
         });
     }
 
@@ -29,9 +28,8 @@ class DropHostEmailToMeetingsTable extends Migration
     {
         Schema::table('meetings', function (Blueprint $table) {
             //
-            $table->dropColumn('host_id');
-            $table->string('customer_email');
             $table->string('host_email');
+            $table->string('customer_email');
         });
     }
 }
