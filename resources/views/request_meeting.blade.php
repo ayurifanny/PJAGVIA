@@ -19,9 +19,9 @@
                 <div class="card-header">Request Inspection Meeting</div>
 
                 <div class="card-body">
-                    @if (session('status'))
+                    @if (\Session::has('success'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {!! \Session::get('success') !!}
                         </div>
                     @endif
 
@@ -31,7 +31,7 @@
                         
                         <div class="form-group">
                             <label>Customer Name:</label>
-                            <input type="text" name="name" class="form-control" placeholder="John">
+                            <input type="text" name="name" class="form-control" id="customer_name" placeholder="John">
                             @if ($errors->has('name'))
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                             @endif
@@ -80,6 +80,12 @@
     
     $('.datepicker').datepicker({
         minDate:3
+    });
+
+    $(document).ready(function ()
+    {
+        var name = '<?=auth()->user()->name?>'
+        $("#customer_name").val(name);
     });
 </script>
 @endsection

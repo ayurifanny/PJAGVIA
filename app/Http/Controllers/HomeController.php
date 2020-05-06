@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\MeetingRequests;
+use App\Meetings;
 
 class HomeController extends Controller
 {
@@ -35,8 +36,11 @@ class HomeController extends Controller
 
     public function history_meeting()
     {
-        $meeting_history = MeetingRequests::where('user_id', \Auth::id())->get();
-        return view('history', compact('meeting_history'));
+        $meeting_requests = MeetingRequests::where('user_id', \Auth::id())->where('approved', 0)->get();
+        $meeting_history =  Meetings::where('user_id', \Auth::id())->get();
+        return \View::make('history')
+            ->with(compact('meeting_requests'))
+            ->with(compact('meeting_history'));
     }
 
 
