@@ -29,15 +29,18 @@ class HomeController extends Controller
             return view('request_meeting');
         }
         else if (auth()->user()->hasRole('inspector')) {
-            return view('customer_home');
+            $meeting_requests =  MeetingRequests::where('approved', 0)->orderBy('created_at', 'DESC')->get();
+            return view('list_of_requests', compact('meeting_requests'));
         }
         
     }
 
+
     public function history_meeting()
     {
-        $meeting_requests = MeetingRequests::where('user_id', \Auth::id())->where('approved', 0)->get();
-        $meeting_history =  Meetings::where('user_id', \Auth::id())->get();
+        if (auth()->user()->hasRole('customer'))
+            $meeting_requests =  MeetingRequests::where('user_id', $id_user)->where('approved', 0)->orderBy('created_at', 'DESC')->get();
+        $meeting_history =  Meetings::where('user_id', \Auth::id())->orderBy('created_at', 'DESC')->get();        
         return \View::make('history')
             ->with(compact('meeting_requests'))
             ->with(compact('meeting_history'));
