@@ -81,7 +81,7 @@
                           @foreach($meeting_history as $key => $meeting)
                           <tr>
                             <th scope="row">{{++$key}}</th>
-                            <td>{{$meeting->project_name}}</td>
+                            <td><a href='/meetings/detail/{{$meeting->id}}'>{{$meeting->project_name}} </a></td>
                             @if (auth()->user()->hasRole('customer'))
                               <td>{{$meeting->customer_name}}</td>
                             @else   

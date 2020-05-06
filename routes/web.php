@@ -33,3 +33,7 @@ Route::post('meetings/request_meeting', 'HomeController@request_meeting');
 Auth::routes();
 
 Route::post('meetings/approve_meeting', 'HomeController@approve_meeting');
+
+Auth::routes();
+
+Route::get('meetings/detail/{id}', 'DetailMeeting@index');
