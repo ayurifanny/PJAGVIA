@@ -16,6 +16,7 @@ class AddAndHostIdToMeetingsTable extends Migration
         Schema::table('meetings', function (Blueprint $table) {
             //
             $table->unsignedBigInteger('host_id')->after('project_name');
+            
         });
     }
 

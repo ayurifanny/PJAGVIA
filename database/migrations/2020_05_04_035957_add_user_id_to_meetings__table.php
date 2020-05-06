@@ -14,7 +14,7 @@ class AddUserIdToMeetingsTable extends Migration
     public function up()
     {
         Schema::table('meetings', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->after('id')->default(1);
+            $table->unsignedBigInteger('user_id')->after('id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
