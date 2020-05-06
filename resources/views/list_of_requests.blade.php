@@ -25,7 +25,7 @@
                             <th scope="col">Customer Name</th>
                             <th scope="col">Meeting Date</th>
                             <th scope="col">Meeting Time</th>
-                            <th scope="col">Created At</th>
+                            <th scope="col">Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -37,16 +37,18 @@
                             <?php $dt = strtotime($meeting_request->request_date); ?>
                             <td>{{date('M d, Y', $dt)}}</td>
                             <td>{{date('H:i:s A', $dt)}}</td>
-                            <td>{{$meeting_request->created_at}}</td>
+                            <td><form method="POST" action="{{ url('meetings/approve_meeting') }}">
+                              {{ csrf_field() }}
+                            <input type="hidden" name="id" value="{{$meeting_request->id}}" />
+                                <button class="btn btn-success btn-submit">Approve</button>
+                            </form>
+                                {{-- <a href=# type="button" class="btn btn-danger">Decline</a></td> --}}
                           </tr>
-
                           @endforeach
                         </tbody>
                     </table>
-                        
                     </div>
                 </div>
-                
     </div>
 </div>
 @endsection

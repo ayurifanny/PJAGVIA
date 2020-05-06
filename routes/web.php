@@ -29,3 +29,7 @@ Route::get('/history_meeting', 'HomeController@history_meeting')->name('history'
 Auth::routes();
 
 Route::post('meetings/request_meeting', 'HomeController@request_meeting');
+
+Auth::routes();
+
+Route::post('meetings/approve_meeting', 'HomeController@approve_meeting');
