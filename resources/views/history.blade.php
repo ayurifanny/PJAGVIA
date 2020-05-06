@@ -78,7 +78,7 @@
                             <th scope="row">{{++$key}}</th>
                             <td>{{$meeting->project_name}}</td>
                             <td>{{$meeting->customer_name}}</td>
-                            <?php $dt = strtotime($meeting->request_date); ?>
+                            <?php $dt = strtotime($meeting->meeting_date); ?>
                             <td>{{date('M d, Y', $dt)}}</td>
                             <td>{{date('H:i:s A', $dt)}}</td>
                             <td>{{$meeting->created_at}}</td>
