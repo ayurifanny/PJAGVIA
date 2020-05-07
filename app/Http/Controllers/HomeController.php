@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\MeetingRequests;
 use App\Meetings;
+use App\Event;
+use Calendar;
 
 class HomeController extends Controller
 {
@@ -103,6 +105,9 @@ class HomeController extends Controller
             $meeting->approved_date = now();
             $meeting->save();
 
+            
+            $this->store($meeting_request, $meeting->id);
+
             $meeting_request->approved = 1;
             $meeting_request->save();
             return back()->with('success',  'Request Meeting has been saved');
@@ -110,5 +115,17 @@ class HomeController extends Controller
         }
     }
 
-
+    public function store($meeting_request, $meeting_id)
+    {
+        
+        $event= new Event();
+        $event->title=$meeting_request->project_name;
+        $event->start= new \DateTime($meeting_request->request_date);
+        $end_date = new \DateTime($meeting_request->request_date);
+        $event->end = $end_date->modify('+ 1 hour');
+        $event->user_id = \Auth::id();
+        $event->meeting_id = $meeting_id;
+        $event->save();
+        return redirect('event')->with('success', 'Event has been added');
+    }
 }

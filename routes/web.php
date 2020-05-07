@@ -38,5 +38,4 @@ Auth::routes();
 
 Route::get('meetings/detail/{id}', 'DetailMeeting@index');
 
-Route::post('event/add','EventController@store');
-Route::get('event','EventController@calender');
+Route::get('event','EventController@show_calendar');
