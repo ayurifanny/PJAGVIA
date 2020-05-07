@@ -8,20 +8,7 @@ use Calendar;
 
 class EventController extends Controller
 {
-    //
-    
-
-    public function store(Request $request)
-    {
-        $event= new Event();
-        $event->title=$request->get('title');
-        $event->start_date=$request->get('startdate');
-        $event->end_date=$request->get('enddate');
-        $event->save();
-        return redirect('event')->with('success', 'Event has been added');
-    }
-
-    public function calender()
+    public function show_calendar()
     {
         $events = [];
         $data = Event::all();
@@ -31,19 +18,21 @@ class EventController extends Controller
             {
                 $events[] = Calendar::event(
                     $value->title,
-                    true,
-                    new \DateTime($value->start_date),
-                    new \DateTime($value->end_date.'+1 day'),
+                    false,
+                    new \DateTime($value->start),
+                    new \DateTime($value->end),
                     null,
                     // Add color
                     [
-                        'color' => '#000000',
-                        'textColor' => '#008000',
+                        'color' => '#000080',
+                        'textColor' => '#FFFFFF',
+                        'url' => '/meetings/detail/'.$value->meeting_id
                     ]
                 );
             }
         }
         $calendar = Calendar::addEvents($events);
+
         return view('dashboard', compact('calendar'));
     }
 }
