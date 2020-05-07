@@ -17,7 +17,7 @@ class CreateMeetingsTable extends Migration
             $table->id();
             $table->string('customer_name');
             $table->string('project_name');
-            $table->timestamp('meeting_date', 0);
+            $table->dateTime('meeting_date');
             $table->string('customer_email');
             $table->string('host_email');
             $table->string('meeting_link');

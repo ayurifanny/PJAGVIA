@@ -38,9 +38,14 @@ class HomeController extends Controller
 
     public function history_meeting()
     {
-        if (auth()->user()->hasRole('customer'))
-            $meeting_requests =  MeetingRequests::where('user_id', $id_user)->where('approved', 0)->latest()->get();
-        $meeting_history =  Meetings::where('user_id', \Auth::id())->orderBy('meeting_date', 'DESC')->get();        
+        if (auth()->user()->hasRole('customer')) {
+            $meeting_requests =  MeetingRequests::where('user_id', \Auth::id())->where('approved', 0)->latest()->get();
+            $meeting_history =  Meetings::where('user_id', \Auth::id())->orderBy('meeting_date', 'DESC')->get();     
+        }
+        else if (auth()->user()->hasRole('inspector')) {
+            $meeting_history =  Meetings::where('host_id', \Auth::id())->orderBy('meeting_date', 'DESC')->get();     
+        }
+            
         return \View::make('history')
             ->with(compact('meeting_requests'))
             ->with(compact('meeting_history'));
@@ -64,6 +69,7 @@ class HomeController extends Controller
             
             $input = $request->all();
             $req_meeting = new MeetingRequests();
+            $req_meeting->user_id = \Auth::id();
             $req_meeting->customer_name = $input['name'];
             $req_meeting->project_name = $input['project_name'];
             $request_date = $input['datepicker'];
@@ -84,20 +90,21 @@ class HomeController extends Controller
         if (auth()->user()->hasRole('inspector')) {
             $input = $request->all();
             $meeting_request = MeetingRequests::findOrFail($input['id']);
-            $meeting_request->approved = 1;
-            $meeting_request->save();
+            
 
             $meeting = new Meetings();
             $meeting->user_id = $meeting_request->user_id;
             $meeting->customer_name = $meeting_request->customer_name;
             $meeting->project_name = $meeting_request->project_name;
-            $meeting->meeting_date = $meeting_request->meeting_date;
+            $meeting->meeting_date = $meeting_request->request_date;
             $meeting->host_id = \Auth::id();
             $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
-            $meeting->meeting_link = $_ENV['JITSI_LINK'] .'/' . substr(str_shuffle($permitted_chars), 0, 10);
+            $meeting->meeting_link = "http://meet.jit.si" . '/' . substr(str_shuffle($permitted_chars), 0, 10);
             $meeting->approved_date = now();
             $meeting->save();
 
+            $meeting_request->approved = 1;
+            $meeting_request->save();
             return back()->with('success',  'Request Meeting has been saved');
 
         }
