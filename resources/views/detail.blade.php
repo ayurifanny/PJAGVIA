@@ -24,9 +24,16 @@
         <div class="col-md-10">
          
                 <div class="card mt-4">
-                    <div class="card-header">General Information</div>
+                    <div class="card-header">General Information //rapiin ya titik duanya lurusin</div>
                     <div class="card-body">
-                        
+                      <strong><h2>{{$meeting_data->project_name}}</h2></strong>
+                      <h6>Client: {{$meeting_data->customer_name}}</h6>
+                      <h6>Inspector: {{$meeting_data->user->name}}</h6>
+                      <?php $dt = strtotime($meeting_data->meeting_date); ?>
+                      <h6>Date: {{date('M d, Y', $dt)}}</h6>
+                      <h6>Time: {{date('H:i:s A', $dt)}}</h6>
+                      <br>
+                      <h6>Meeting Link: <a href='{{$meeting_data->meeting_link}}' target="_blank" >{{$meeting_data->meeting_link}}</a></h6>
                     </div>
                 </div>
                 <div class="card mt-4">

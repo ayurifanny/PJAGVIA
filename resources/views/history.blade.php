@@ -66,7 +66,7 @@
                           <tr>
                             <th scope="col">No.</th>
                             <th scope="col">Project Name</th>
-                            @if (auth()->user()->hasRole('customer'))
+                            @if (auth()->user()->hasRole('inspector'))
                               <th scope="col">Customer Name</th>
                             @else   
                               <th scope="col">Inspector Name</th>
@@ -82,7 +82,7 @@
                           <tr>
                             <th scope="row">{{++$key}}</th>
                             <td><a href='/meetings/detail/{{$meeting->id}}'>{{$meeting->project_name}} </a></td>
-                            @if (auth()->user()->hasRole('customer'))
+                            @if (auth()->user()->hasRole('inspector'))
                               <td>{{$meeting->customer_name}}</td>
                             @else   
                             <td>{{$meeting->user->name}}</td>
