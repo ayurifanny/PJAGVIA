@@ -25,18 +25,50 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
     public function index()
     {
         if (auth()->user()->hasRole('customer')) {
             return view('request_meeting');
         }
         else if (auth()->user()->hasRole('inspector')) {
-            $meeting_requests =  MeetingRequests::where('approved', 0)->latest()->get();
-            return view('list_of_requests', compact('meeting_requests'));
+            return $this->show_calendar();
+        }   
+    }
+    
+    public function show_calendar()
+    {
+        $events = [];
+        $data = Event::where('user_id', \Auth::id())->get();
+        if($data->count())
+            {
+            foreach ($data as $key => $value) 
+            {
+                $events[] = Calendar::event(
+                    $value->title,
+                    false,
+                    new \DateTime($value->start),
+                    new \DateTime($value->end),
+                    null,
+                    // Add color
+                    [
+                        'color' => '#000080',
+                        'textColor' => '#FFFFFF',
+                        'url' => '/meetings/detail/'.$value->meeting_id
+                    ]
+                );
+            }
         }
-        
+        $calendar = Calendar::addEvents($events);
+
+        return view('dashboard', compact('calendar'));
     }
 
+
+    public function list_request() {
+        $meeting_requests =  MeetingRequests::where('approved', 0)->latest()->get();
+        return view('list_of_requests', compact('meeting_requests'));
+    }
 
     public function history_meeting()
     {

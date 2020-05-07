@@ -9,8 +9,11 @@
          <a class="nav-link" href="/history_meeting">History</a>
       </li>
     @elseif (auth()->user()->hasRole('inspector'))
+    <li class="nav-item">
+      <a class="nav-link" href="/home">Dashboard</a>
+    </li>
       <li class="nav-item">
-        <a class="nav-link" href="/home">List of Request Meeting</a>
+        <a class="nav-link" href="/list_request">List of Request Meeting</a>
       </li>
       <li class="nav-item">
          <a class="nav-link" href="/history_meeting">History</a>

@@ -38,4 +38,4 @@ Auth::routes();
 
 Route::get('meetings/detail/{id}', 'DetailMeeting@index');
 
-Route::get('event','EventController@show_calendar');
+Route::get('list_request','HomeController@list_request');
