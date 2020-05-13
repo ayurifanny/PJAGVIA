@@ -53,7 +53,7 @@
                                 <span class="text-danger">{{ $errors->first('datepicker') }}</span>
                             @endif
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-5">
                             <label for="">Request Meeting Time:</label>
                             <div class='input-group date' id='timepicker' name="time">
                                 {!! Form::time('time', null, ['class' => 'form-control']) !!}
