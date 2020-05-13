@@ -39,3 +39,5 @@ Auth::routes();
 Route::get('meetings/detail/{id}', 'DetailMeeting@index');
 
 Route::get('list_request','HomeController@list_request');
+
+Route::get('photo_detail','PictureCanvasController@index');
