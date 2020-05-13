@@ -14,10 +14,10 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 py-3">
+            
             <div class="card">
-                <div class="card-header">Request Inspection Meeting</div>
-
+                <div class="card-header"><p class="h2 text-center p-2"><strong>Request Inspection Meeting</strong></p></div>
                 <div class="card-body">
                     @if (\Session::has('success'))
                         <div class="alert alert-success" role="alert">
@@ -65,7 +65,7 @@
                     
                
                         <div class="form-group">
-                            <button class="btn btn-success btn-submit">Submit</button>
+                            <button class="btn btn-primary btn-submit btn-block">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -77,7 +77,6 @@
 
 @section('additional_script')
 <script>
-    
     $('.datepicker').datepicker({
         minDate:3
     });

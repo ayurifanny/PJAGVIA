@@ -21,32 +21,46 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
-         
-                <div class="card mt-4">
-                    <div class="card-header">General Information //rapiin ya titik duanya lurusin</div>
-                    <div class="card-body">
-                      <strong><h2>{{$meeting_data->project_name}}</h2></strong>
-                      <h6>Client: {{$meeting_data->customer_name}}</h6>
-                      <h6>Inspector: {{$meeting_data->user->name}}</h6>
-                      <?php $dt = strtotime($meeting_data->meeting_date); ?>
-                      <h6>Date: {{date('M d, Y', $dt)}}</h6>
-                      <h6>Time: {{date('H:i:s A', $dt)}}</h6>
-                      <br>
-                      <h6>Meeting Link: <a href='{{$meeting_data->meeting_link}}' target="_blank" >{{$meeting_data->meeting_link}}</a></h6>
-                    </div>
-                </div>
-                <div class="card mt-4">
-                  <div class="card-header">Uploaded Photo Information</div>
-                  <div class="card-body">
-                      
-                  </div>
-              </div>
-              <div class="card mt-4">
-                <div class="card-header">Report</div>
+        <div class="col-md-10 py-3">
+            <div class="card mt-4">
+                <div class="card-header"><h4>General Information</h4></div>
                 <div class="card-body">
-                    
+                  <strong><h2>{{$meeting_data->project_name}}</h2></strong>
+                  <div class ="row">
+                    <div class="col-sm-2">Client</div>
+                    <div class="col">:  {{$meeting_data->customer_name}}</div>
+                  </div>
+                  <div class ="row">
+                    <div class="col-sm-2 ">Inspector</div>
+                    <div class="col ">:  {{$meeting_data->user->name}}</div>
+                  </div>
+                  <?php $dt = strtotime($meeting_data->meeting_date); ?>
+                  <div class ="row">
+                    <div class="col-sm-2 ">Date</div>
+                    <div class="col ">: {{date('M d, Y', $dt)}}</div>
+                  </div>
+                  <div class ="row">
+                    <div class="col-sm-2 ">Time</div>
+                    <div class="col ">: {{date('H:i:s A', $dt)}}</div>
+                  </div>
+                  <br>
+                  <div class ="row">
+                    <div class="col-sm-2 ">Meeting Link</div>
+                    <div class="col ">: <a href='{{$meeting_data->meeting_link}}' target="_blank" >{{$meeting_data->meeting_link}}</a></div>
+                  </div>
                 </div>
+            </div>
+            <div class="card mt-4">
+              <div class="card-header"><h4>Uploaded Photo Information</h4></div>
+              <div class="card-body">
+                  
+              </div>
+            </div>
+            <div class="card mt-4">
+              <div class="card-header"><h4>Report<h4></div>
+              <div class="card-body">
+                  
+              </div>
             </div>
         </div>
     </div>

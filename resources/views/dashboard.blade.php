@@ -7,7 +7,7 @@
 @section('navbar')
     @if (auth()->user()->hasRole('customer'))
       <li class="nav-item">
-        <a class="nav-link" href="/home">Request Meeting</a>
+        <a class="nav-link" href="/home">Request Meeting</a></h4>
       </li>
       <li class="nav-item">
          <a class="nav-link" href="/history_meeting">History</a>
@@ -28,9 +28,7 @@
 @section('content')
 <div class="container">
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h2>Dashboard</h2>
-        </div>
+        
         <div class="panel-body" >
            {!! $calendar->calendar() !!}
        </div>

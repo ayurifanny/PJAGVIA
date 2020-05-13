@@ -24,10 +24,10 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-10 py-3">
           @if (auth()->user()->hasRole('customer'))
                 <div class="card mt-4">
-                    <div class="card-header">Request Meeting</div>
+                    <div class="card-header"><p class="h3 p-1"><strong>Request Meeting</strong></p></div>
                     <div class="card-body">
                       <table class="table">
                         <?php $key = 0; ?>
@@ -61,7 +61,7 @@
                 </div>
                 @endif
                 <div class="card mt-4">
-                    <div class="card-header">History Meeting</div>
+                    <div class="card-header"><p class="h3 p-1"><strong>History Meeting</strong></p></div>
                     <div class="card-body">
                       <table class="table">
                         <?php $key = 0; ?>

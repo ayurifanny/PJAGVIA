@@ -15,9 +15,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-10 py-3">
                 <div class="card mt-4">
-                    <div class="card-header">Request Meeting</div>
+                    <div class="card-header"><p class="h2 text-center p-2"><strong>Request Meeting</strong></p></div>
                     <div class="card-body">
                       <table class="table">
                         <?php $key = 0; ?>
@@ -34,7 +34,7 @@
                         <tbody>
                           @foreach($meeting_requests as $key => $meeting_request)
                           <tr>
-                            <th scope="row">{{++$key}}</th>
+                            <td scope="row">{{++$key}}</td>
                             <td>{{$meeting_request->project_name}}</td>
                             <td>{{$meeting_request->customer_name}}</td>
                             <?php $dt = strtotime($meeting_request->request_date); ?>
