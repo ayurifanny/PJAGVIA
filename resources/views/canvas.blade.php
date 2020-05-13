@@ -36,10 +36,14 @@
     <button class="u-full-width" id="clear">Clear</button>
     </div>
     <div>
-        <input type="button" onclick="uploadEx()" value="Upload" />
+        <input type="button" id="uploadPicture" value="Upload" />
         <input type="button" onclick="drawagain()" value="Draw More" />
         
     </div>
+    <form method="post" accept-charset="utf-8" name="form1">
+        <input type="hidden" id="_token" value="{{ csrf_token() }}">
+        <input name="hidden_data" id='hidden_data' type="hidden"/>
+    </form>
 
                 </div>
             </div>
@@ -130,5 +134,50 @@
 //     context.drawImage(base_image, 0, 0);
 //   }
 // }
+
+$(document).ready(function(){
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $("#uploadPicture").click(function(){
+                var canvas = document.getElementById("canvas");
+                context = canvas.getContext('2d');
+                var dataURL = canvas.toDataURL("image/png");
+                $.ajax({
+                    /* the route pointing to the post function */
+                    url: '/upload',
+                    type: 'POST',
+                    /* send the csrf-token and the input to the controller */
+                    data: {_token: CSRF_TOKEN, hidden_data:dataURL},
+                    dataType: 'JSON',
+                    /* remind that 'data' is the response of the AjaxController */
+                    success: function (data) { 
+                        $(".writeinfo").append(data.msg); 
+                    }
+                }); 
+            });
+       });
+function uploadEx() {
+				var canvas = document.getElementById("canvas");
+                context = canvas.getContext('2d');
+
+                
+				var fd = new FormData(document.forms["form1"]);
+                var _token = 'hezB4rRvRmfSlUVpDDbaxh45BaOkXpCXq8zr3qWO';
+                fd.append("_token", _token);
+                var xhr = new XMLHttpRequest();
+				xhr.open('POST', '/upload', true);
+
+				xhr.upload.onprogress = function(e) {
+					if (e.lengthComputable) {
+						var percentComplete = (e.loaded / e.total) * 100;
+						console.log(percentComplete + '% uploaded');
+						alert('Succesfully uploaded');
+					}
+				};
+
+				xhr.onload = function() {
+
+				};
+				xhr.send(fd);
+            };
 </script>
 @endsection
