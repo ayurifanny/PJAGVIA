@@ -54,7 +54,18 @@
         <script>
         
         var el = document.getElementById('sketchpad');
-        var pad = new Sketchpad(el);
+        base_image = new Image();
+        base_image.src = 'ARG.jpg';
+        
+        base_image.onload = function() {
+            var size = calculateAspectRatioFit(this.width, this.height, 1000,1000);
+            pad = new Sketchpad(el, {
+                aspectRatio: size.width/size.height,
+                width: size.width, 
+                height: size.height,
+                image: 'ARG.jpg'});
+        }
+        
 
         function setLineColor(e) {
         var color = e.target.value;
@@ -96,8 +107,17 @@
     }
 
     var canvas = document.getElementById('canvas');
-    // canvas.style="background-image:url('test2.png')";
     
+    function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+        var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+        if (srcWidth > maxWidth || srcHeight > maxHeight ) {
+            return { width: srcWidth*ratio, height: srcHeight*ratio };
+        }
+        else {
+            return { width: srcWidth, height: srcHeight };
+        }
+    }
+
 //     context = canvas.getContext('2d');
 
 //     make_base();

@@ -38,6 +38,7 @@
             opts.aspectRatio = opts.aspectRatio || 1;
             opts.width = opts.width || el.clientWidth;
             opts.height = opts.height || opts.width * opts.aspectRatio;
+            opts.image = opts.image || null;
             opts.line = mergeObjects({
                 color: '#000',
                 size: 5,
@@ -51,6 +52,7 @@
     
             // Create a canvas element
             var canvas = document.createElement('canvas');
+            canvas.setAttribute('id', 'canvas');
     
             /**
              * Set the size of canvas
@@ -75,6 +77,19 @@
             setCanvasSize(opts.width, opts.height);
             el.appendChild(canvas);
             var context = canvas.getContext('2d');
+            if (opts.image != null) {
+                base_image = new Image();
+                base_image.src = opts.image;
+                base_image.onload = function(){
+                    
+                    
+                    var pattern = context.createPattern(base_image, 'no-repeat');
+                    context.fillStyle = pattern;
+                    context.fillRect(0, 0, canvas.width, canvas.height);
+                // context.drawImage(base_image, 0, 0);
+                }
+            }
+            
             /**
              * Returns a points x,y locations relative to the size of the canvase
              */
@@ -126,6 +141,11 @@
     
                 if (opts.backgroundColor) {
                     context.fillStyle = opts.backgroundColor;
+                    context.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                if (opts.image != null) {
+                    var pattern = context.createPattern(base_image, 'no-repeat');
+                    context.fillStyle = pattern;
                     context.fillRect(0, 0, canvas.width, canvas.height);
                 }
             }
@@ -182,6 +202,15 @@
                 for (var i = 0; i < that.strokes.length; i++) {
                     drawStroke(that.strokes[i]);
                 }
+            }
+
+            /**
+             * Resize the image
+             */
+            function imgSizeFit(img, maxWidth, maxHeight) { 
+                var ratio = Math.min(1, maxWidth / img.naturalWidth, maxHeight / img.naturalHeight); 
+                img.style.width = img.naturalWidth * ratio + 'px'; 
+                img.style.height = img.naturalHeight * ratio + 'px'; 
             }
     
             // On mouse down, create a new stroke with a start location
@@ -370,7 +399,7 @@
          * @param  {number} width - New width of the canvas
          */
         Sketchpad.prototype.resize = function (width) {
-            var height = width * this.opts.aspectRatio;
+            var height = width / this.opts.aspectRatio;
             this.opts.lineSize = this.opts.lineSize * (width / this.opts.width);
             this.opts.width = width;
             this.opts.height = height;
