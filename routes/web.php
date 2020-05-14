@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,8 +38,8 @@ Auth::routes();
 
 Route::get('meetings/detail/{id}', 'DetailMeeting@index');
 
-Route::get('list_request','HomeController@list_request');
+Route::get('list_request', 'HomeController@list_request');
 
-Route::get('photo_detail','PictureCanvasController@index');
+Route::get('photo_detail', 'PictureCanvasController@index');
 
-Route::post('upload','PictureCanvasController@upload_lah');
+Route::post('save_picture', 'PictureCanvasController@save_picture');

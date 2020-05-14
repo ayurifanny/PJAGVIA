@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-
+    <link href="{{ asset('css/canvas.css') }}" rel="stylesheet">
 @endsection
 @section('navbar')
 @if(auth()->user()->hasRole('customer'))
@@ -17,38 +17,49 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="two-thirds column">
-            <div id="sketchpad"></div>
-            <em>Try resizing the window!</em>
+        <div class="col-sm">
+            <div class="form-group">
+                <label for="line-color-input">Set Line Color</label>
+                <select id="line-color-input" class="form-control">
+                    <option value="#000000">Black</option>
+                    <option value="#FF0000">Red</option>
+                    <option value="#00FF00">Green</option>
+                    <option value="#0000FF">Blue</option>
+                  </select>
+            </div>
         </div>
-        <div class="one-third column">
-            <label for="line-color-input">Set Line Color</label>
-            <input class="u-full-width" type="text" value="#000000" id="line-color-input">
-            <label for="line-size-input">Set Line Size</label>
-            <input class="u-full-width" type="number" value="5" id="line-size-input">
-            <div class="row">
-                <div class="one-half column">
-                    <button class="u-full-width" id="undo">Undo</button>
-                </div>
-                <div class="one-half column">
-                    <button class="u-full-width" id="redo">Redo</button>
-                </div>
-                <button class="u-full-width" id="clear">Clear</button>
+        <div class="col-sm">
+            <div class="form-group">
+                <label for="line-size-input">Set Line Size</label>
+                <input class="form-control" type="number" value="5" id="line-size-input">
             </div>
-            <div>
-                <input type="button" id="uploadPicture" value="Upload" />
-                <input type="button" onclick="drawagain()" value="Draw More" />
+        </div>
 
-            </div>
-            <form method="post" accept-charset="utf-8" name="form1">
-                <input type="hidden" id="_token" value="{{ csrf_token() }}">
-                <input name="hidden_data" id='hidden_data' type="hidden" />
-            </form>
+        <div class="col-sm">
+            <button class="btn btn-dark" id="undo" >Undo</button>
+        </div>
+        <div class="col-sm">
+
+            <button class="btn btn-dark" id="redo">Redo</button>
 
         </div>
+        <div class="col-sm">
+            <button class="btn btn-dark" id="clear">Clear</button>
+        </div>
+
+
+
+        <div class="col-sm">
+            <input type="button" class="btn btn-primary" id="uploadPicture" value="Save" />
+        </div>
+        <form method="post" accept-charset="utf-8" name="form1">
+            <input name="hidden_data" id='hidden_data' type="hidden" />
+        </form>
     </div>
-</div>
-</div>
+    <div class="two-thirds column">
+        <div id="sketchpad"></div>
+        <em>Try resizing the window!</em>
+    </div>
 </div>
 @endsection
 
@@ -135,7 +146,7 @@
             var dataURL = canvas.toDataURL("image/png");
             $.ajax({
                 /* the route pointing to the post function */
-                url: '/upload',
+                url: '/save_picture',
                 type: 'POST',
                 /* send the csrf-token and the input to the controller */
                 data: {
@@ -150,31 +161,6 @@
             });
         });
     });
-
-    function uploadEx() {
-        var canvas = document.getElementById("canvas");
-        context = canvas.getContext('2d');
-
-
-        var fd = new FormData(document.forms["form1"]);
-        var _token = 'hezB4rRvRmfSlUVpDDbaxh45BaOkXpCXq8zr3qWO';
-        fd.append("_token", _token);
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/upload', true);
-
-        xhr.upload.onprogress = function (e) {
-            if (e.lengthComputable) {
-                var percentComplete = (e.loaded / e.total) * 100;
-                console.log(percentComplete + '% uploaded');
-                alert('Succesfully uploaded');
-            }
-        };
-
-        xhr.onload = function () {
-
-        };
-        xhr.send(fd);
-    };
 
 </script>
 @endsection
