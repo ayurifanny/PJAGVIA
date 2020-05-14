@@ -267,9 +267,29 @@
                 x: cursor.x,
                 y: cursor.y
             });
+            sendPusherData(strokes)
             that.redraw();
 
             if (that.onDrawEnd) that.onDrawEnd();
+        }
+
+        function sendPusherData(strokes) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                /* the route pointing to the post function */
+                url: '/send_stroke',
+                type: 'POST',
+                /* send the csrf-token and the input to the controller */
+                data: {
+                    _token: CSRF_TOKEN,
+                    hidden_data: strokes
+                },
+                dataType: 'JSON',
+                /* remind that 'data' is the response of the AjaxController */
+                success: function (data) {
+                    $(".writeinfo").append(data.msg);
+                }
+            });
         }
 
         // Event Listeners
