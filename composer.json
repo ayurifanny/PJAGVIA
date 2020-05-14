@@ -17,7 +17,8 @@
         "laravel/ui": "^2.0",
         "laravelcollective/html": "~6.0",
         "spatie/laravel-permission": "^3.11",
-        "qlick/laravel-full-calendar": "~1.0"
+        "qlick/laravel-full-calendar": "~1.0",
+        "pusher/pusher-php-server": "~4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
