@@ -25,6 +25,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <style>
+        #mCSB_1 {
+            position: fixed;
+        }
+    </style>
     @yield('styles')
 </head>
 <body>
