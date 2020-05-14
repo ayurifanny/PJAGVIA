@@ -2,18 +2,21 @@
 
 @section('navbar')
     @if (auth()->user()->hasRole('customer'))
-      <li class="nav-item">
-        <a class="nav-link" href="/home">Request Meeting</a>
+      <li class="nav-item mb-3">
+        <a class="nav-link d-inline-block" href="/home"><i class="fas fa-calendar mr-2"></i>Request Inspection</a>
       </li>
-      <li class="nav-item">
-         <a class="nav-link" href="/history_meeting">History</a>
+      <li class="nav-item mb-3">
+        <a class="nav-link d-inline-block" href="/history_meeting"><i class="fas fa-history mr-2"></i>History</a>
       </li>
     @elseif (auth()->user()->hasRole('inspector'))
-      <li class="nav-item">
-        <a class="nav-link" href="/home">List of Request Meeting</a>
+      <li class="nav-item mb-3">
+        <a class="nav-link" href="/home"><i class="fas fa-tachometer mr-2"></i>Dashboard</a>
       </li>
-      <li class="nav-item">
-         <a class="nav-link" href="/history_meeting">History</a>
+      <li class="nav-item mb-3">
+        <a class="nav-link" href="/home"><i class="fas fa-list-ul mr-2"></i>List of Inspection Request</a>
+      </li>
+      <li class="nav-item mb-3">
+        <a class="nav-link" href="/history_meeting"><i class="fas fa-history mr-2"></i>History</a>
       </li>
     @endif
 @endsection
@@ -45,7 +48,7 @@
                   </div>
                   <br>
                   <div class ="row">
-                    <div class="col-sm-2 ">Meeting Link</div>
+                    <div class="col-sm-2 ">Inspection Link</div>
                     <div class="col ">: <a href='{{$meeting_data->meeting_link}}' target="_blank" >{{$meeting_data->meeting_link}}</a></div>
                   </div>
                 </div>

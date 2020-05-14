@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <p class="h1 text-center p-2"><strong>{{ __('Register') }}</strong></p>
+        <div class="col-md-6 py-3">
             <div class="card">
+                <div class="h1 card-header text-center"><strong>{{ __('Register') }}</strong></div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf

@@ -61,12 +61,6 @@
     <body>
         <div class="view" style="background-image:url('http://www.pjagroup.com/wp-content/uploads/2019/06/large-bg-plumbing.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">     
             <div class="content flex-center full-height">
-                <div class="top-left p-responsive links">
-                    <a class="mr-4" href="/">
-                        <img width="110" height="45" class="d-inline-block align-top"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
-                    </a>
-                </div>
-                
                 @if (Route::has('login'))
                     <div class="top-right links">
                         @auth
@@ -83,7 +77,12 @@
             
                 <div class="row w-75 mt-5 pt-5">
                     <div class="col my-auto mr-5">
-                        <h1 class="text-center text-black font-weight-bolder"><strong>
+                    <div class="top-left p-responsive links">
+                    <a class="mr-4" href="/">
+                        <img width="110" height="45" class="d-inline-block align-top"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
+                    </a>
+                </div>    
+                    <h1 class="text-center text-black font-weight-bolder"><strong>
                             PJA Virtual Inspection</strong>
                         </h1>
                     </div>

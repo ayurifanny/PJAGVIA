@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('navbar')
-    <li class="nav-item">
-      <a class="nav-link" href="/home">Dashboard</a>
-    </li>
-    <li class="nav-item">
-    <a class="nav-link" href="/list_request">List of Request Meeting</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/history_meeting">History</a>
-    </li>
+  <li class="nav-item mb-3">
+    <a class="nav-link" href="/home"><i class="fas fa-tachometer mr-2"></i>Dashboard</a>
+  </li>
+  <li class="nav-item mb-3">
+    <a class="nav-link" href="/home"><i class="fas fa-list-ul mr-2"></i>List of Inspection Request</a>
+  </li>
+  <li class="nav-item mb-3">
+    <a class="nav-link" href="/history_meeting"><i class="fas fa-history mr-2"></i>History</a>
+  </li>
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10 py-3">
                 <div class="card mt-4">
-                    <div class="card-header"><p class="h2 text-center p-2"><strong>Request Meeting</strong></p></div>
+                    <div class="card-header"><p class="h2 text-center p-2"><strong>Request Inspection</strong></p></div>
                     <div class="card-body">
                       <table class="table">
                         <?php $key = 0; ?>
@@ -26,8 +26,8 @@
                             <th scope="col">No.</th>
                             <th scope="col">Project Name</th>
                             <th scope="col">Customer Name</th>
-                            <th scope="col">Meeting Date</th>
-                            <th scope="col">Meeting Time</th>
+                            <th scope="col">Inspection Date</th>
+                            <th scope="col">Inspection Time</th>
                             <th scope="col">Action</th>
                           </tr>
                         </thead>

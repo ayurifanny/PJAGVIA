@@ -6457,7 +6457,6 @@ input[type=button].btn-block {
   color: rgba(255, 255, 255, 0.9);
 }
 
-
 .navbar-dark .navbar-toggler {
   color: rgba(255, 255, 255, 0.5);
   border-color: rgba(255, 255, 255, 0.1);
@@ -12150,6 +12149,76 @@ button.bg-dark:focus {
     text-align: center !important;
   }
 }
+
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+
+#sidebar {
+  width: 300px;
+  position: relative;
+  top:15;
+  left: 0;
+  z-index: 999;
+  background: #e7e9eb;
+  color: #fff;
+  transition: all 0.3s;
+  overflow: auto;
+}
+
+#sidebar.active {
+  margin-left: -300px;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+      margin-left: -300px;
+  }
+  #sidebar.active {
+      margin-left: 0;
+  }
+}
+
+#sidebar .sidebar-header {
+  padding: 20px;
+  background: #6d7fcc;
+}
+
+#sidebar ul.components {
+  padding: 20px 0;
+}
+
+#sidebar ul p {
+  color: #fff;
+  padding: 10px;
+}
+
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
+  color : rgba(0, 0, 0, 0.75);
+}
+
+#sidebar ul li a:hover {
+  color: rgb(0, 0, 0);
+}
+
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+  color: #fff;
+  background: #6d7fcc;
+}
+
+.ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: #6d7fcc;
+}
+
+/* ------------------------------------ */
 
 .text-lowercase {
   text-transform: lowercase !important;
