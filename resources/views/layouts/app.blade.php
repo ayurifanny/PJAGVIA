@@ -26,7 +26,7 @@
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <style>
-        #mCSB_1 {
+        .mCustomScrollBox {
             position: fixed;
         }
     </style>
@@ -97,7 +97,7 @@
 
             @else
                 <!-- Sidebar -->
-                <nav id="sidebar">
+                <nav id="sidebar" class="tired">
                     <ul class="list-unstyled components ml-3">
                         @yield('navbar')
                     </ul>
@@ -124,13 +124,13 @@
         });
 
         $(document).ready(function () {
-            $("#sidebar").mCustomScrollbar({
+            $(".tired").mCustomScrollbar({
                 theme: "minimal"
             });
 
             $('#sidebarCollapse').on('click', function () {
                 // open or close navbar
-                $('#sidebar').toggleClass('active');
+                $('.tired').toggleClass('active');
                 // close dropdowns
                 $('.collapse.in').toggleClass('in');
                 // and also adjust aria-expanded attributes we use for the open/closed arrows

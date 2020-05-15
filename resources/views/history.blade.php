@@ -12,8 +12,8 @@
       <li class="nav-item mb-3">
         <a class="nav-link" href="/home"><i class="fas fa-tachometer mr-2"></i>Dashboard</a>
       </li>
-      <li class="nav-item mb-3">
-        <a class="nav-link" href="/home"><i class="fas fa-list-ul mr-2"></i>List of Inspection Request</a>
+      <li php class="nav-item mb-3">
+        <a class="nav-link" href="/list_request"><i class="fas fa-list-ul mr-2"></i>List of Inspection Request</a>
       </li>
       <li class="nav-item mb-3">
         <a class="nav-link" href="/history_meeting"><i class="fas fa-history mr-2"></i>History</a>
