@@ -28,6 +28,7 @@
     <style>
         .mCustomScrollBox {
             position: fixed;
+            height:100vh;
         }
     </style>
     @yield('styles')
@@ -35,7 +36,6 @@
 <body>
     <div id="app">
         <nav class="navbar sticky-top navbar-expand-lg navbar-dark text-white bg-dark shadow-sm">
-            <div class="container">
                 @guest
 
                 @else
@@ -43,7 +43,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                 @endguest
-
+            <div class="container">
                 <a class="navbar-brand px-1 py-2" href="/home">
                     <img width="90" height="40" class="d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
                     <span class ="h4 text-center font-italic my-auto ml-3" >PJA Group Virtual Inspection</span>
