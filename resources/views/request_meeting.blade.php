@@ -46,7 +46,7 @@
                         <div class="form-group">
                             <label for="">Request Inspection Date:</label>
                             <div class='input-group date' id='datepicker'>
-                                <input type='text' class="form-control datepicker"  name="datepicker" placeholder="mm/dd/yyyy"/>
+                                <input type='text' autocomplete="off" class="form-control datepicker" name="datepicker" placeholder="mm/dd/yyyy"/>
                             </div>
                             @if ($errors->has('datepicker'))
                                 <span class="text-danger">{{ $errors->first('datepicker') }}</span>
