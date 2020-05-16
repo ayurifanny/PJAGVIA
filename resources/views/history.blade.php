@@ -10,7 +10,7 @@
       </li>
     @elseif (auth()->user()->hasRole('inspector'))
       <li class="nav-item mb-3">
-        <a class="nav-link" href="/home"><i class="fas fa-tachometer mr-2"></i>Dashboard</a>
+        <a class="nav-link" href="/home"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>
       </li>
       <li php class="nav-item mb-3">
         <a class="nav-link" href="/list_request"><i class="fas fa-list-ul mr-2"></i>List of Inspection Request</a>
@@ -60,7 +60,7 @@
             </div>
           @endif
 
-          <div class="card mt-4">
+          <div class="card mt-4 pb-3">
             <div class="card-header"><p class="h3 p-1"><strong>Inspection History</strong></p></div>
             <div class="card-body">
               <table class="table">
@@ -78,6 +78,7 @@
                     <th scope="col">Inspection Date</th>
                     <th scope="col">Inspection Time</th>
                     <th scope="col">Created At</th>
+                    <th scope="col">View Report</th>
                   </tr>
                 </thead>
 
@@ -96,21 +97,13 @@
                       <td>{{date('M d, Y', $dt)}}</td>
                       <td>{{date('H:i:s A', $dt)}}</td>
                       <td>{{$meeting->created_at}}</td>
+                      <td><a href='#'>view</a></td>
                     </tr>
                   @endforeach
                 </tbody>
             </table>
             </div>
           </div>
-
-          <div class="card mt-4">
-            <div class="card-header"><p class="h3 p-1"><strong>View Report</strong></p></div>
-            
-            <div class="card-body">
-              
-            </div>
-          </div>
-
         </div>
     </div>
 </div>

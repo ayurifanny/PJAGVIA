@@ -54,6 +54,8 @@ class HomeController extends Controller
                     [
                         'color' => '#000080',
                         'textColor' => '#FFFFFF',
+                        'backgroundColor' => '#34394d',
+                        'borderColor' => '#34394d',
                         'url' => '/meetings/detail/'.$value->meeting_id
                     ]
                 );

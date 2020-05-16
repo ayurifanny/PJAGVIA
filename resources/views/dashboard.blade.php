@@ -14,7 +14,7 @@
       </li>
     @elseif (auth()->user()->hasRole('inspector'))
       <li class="nav-item mb-3">
-        <a class="nav-link" href="/home"><i class="fas fa-tachometer mr-2"></i>Dashboard</a>
+        <a class="nav-link" href="/home"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>
       </li>
       <li class="nav-item mb-3">
         <a class="nav-link" href="/list_request"><i class="fas fa-list-ul mr-2"></i>List of Inspection Request</a>
@@ -27,11 +27,13 @@
 
 @section('content')
 <div class="container">
+  <div class="row justify-content-center p-5">
     <div class="panel panel-default">
-        <div class="panel-body" >
+        <div class="panel-body">
            {!! $calendar->calendar() !!}
        </div>
-   </div>
+    </div>
+  </div>
 </div>
 @endsection
 

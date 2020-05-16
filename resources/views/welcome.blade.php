@@ -15,7 +15,7 @@
             html, body {
                 background-color: #fff;
                 color: #636b6f;
-                font-family: 'Nunito', sans-serif;
+                font-family: 'Open Sans', sans-serif;
                 font-weight: 200;
                 height: 100vh;
                 margin: 0;
@@ -33,13 +33,13 @@
 
             .top-left {
                 position: absolute;
-                left: 10%;
+                left: 12%;
                 top: 7%;
             }
 
             .top-right {
                 position: absolute;
-                right: 8%;
+                right: 10%;
                 top: 7%;
             }
 
@@ -74,75 +74,76 @@
                         @endauth
                     </div>
                 @endif
-            
-                <div class="row w-75 mt-5 pt-5">
-                    <div class="col my-auto mr-5">
-                    <div class="top-left p-responsive links">
+
+                <div class="top-left links">
                     <a class="mr-4" href="/">
                         <img width="110" height="45" class="d-inline-block align-top"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
                     </a>
-                </div>    
-                    <h1 class="text-center text-black font-weight-bolder"><strong>
-                            PJA Virtual Inspection</strong>
+                </div>  
+
+                <div class="row w-75 mt-5 pt-5">
+                    <div class="col">  
+                        <h1 class="text-white font-weight-bolder"><strong>
+                            PJA Group Virtual Inspection App</strong>
                         </h1>
                     </div>
 
                     <div class="mx-auto col-6">
                         <div class="card px-3 py-3">
-                        <div class="card-body">
-                            <form method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <div class="form-group justify-content-center">
-                                    <label for="email"><strong>{{ __('E-Mail Address') }}<strong></label>
+                            <div class="card-body">
+                                <form method="POST" action="{{ route('login') }}">
+                                    @csrf
+                                    <div class="form-group justify-content-center">
+                                        <label for="email"><strong>{{ __('E-Mail Address') }}</strong></label>
 
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
 
-                                <div class="form-group">
-                                    <label for="password">{{ __('Password') }}</label>
-                                    
-                                    <span class="float-right">
-                                        @if (Route::has('password.request'))
-                                            <a class="label-link" href="{{ route('password.request') }}">
-                                                {{ __('Forgot Your Password?') }}
-                                            </a>
-                                        @endif
-                                    </span>
+                                    <div class="form-group">
+                                        <label for="password">{{ __('Password') }}</label>
                                         
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                        <span class="float-right">
+                                            @if (Route::has('password.request'))
+                                                <a class="label-link" href="{{ route('password.request') }}">
+                                                    {{ __('Forgot Your Password?') }}
+                                                </a>
+                                            @endif
                                         </span>
-                                    @enderror
-                                </div>
+                                            
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
-                                <div class="form-group row mb-5">
-                                    <div class="col-md-6 offset-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
 
-                                            <label class="form-check-label" for="remember">
-                                                {{ __('Remember Me') }}
-                                            </label>
+                                    <div class="form-group row mb-5">
+                                        <div class="col-md-6 offset-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                                <label class="form-check-label" for="remember">
+                                                    {{ __('Remember Me') }}
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                
-                                <button type="submit" class="btn btn-lg btn-block btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-                                
-                            </form>
-                        </div>
+                                    
+                                    <button type="submit" class="btn btn-lg btn-block btn-primary">
+                                        {{ __('Login') }}
+                                    </button>
+                                    
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

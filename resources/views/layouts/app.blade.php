@@ -15,7 +15,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel="stylesheet">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -28,7 +28,7 @@
     <style>
         .mCustomScrollBox {
             position: fixed;
-            height:100vh;
+            height:100%;
         }
     </style>
     @yield('styles')
@@ -39,14 +39,14 @@
                 @guest
 
                 @else
-                    <button type="button" id="sidebarCollapse" class="btn mr-3">
+                    <button type="button" id="sidebarCollapse" class="btn mr-3 in" aria-expanded="true">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                 @endguest
             <div class="container">
                 <a class="navbar-brand px-1 py-2" href="/home">
                     <img width="90" height="40" class="d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
-                    <span class ="h4 text-center font-italic my-auto ml-3" >PJA Group Virtual Inspection</span>
+                    <span class ="h4 text-center font-italic my-auto ml-3" >PJA Group Virtual Inspection App</span>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -98,7 +98,7 @@
             @else
                 <!-- Sidebar -->
                 <nav id="sidebar" class="tired">
-                    <ul class="list-unstyled components ml-3">
+                    <ul class="list-unstyled components ml-2">
                         @yield('navbar')
                     </ul>
                 </nav>
@@ -107,6 +107,14 @@
             <!-- Page Content -->
             @yield('content')
         </div>
+
+        <!-- <footer class="page-footer align-bottom font-small bg-dark text-white">
+            
+            <div class="footer-copyright text-center py-4">© 2020 Copyright:
+                <a href="#"> link</a>
+            </div>
+            
+        </footer>    -->
         
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
