@@ -3,6 +3,26 @@
 @section('styles')
     <link href="{{ asset('css/canvas.css') }}" rel="stylesheet">
 @endsection
+
+@section('scripts')
+<script src="https://js.pusher.com/6.0/pusher.min.js"></script>
+<script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('8bbc99c65428ae983ae7', {
+      cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      alert(JSON.stringify(data));
+    });
+  </script>
+
+@endsection
+
 @section('navbar')
 @if(auth()->user()->hasRole('customer'))
     <li class="nav-item">

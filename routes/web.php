@@ -45,12 +45,6 @@ Route::get('photo_detail', 'PictureCanvasController@index');
 
 Route::post('save_picture', 'PictureCanvasController@save_picture');
 
-Route::get('/test', function () {
-    return view('test');
-    // auth()->user()->assignRole('customer');
-});
+Route::post('send_stroke', 'PictureCanvasController@send_stroke');
 
-Route::post('/test1', function () {
-    event(new DrawLine('hello world'));
-    return 'yes';
-});
+Route::get('test1','PictureCanvasController@call_event');

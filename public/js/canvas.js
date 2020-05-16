@@ -35,6 +35,8 @@
         opts.width = opts.width || el.clientWidth;
         opts.height = opts.height || opts.width * opts.aspectRatio;
         opts.image = opts.image || null;
+        opts.enable_draw = opts.enable_draw || true;
+        
         opts.line = mergeObjects(
             {
                 color: "#000",
@@ -282,7 +284,7 @@
                 /* send the csrf-token and the input to the controller */
                 data: {
                     _token: CSRF_TOKEN,
-                    hidden_data: strokes
+                    strokes: strokes
                 },
                 dataType: 'JSON',
                 /* remind that 'data' is the response of the AjaxController */
@@ -293,15 +295,18 @@
         }
 
         // Event Listeners
-        canvas.addEventListener("mousedown", startLine);
-        canvas.addEventListener("touchstart", startLine);
+        if (opts.enable_draw) {
+            canvas.addEventListener("mousedown", startLine);
+            canvas.addEventListener("touchstart", startLine);
 
-        canvas.addEventListener("mousemove", drawLine);
-        canvas.addEventListener("touchmove", drawLine);
+            canvas.addEventListener("mousemove", drawLine);
+            canvas.addEventListener("touchmove", drawLine);
 
-        canvas.addEventListener("mouseup", endLine);
-        canvas.addEventListener("mouseleave", endLine);
-        canvas.addEventListener("touchend", endLine);
+            canvas.addEventListener("mouseup", endLine);
+            canvas.addEventListener("mouseleave", endLine);
+            canvas.addEventListener("touchend", endLine);
+        }
+        
 
         if (typeof opts.onDrawEnd === "function") {
             this.onDrawEnd = opts.onDrawEnd;

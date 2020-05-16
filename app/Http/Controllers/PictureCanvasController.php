@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DrawLine;
+
 class PictureCanvasController extends Controller
 {
+    public $data;
+
+    public function __construct()
+    {
+        $this->data = null;
+    }
     public function index()
     {
         return view('canvas');
@@ -22,5 +30,17 @@ class PictureCanvasController extends Controller
         fclose($file);
 
         return;
+    }
+
+    public function send_stroke()
+    {
+        $this->data = $_POST['strokes'];
+        return redirect()->to('test1');
+    }
+
+    public function call_event()
+    {
+        event(new DrawLine(json_encode($this->data)));
+        return yes;
     }
 }
