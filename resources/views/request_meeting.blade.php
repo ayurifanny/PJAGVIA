@@ -2,22 +2,21 @@
 
 @section('navbar')
     @if (auth()->user()->hasRole('customer'))
-      <li class="nav-item">
-        <a class="nav-link" href="/home">Request Meeting</a>
+      <li class="nav-item mb-3">
+        <a class="nav-link d-inline-block" href="/home"><i class="fas fa-calendar mr-2"></i>Request Inspection</a>
       </li>
-      <li class="nav-item">
-         <a class="nav-link" href="/history_meeting">History</a>
+      <li class="nav-item mb-3">
+        <a class="nav-link d-inline-block" href="/history_meeting"><i class="fas fa-history mr-2"></i>History</a>
       </li>
     @endif
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 py-5">
             <div class="card">
-                <div class="card-header">Request Inspection Meeting</div>
-
+                <div class="card-header"><p class="h2 text-center p-2"><strong>Request Inspection</strong></p></div>
                 <div class="card-body">
                     @if (\Session::has('success'))
                         <div class="alert alert-success" role="alert">
@@ -45,16 +44,16 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="">Request Meeting Date:</label>
+                            <label for="">Request Inspection Date:</label>
                             <div class='input-group date' id='datepicker'>
-                                <input type='text' class="form-control datepicker"  name="datepicker" placeholder="mm/dd/yyyy"/>
+                                <input type='text' autocomplete="off" class="form-control datepicker" name="datepicker" placeholder="mm/dd/yyyy"/>
                             </div>
                             @if ($errors->has('datepicker'))
                                 <span class="text-danger">{{ $errors->first('datepicker') }}</span>
                             @endif
                         </div>
-                        <div class="form-group">
-                            <label for="">Request Meeting Time:</label>
+                        <div class="form-group mb-5">
+                            <label for="">Request Inspection Time:</label>
                             <div class='input-group date' id='timepicker' name="time">
                                 {!! Form::time('time', null, ['class' => 'form-control']) !!}
                             </div>
@@ -65,7 +64,7 @@
                     
                
                         <div class="form-group">
-                            <button class="btn btn-success btn-submit">Submit</button>
+                            <button class="btn btn-primary btn-submit btn-block">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -77,7 +76,6 @@
 
 @section('additional_script')
 <script>
-    
     $('.datepicker').datepicker({
         minDate:3
     });

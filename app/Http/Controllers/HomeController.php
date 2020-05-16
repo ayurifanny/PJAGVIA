@@ -54,6 +54,8 @@ class HomeController extends Controller
                     [
                         'color' => '#000080',
                         'textColor' => '#FFFFFF',
+                        'backgroundColor' => '#f8f9f9',
+                        'borderColor' => '#f8f9f9',
                         'url' => '/meetings/detail/'.$value->meeting_id
                     ]
                 );
@@ -77,7 +79,8 @@ class HomeController extends Controller
             $meeting_history =  Meetings::where('user_id', \Auth::id())->orderBy('meeting_date', 'DESC')->get();     
         }
         else if (auth()->user()->hasRole('inspector')) {
-            $meeting_history =  Meetings::where('host_id', \Auth::id())->orderBy('meeting_date', 'DESC')->get();     
+            $meeting_history =  Meetings::where('host_id', \Auth::id())->orderBy('meeting_date', 'DESC')->get();    
+            $meeting_requests = null;  
         }
             
         return \View::make('history')
