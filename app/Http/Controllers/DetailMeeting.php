@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Meetings;
+use App\Uploads;
+use Illuminate\Http\Request;
 
 class DetailMeeting extends Controller
 {
@@ -21,16 +22,18 @@ class DetailMeeting extends Controller
     public function index($id)
     {
         $meeting_data = Meetings::findOrFail($id);
+        $picture_data = Uploads::where('meeting_id', $id)->get();
         if ($this->is_user_authorized($meeting_data)) {
             return \View::make('detail')
-            ->with(compact('meeting_data'));
-        }
-        else {
+                ->with(compact('meeting_data'))
+                ->with(compact('picture_data'));
+        } else {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
     }
 
-    public function is_user_authorized($detail) {
+    public function is_user_authorized($detail)
+    {
         return (auth()->user()->hasRole('customer') && $detail->user_id == \Auth::id()) || (auth()->user()->hasRole('inspector') && $detail->host_id == \Auth::id());
     }
 

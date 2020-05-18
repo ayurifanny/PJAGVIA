@@ -40,7 +40,7 @@ Route::get('meetings/detail/{id}', 'DetailMeeting@index');
 
 Route::get('list_request', 'HomeController@list_request');
 
-Route::get('photo_detail', 'PictureCanvasController@index');
+Route::get('photo_detail/{id}', 'PictureCanvasController@index');
 
 Route::post('save_picture', 'PictureCanvasController@save_picture');
 
@@ -49,3 +49,7 @@ Route::post('send_stroke', 'PictureCanvasController@send_stroke');
 Route::get('test1', 'PictureCanvasController@call_event');
 
 Route::post('upload', 'UploadsController@upload');
+
+Route::get('storage/{filename}', function ($filename) {
+    return Image::make(storage_path('public/' . $filename))->response();
+});

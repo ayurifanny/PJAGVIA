@@ -87,11 +87,17 @@ class UploadsController extends Controller
     public function upload(Request $request)
     {
         $files = $request->file('file');
-
         if (!empty($files)):
             foreach ($files as $file):
-                Storage::put($file->getClientOriginalName(), file_get_contents($file));
+                Storage::disk('public')->put($request['id'] . '/' . $file->getClientOriginalName(), file_get_contents($file));
+                $upload = new Uploads();
+                $upload->meeting_id = $request['id'];
+                $upload->photo = $file->getClientOriginalName();
+                $upload->approved = -1;
+                $upload->save();
             endforeach;
         endif;
+
+        return back();
     }
 }

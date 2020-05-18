@@ -91,7 +91,7 @@
 <script>
     var el = document.getElementById('sketchpad');
     base_image = new Image();
-    base_image.src = 'ARG.jpg';
+    base_image.src = '{{"/storage/" . $pic->meeting_id . "/" . $pic->photo }}';
 
     base_image.onload = function () {
         var size = calculateAspectRatioFit(this.width, this.height, 1000, 1000);
@@ -99,7 +99,7 @@
             aspectRatio: size.width / size.height,
             width: size.width,
             height: size.height,
-            image: 'ARG.jpg'
+            image: this.src
         });
     }
 
@@ -173,7 +173,9 @@
                 /* send the csrf-token and the input to the controller */
                 data: {
                     _token: CSRF_TOKEN,
-                    hidden_data: dataURL
+                    hidden_data: dataURL,
+                    meeting_id: '{{$pic->meeting_id}}',
+                    file_name: '{{$pic->photo}}'
                 },
                 dataType: 'JSON',
                 /* remind that 'data' is the response of the AjaxController */

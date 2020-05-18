@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\DrawLine;
+use App\Uploads;
 use Storage;
 
 class PictureCanvasController extends Controller
@@ -13,9 +14,11 @@ class PictureCanvasController extends Controller
     {
         $this->data = null;
     }
-    public function index()
+    public function index($id)
     {
-        return view('canvas');
+        $pic = Uploads::findOrFail($id);
+        return \View::make('canvas')
+            ->with(compact('pic'));
     }
 
     public function save_picture()
@@ -25,9 +28,10 @@ class PictureCanvasController extends Controller
         $img = str_replace('data:image/png;base64,', '', $img);
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
-        $filename = 'test.png';
+        $fn = explode('.', $_POST['file_name']);
+        $filename = $_POST['meeting_id'] . '/' . $fn[0] . '_edited.png';
 
-        Storage::disk('local')->put("test.png", $data);
+        Storage::disk('public')->put($filename, $data);
         dd("stored");
         return;
     }
