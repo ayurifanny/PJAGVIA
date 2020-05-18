@@ -32,6 +32,10 @@ class PictureCanvasController extends Controller
         $filename = $_POST['meeting_id'] . '/' . $fn[0] . '_edited.png';
 
         Storage::disk('public')->put($filename, $data);
+
+        $upload = Uploads::where('photo', $_POST['file_name'])->where('meeting_id', $_POST['meeting_id'])->get();
+        $upload[0]->photo_edited = $fn[0] . '_edited.png';
+        $upload[0]->save();
         dd("stored");
         return;
     }
