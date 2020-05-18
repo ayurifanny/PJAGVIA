@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\DrawLine;
+use Storage;
 
 class PictureCanvasController extends Controller
 {
@@ -25,10 +26,9 @@ class PictureCanvasController extends Controller
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
         $filename = 'test.png';
-        $file = fopen($filename, 'wb');
-        fwrite($file, $data);
-        fclose($file);
 
+        Storage::disk('local')->put("test.png", $data);
+        dd("stored");
         return;
     }
 
