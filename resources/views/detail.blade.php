@@ -56,7 +56,11 @@
             <div class="card mt-4">
               <div class="card-header"><h4>Uploaded Photo Information</h4></div>
               <div class="card-body">
-                  
+                  <form method="POST" action="/upload" id="upload" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <input type="file" name="file[]" multiple>
+                    <input type="submit" value="Submit">
+                  </form>
               </div>
             </div>
             <div class="card mt-4">
