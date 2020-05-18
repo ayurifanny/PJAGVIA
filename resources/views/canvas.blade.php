@@ -17,7 +17,9 @@
 
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function(data) {
-      alert(JSON.stringify(data));
+        // alert(JSON.stringify(data));
+        var canvas = document.getElementById("canvas");
+        pad.newRedraw(data.stroke);
     });
   </script>
 

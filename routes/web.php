@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\DrawLine;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,4 +46,4 @@ Route::post('save_picture', 'PictureCanvasController@save_picture');
 
 Route::post('send_stroke', 'PictureCanvasController@send_stroke');
 
-Route::get('test1','PictureCanvasController@call_event');
+Route::get('test1', 'PictureCanvasController@call_event');

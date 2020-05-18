@@ -11,11 +11,11 @@ class DrawLine implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
+    public $stroke;
 
-    public function __construct($message)
+    public function __construct($stroke)
     {
-        $this->message = $message;
+        $this->stroke = $stroke;
     }
 
     public function broadcastOn()

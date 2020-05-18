@@ -34,13 +34,14 @@ class PictureCanvasController extends Controller
 
     public function send_stroke()
     {
-        $this->data = $_POST['strokes'];
-        return redirect()->to('test1');
+        $data = $_POST['strokes'];
+        $this->call_event($data);
+        return;
     }
 
-    public function call_event()
+    public function call_event($data)
     {
-        event(new DrawLine(json_encode($this->data)));
-        return yes;
+        event(new DrawLine($data));
+        return;
     }
 }

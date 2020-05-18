@@ -203,6 +203,20 @@
             }
         }
 
+        function newRedraw(strokes) {
+            
+            var jsonObjArray = [];
+            // alert(JSON.stringify(strokes));
+            jsonObjArray.push(strokes[0]);
+
+            that.strokes.push(strokes);
+            // for (var i = 0; i < strokes.length; i++) {
+            //     that.strokes.push(strokes[i]);
+            // }
+            
+            redraw();
+        }
+
         /**
          * Resize the image
          */
@@ -269,7 +283,8 @@
                 x: cursor.x,
                 y: cursor.y
             });
-            sendPusherData(strokes)
+            sendPusherData(strokes[strokes.length - 1])
+            
             that.redraw();
 
             if (that.onDrawEnd) that.onDrawEnd();
@@ -323,6 +338,7 @@
         this.setCanvasSize = setCanvasSize;
         this.getPointRelativeToCanvas = getPointRelativeToCanvas;
         this.getLineSizeRelativeToCanvas = getLineSizeRelativeToCanvas;
+        this.newRedraw = newRedraw;
 
         if (strokes) {
             redraw();
