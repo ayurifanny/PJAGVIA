@@ -53,3 +53,6 @@ Route::post('upload', 'UploadsController@upload');
 Route::get('storage/{filename}', function ($filename) {
     return Image::make(storage_path('public/' . $filename))->response();
 });
+
+Route::post('add_remarks', 'PictureCanvasController@add_remarks');
+Route::post('add_drawing', 'PictureCanvasController@add_drawing');

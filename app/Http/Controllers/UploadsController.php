@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Uploads;
 use Illuminate\Http\Request;
+use Image;
 use Storage;
 
 class UploadsController extends Controller
@@ -89,7 +90,16 @@ class UploadsController extends Controller
         $files = $request->file('file');
         if (!empty($files)):
             foreach ($files as $file):
-                Storage::disk('public')->put($request['id'] . '/' . $file->getClientOriginalName(), file_get_contents($file));
+                $image = Image::make($file);
+                if ($image->height() > 1000 || $image->width() > 1000) {
+                    $image->resize(1000, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    $image->stream();
+                }
+
+                Storage::disk('public')->put($request['id'] . '/' . $file->getClientOriginalName(), $image);
+
                 $upload = new Uploads();
                 $upload->meeting_id = $request['id'];
                 $upload->photo = $file->getClientOriginalName();
