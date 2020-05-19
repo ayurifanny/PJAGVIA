@@ -87,6 +87,7 @@
                 context.fillRect(0, 0, canvas.width, canvas.height);
                 // context.drawImage(base_image, 0, 0);
             };
+            
         }
 
         /**
@@ -320,6 +321,8 @@
             canvas.addEventListener("mouseup", endLine);
             canvas.addEventListener("mouseleave", endLine);
             canvas.addEventListener("touchend", endLine);
+            canvas.addEventListener("mouseup", toJSON);
+            canvas.addEventListener("touchend", toJSON);
         }
         
 

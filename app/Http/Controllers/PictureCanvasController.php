@@ -82,4 +82,11 @@ class PictureCanvasController extends Controller
         $this->save_picture($_POST['hidden_data'], $_POST['file_name'], $_POST['meeting_id']);
         return;
     }
+
+    public function add_drawing()
+    {
+        $picture = Uploads::findOrFail($_POST['id']);
+        $picture->drawings = $_POST['drawing'];
+        $picture->save();
+    }
 }
