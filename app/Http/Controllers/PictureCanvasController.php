@@ -15,7 +15,9 @@ class PictureCanvasController extends Controller
     public function __construct()
     {
         $this->data = null;
-        $this->id = \URL::previous();
+        $url = \URL::previous();
+        $url = explode('/', $url);
+        $this->id = end($url);
     }
     public function index($id)
     {
@@ -30,19 +32,18 @@ class PictureCanvasController extends Controller
         }
     }
 
-    public function save_picture()
+    public function save_picture($hidden_data, $file_name, $meeting_id)
     {
-        $upload_dir = "../upload/";
-        $img = $_POST['hidden_data'];
+        $img = $hidden_data;
         $img = str_replace('data:image/png;base64,', '', $img);
         $img = str_replace(' ', '+', $img);
         $data = base64_decode($img);
-        $fn = explode('.', $_POST['file_name']);
-        $filename = $_POST['meeting_id'] . '/' . $fn[0] . '_edited.png';
+        $fn = explode('.', $file_name);
+        $filename = $meeting_id . '/' . $fn[0] . '_edited.png';
 
         Storage::disk('public')->put($filename, $data);
 
-        $upload = Uploads::where('photo', $_POST['file_name'])->where('meeting_id', $_POST['meeting_id'])->get();
+        $upload = Uploads::where('photo', $file_name)->where('meeting_id', $meeting_id)->get();
         $upload[0]->photo_edited = $fn[0] . '_edited.png';
         $upload[0]->save();
         dd("stored");
@@ -60,6 +61,25 @@ class PictureCanvasController extends Controller
     {
         $id = explode("/", $this->id);
         event(new DrawLine($data, end($id)));
+        return;
+    }
+
+    public function add_remarks()
+    {
+        $picture = Uploads::findOrFail($this->id);
+        $picture->remarks = $_POST['remarks'];
+        switch ($_POST['status']) {
+            case 'approve':
+                $picture->approved = 1;
+                break;
+
+            case 'decline':
+                $picture->approved = 0;
+                break;
+        }
+
+        $picture->save();
+        $this->save_picture($_POST['hidden_data'], $_POST['file_name'], $_POST['meeting_id']);
         return;
     }
 }

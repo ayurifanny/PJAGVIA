@@ -75,12 +75,19 @@
             <input type="button" class="btn btn-primary" id="uploadPicture" value="Save" />
         </div>
         <form method="post" accept-charset="utf-8" name="form1">
-            <input name="hidden_data" id='hidden_data' type="hidden" />
+            
         </form>
+
     </div>
     <div class="two-thirds column">
         <div id="sketchpad"></div>
-        <em>Try resizing the window!</em>
+        <form method="POST" accept-charset="utf-8" name="form1">
+            <label for="remarks">Remarks:</label>
+            <input type="text" name="remarks" id="remarks">
+            <input name="hidden_data" id='hidden_data' type="hidden" />
+            <input type="button" class="btn btn-primary status" id="approve" value="approve" />
+            <input type="button" class="btn btn-primary status" id="decline" value="decline" />
+        </form>
     </div>
 </div>
 @endsection
@@ -163,20 +170,24 @@
 
     $(document).ready(function () {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $("#uploadPicture").click(function () {
+        $(".status").click(function () {
             var canvas = document.getElementById("canvas");
             context = canvas.getContext('2d');
             var dataURL = canvas.toDataURL("image/png");
+            var txt = document.getElementById("remarks");
+            var status = $(this).val();
             $.ajax({
                 /* the route pointing to the post function */
-                url: '/save_picture',
+                url: '/add_remarks',
                 type: 'POST',
                 /* send the csrf-token and the input to the controller */
                 data: {
                     _token: CSRF_TOKEN,
                     hidden_data: dataURL,
                     meeting_id: '{{ $pic->meeting_id }}',
-                    file_name: '{{ $pic->photo }}'
+                    file_name: '{{ $pic->photo }}',
+                    remarks:txt.value,
+                    status:status,
                 },
                 dataType: 'JSON',
                 /* remind that 'data' is the response of the AjaxController */
