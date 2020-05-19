@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\DrawLine;
+use App\Meetings;
 use App\Uploads;
 use Storage;
 
@@ -19,8 +20,14 @@ class PictureCanvasController extends Controller
     public function index($id)
     {
         $pic = Uploads::findOrFail($id);
-        return \View::make('canvas')
-            ->with(compact('pic'));
+        $authorize_user = Meetings::findOrFail($pic->meeting_id);
+
+        if (\Auth::id() == $authorize_user->user_id || \Auth::id() == $authorize_user->host_id) {
+            return \View::make('canvas')
+                ->with(compact('pic'));
+        } else {
+            return response('Unauthorized.', 401);
+        }
     }
 
     public function save_picture()

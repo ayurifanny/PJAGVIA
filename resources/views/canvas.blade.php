@@ -10,7 +10,7 @@
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
-    var pusher = new Pusher('8bbc99c65428ae983ae7', {
+    var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
         cluster: 'ap1'
     });
     
