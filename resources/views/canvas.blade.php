@@ -1,27 +1,27 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link href="{{ asset('css/canvas.css') }}" rel="stylesheet">
+<link href="{{ asset('css/canvas.css') }}" rel="stylesheet">
 @endsection
 
 @section('scripts')
 <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
 <script>
-
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
     var pusher = new Pusher('8bbc99c65428ae983ae7', {
-      cluster: 'ap1'
+        cluster: 'ap1'
     });
-
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
+    
+    var channel = pusher.subscribe('channel-' + '{{request()->route("id")}}');
+    channel.bind('my-event', function (data) {
         // alert(JSON.stringify(data));
         var canvas = document.getElementById("canvas");
         pad.newRedraw(data.stroke);
     });
-  </script>
+
+</script>
 
 @endsection
 
@@ -47,7 +47,7 @@
                     <option value="#FF0000">Red</option>
                     <option value="#00FF00">Green</option>
                     <option value="#0000FF">Blue</option>
-                  </select>
+                </select>
             </div>
         </div>
         <div class="col-sm">
@@ -58,7 +58,7 @@
         </div>
 
         <div class="col-sm">
-            <button class="btn btn-dark" id="undo" >Undo</button>
+            <button class="btn btn-dark" id="undo">Undo</button>
         </div>
         <div class="col-sm">
 
@@ -87,18 +87,19 @@
 
 @section('additional_script')
 
+
 <script src="{{ asset('js/canvas.js') }}"></script>
 <script>
     var el = document.getElementById('sketchpad');
     base_image = new Image();
-    base_image.src = '{{"/storage/" . $pic->meeting_id . "/" . $pic->photo }}';
+    base_image.src =
+        '{{ "/storage/" . $pic->meeting_id . "/" . $pic->photo }}';
 
     base_image.onload = function () {
-        var size = calculateAspectRatioFit(this.width, this.height, 1000, 1000);
         pad = new Sketchpad(el, {
-            aspectRatio: size.width / size.height,
-            width: size.width,
-            height: size.height,
+            aspectRatio: this.width / this.height,
+            width: this.width,
+            height: this.height,
             image: this.src
         });
     }
@@ -174,8 +175,8 @@
                 data: {
                     _token: CSRF_TOKEN,
                     hidden_data: dataURL,
-                    meeting_id: '{{$pic->meeting_id}}',
-                    file_name: '{{$pic->photo}}'
+                    meeting_id: '{{ $pic->meeting_id }}',
+                    file_name: '{{ $pic->photo }}'
                 },
                 dataType: 'JSON',
                 /* remind that 'data' is the response of the AjaxController */

@@ -9,10 +9,12 @@ use Storage;
 class PictureCanvasController extends Controller
 {
     public $data;
+    public $id;
 
     public function __construct()
     {
         $this->data = null;
+        $this->id = \URL::previous();
     }
     public function index($id)
     {
@@ -49,7 +51,8 @@ class PictureCanvasController extends Controller
 
     public function call_event($data)
     {
-        event(new DrawLine($data));
+        $id = explode("/", $this->id);
+        event(new DrawLine($data, end($id)));
         return;
     }
 }

@@ -12,15 +12,17 @@ class DrawLine implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $stroke;
+    public $id;
 
-    public function __construct($stroke)
+    public function __construct($stroke, $id)
     {
         $this->stroke = $stroke;
+        $this->id = $id;
     }
 
     public function broadcastOn()
     {
-        return ['my-channel'];
+        return ['channel-' . $this->id];
     }
 
     public function broadcastAs()
