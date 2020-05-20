@@ -69,16 +69,6 @@
         <div class="col-sm">
             <button class="btn btn-dark" id="clear">Clear</button>
         </div>
-
-        
-
-        <div class="col-sm">
-            <input type="button" class="btn btn-primary" id="uploadPicture" value="Save" />
-        </div>
-        <form method="post" accept-charset="utf-8" name="form1">
-            
-        </form>
-
     </div>
     <div class="two-thirds column">
         <div id="sketchpad" style="position: relative;">

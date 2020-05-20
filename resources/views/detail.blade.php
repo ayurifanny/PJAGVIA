@@ -70,11 +70,47 @@
                         <input type="submit" value="Submit">
                     </form>
 
+                    <table>
+                        <tr>
+                            <th>No</th>
+                            <th>Product ID</th>
+                            <th>Picture</th>
+                            <th>Remarks</th>
+                            <th>Edited Picture</th>
+                            <th>Action</th>
+                        </tr>
+                    
+                    @foreach($picture_data as $key => $pic)
+                        
 
-                    @foreach($picture_data as $pic)
-                        <button type="button"
+                        <tr>
+                        <td>{{++$key}}</td>
+                        <td>II-{{str_pad($pic->meeting_id, 3, '0', STR_PAD_LEFT) }}-{{str_pad($key, 3, '0', STR_PAD_LEFT) }}</td>
+                        <td><img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo) }}' alt={{$pic->photo}}></td>
+                        <td>{{$pic->remarks}}</td>
+                        
+
+                        
+                        @if ($pic->photo_edited == null):
+                        <td></td>
+                        @else
+                        <td><img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo_edited) }}' alt={{$pic->photo}}></td>
+                        @endif
+
+                        <td>
+                            @if ($pic->approved == -1):
+                            <button type="button"
                             onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'">{{ $pic->photo }}</button>
+                            @elseif ($pic->approved == 0):
+                            label decline
+                            @elseif ($pic->approved == 1):
+                            label approve
+                            @endif
+                        </td>
+                        
+                        </tr>
                     @endforeach
+                </table>
                 </div>
             </div>
             <div class="card mt-4">
@@ -88,4 +124,13 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('additional_scripts')
+<script>
+    function pad(n, length) {
+  var len = length - (''+n).length;
+  return (len > 0 ? new Array(++len).join('0') : '') + n
+}
+</script>
 @endsection
