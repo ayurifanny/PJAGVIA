@@ -35,7 +35,7 @@
         opts.width = opts.width || el.clientWidth;
         opts.height = opts.height || opts.width * opts.aspectRatio;
         opts.image = opts.image || null;
-        opts.enable_draw = opts.enable_draw || true;
+        opts.enable_draw = opts.enable_draw;
         
         opts.line = mergeObjects(
             {
