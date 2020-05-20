@@ -103,6 +103,7 @@
     base_image.src =
         '{{ "/storage/" . $pic->meeting_id . "/" . $pic->photo }}';
     var x = {!!$pic->drawings!!}
+
     base_image.onload = function () {
         pad = new Sketchpad(el, {
             aspectRatio: this.width / this.height,
