@@ -28,7 +28,7 @@
 
         if (opts.data) {
             opts.aspectRatio = opts.data.aspectRatio;
-            strokes = opts.data.strokes;
+            strokes = opts.data.strokes || [];
         }
 
         opts.aspectRatio = opts.aspectRatio || 1;

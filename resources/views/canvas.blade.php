@@ -81,7 +81,9 @@
 
     </div>
     <div class="two-thirds column">
-        <div id="sketchpad"></div>
+        <div id="sketchpad" style="position: relative;">
+            <canvas id="canvas2" style="position: absolute; left: 0; top: 0; z-index: -1;"></canvas>
+        </div>
         <form method="POST" accept-charset="utf-8" name="form1">
             <label for="remarks">Remarks:</label>
             <input type="text" name="remarks" id="remarks">
@@ -90,6 +92,7 @@
             <input type="button" class="btn btn-primary status" id="decline" value="decline" />
         </form>
     </div>
+    <button id="zoom-button">zoom</button>
 </div>
 @endsection
 
@@ -98,6 +101,7 @@
 
 <script src="{{ asset('js/canvas.js') }}"></script>
 <script>
+
     var el = document.getElementById('sketchpad');
     base_image = new Image();
     base_image.src =
@@ -111,6 +115,8 @@
             image: this.src,
             data: x
         });
+
+
     }
 
     function setLineColor(e) {
@@ -168,17 +174,14 @@
             });
     }
     
-    // resize
-    window.onresize = function (e) {
-        pad.resize(el.offsetWidth);
-    }
 
-    canvas = document.getElementById('canvas');
- 
+    
+
     
 
 
     $(document).ready(function () {
+        var canvas = document.getElementById('canvas');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(".status").click(function () {
             var canvas = document.getElementById("canvas");
@@ -206,7 +209,88 @@
                 }
             });
         });
+
+        $("#zoom-button").click(function () {
+            
+            if (canvas2.style.zIndex > 0) {
+                canvas2.style.zIndex = -1;
+                this.innerHTML="zoom";
+            }
+            else {
+                canvas2.style.zIndex = 1;
+                this.innerHTML="unzoom";
+            }
+            
+        });
+
+
     });
 
+</script>
+
+<script>
+    // variables
+var canvas2, ctx;
+var image;
+var iMouseX, iMouseY = 1;
+var bMouseDown = false;
+var iZoomRadius = 100;
+var iZoomPower = 2;
+
+
+
+// drawing functions
+function clear() { 
+    canvas2 = document.getElementById('canvas2');
+    canvas2.setAttribute('width', pad.canvas.width);
+    canvas2.setAttribute('height', pad.canvas.height);
+    ctx = canvas2.getContext('2d');
+// clear canvas function
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+}
+
+function drawScene() { // main drawScene function
+    clear(); // clear canvas
+
+    if (bMouseDown) { // drawing zoom area
+        ctx.drawImage(pad.canvas, 0 - iMouseX * (iZoomPower - 1), 0 - iMouseY * (iZoomPower - 1), ctx.canvas.width * iZoomPower, ctx.canvas.height * iZoomPower);
+        ctx.globalCompositeOperation = 'destination-atop';
+
+        var oGrd = ctx.createRadialGradient(iMouseX, iMouseY, 0, iMouseX, iMouseY, iZoomRadius);
+        oGrd.addColorStop(0.8, "rgba(0, 0, 0, 1.0)");
+        oGrd.addColorStop(1.0, "rgba(0, 0, 0, 0.1)");
+        ctx.fillStyle = oGrd;
+        ctx.beginPath();
+        ctx.arc(iMouseX, iMouseY, iZoomRadius, 0, Math.PI*2, true); 
+        ctx.closePath();
+        ctx.fill();
+    }
+}
+
+$(function(){
+    // loading source image
+    image = new Image();
+    image.onload = function () {
+    }
+    image.src = '{{ "/storage/" . $pic->meeting_id . "/" . $pic->photo }}';;
+
+
+    $('#sketchpad').mousemove(function(e) {
+         // mouse move handler
+        var canvasOffset = $(canvas2).offset();
+        iMouseX = Math.floor(e.pageX - canvasOffset.left);
+        iMouseY = Math.floor(e.pageY - canvasOffset.top);
+    });
+
+    $('#sketchpad').mousedown(function(e) { // binding mousedown event
+        bMouseDown = true;
+    });
+
+    $('#sketchpad').mouseup(function(e) { // binding mouseup event
+        bMouseDown = false;
+    });
+
+    setInterval(drawScene, 30); // loop drawScene
+});
 </script>
 @endsection
