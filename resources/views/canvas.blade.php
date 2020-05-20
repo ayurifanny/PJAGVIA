@@ -82,8 +82,7 @@
     </div>
     <div class="two-thirds column">
         <div id="sketchpad" style="position: relative;">
-            <canvas id="layer2" width="807" height="456" 
-   style="position: absolute; left: 0; top: 0; z-index: -1;"></canvas>
+            <canvas id="canvas2" style="position: absolute; left: 0; top: 0; z-index: -1;"></canvas>
         </div>
         <form method="POST" accept-charset="utf-8" name="form1">
             <label for="remarks">Remarks:</label>
@@ -93,7 +92,7 @@
             <input type="button" class="btn btn-primary status" id="decline" value="decline" />
         </form>
     </div>
-    <button id="lala">zoom</button>
+    <button id="zoom-button">zoom</button>
 </div>
 @endsection
 
@@ -102,12 +101,12 @@
 
 <script src="{{ asset('js/canvas.js') }}"></script>
 <script>
+
     var el = document.getElementById('sketchpad');
     base_image = new Image();
     base_image.src =
         '{{ "/storage/" . $pic->meeting_id . "/" . $pic->photo }}';
     var x = {!!$pic->drawings!!}
-
     base_image.onload = function () {
         pad = new Sketchpad(el, {
             aspectRatio: this.width / this.height,
@@ -175,16 +174,14 @@
             });
     }
     
-    // resize
-    // window.onresize = function (e) {
-    //     pad.resize(el.offsetWidth);
-    // }
 
-    canvas = document.getElementById('canvas');
- 
+    
+
+    
 
 
     $(document).ready(function () {
+        var canvas = document.getElementById('canvas');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(".status").click(function () {
             var canvas = document.getElementById("canvas");
@@ -213,13 +210,15 @@
             });
         });
 
-        $("#lala").click(function () {
-            alert("aa")
+        $("#zoom-button").click(function () {
+            
             if (canvas2.style.zIndex > 0) {
                 canvas2.style.zIndex = -1;
+                this.innerHTML="zoom";
             }
             else {
                 canvas2.style.zIndex = 1;
+                this.innerHTML="unzoom";
             }
             
         });
@@ -242,8 +241,11 @@ var iZoomPower = 2;
 
 // drawing functions
 function clear() { 
-    canvas2 = document.getElementById('layer2');
-    ctx = canvas2.getContext('2d');// clear canvas function
+    canvas2 = document.getElementById('canvas2');
+    canvas2.setAttribute('width', pad.canvas.width);
+    canvas2.setAttribute('height', pad.canvas.height);
+    ctx = canvas2.getContext('2d');
+// clear canvas function
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
@@ -263,10 +265,6 @@ function drawScene() { // main drawScene function
         ctx.closePath();
         ctx.fill();
     }
-
-    // draw source image
-    // ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height);
-
 }
 
 $(function(){
@@ -276,7 +274,6 @@ $(function(){
     }
     image.src = '{{ "/storage/" . $pic->meeting_id . "/" . $pic->photo }}';;
 
-    // creating canvas object
 
     $('#sketchpad').mousemove(function(e) {
          // mouse move handler
