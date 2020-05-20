@@ -66,7 +66,7 @@
                     <form method="POST" action="/upload" id="upload" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value={{ request()->route('id') }}>
-                        <input type="file" name="file[]" multiple>
+                        <input type="file" name="file[]" multiple accept="image/*">
                         <input type="submit" value="Submit">
                     </form>
 
