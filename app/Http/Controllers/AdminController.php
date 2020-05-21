@@ -12,12 +12,19 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         //
-        $users = User::all();
-        return \View::make('admin')
-            ->with(compact('users'));
+        if (\Auth::user()->hasRole('admin')) {
+            $users = User::all();
+            return \View::make('admin')
+                ->with(compact('users'));
+        }
+        return;
     }
 
     /**
@@ -73,9 +80,11 @@ class AdminController extends Controller
     public function update(Request $request)
     {
         //
-        $user = User::findOrFail($_POST["user_id"]);
-        $user->syncRoles([$_POST["role"]]);
-        return back();
+        if (\Auth::user()->hasRole('admin')) {
+            $user = User::findOrFail($_POST["user_id"]);
+            $user->syncRoles([$_POST["role"]]);
+            return back();
+        }
     }
 
     /**
@@ -87,8 +96,10 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
-        $user = User::findOrFail($id);
-        $user->delete();
-        return back();
+        if (\Auth::user()->hasRole('admin')) {
+            $user = User::findOrFail($id);
+            $user->delete();
+            return back();
+        }
     }
 }

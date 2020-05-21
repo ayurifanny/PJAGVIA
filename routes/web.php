@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', function () {
+    if (\Auth::check()) {
+        if (auth()->user()->hasRole('admin')) {
+            return redirect('/admin');;
+        }
+        return redirect('/home');
+    }
     return view('welcome');
-    // auth()->user()->assignRole('customer');
 });
 
 Auth::routes();

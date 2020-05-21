@@ -40,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -82,6 +82,6 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        return redirect($this->redirectTo)->with('message', 'Your message');
+        return redirect($this->redirectTo)->with('success', 'Account Created');
     }
 }
