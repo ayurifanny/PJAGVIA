@@ -47,6 +47,7 @@ Route::post('save_picture', 'PictureCanvasController@save_picture');
 Route::post('send_stroke', 'PictureCanvasController@send_stroke');
 
 Route::get('test1', 'PictureCanvasController@call_event');
+Route::get('admin', 'AdminController@index');
 
 Route::post('upload', 'UploadsController@upload');
 
