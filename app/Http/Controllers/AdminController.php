@@ -84,8 +84,11 @@ class AdminController extends Controller
      * @param  \App\Meetings  $meetings
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $User)
+    public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return back();
     }
 }

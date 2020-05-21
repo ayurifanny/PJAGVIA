@@ -47,7 +47,7 @@
                             <a href="#" class="btn btn-primary">Edit</a>
                         </td>
                         <td>
-                            <form action="#" method="post">
+                            <form action="/users/{{$user->id}}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit">Delete</button>
