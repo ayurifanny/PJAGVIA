@@ -97,7 +97,7 @@
         @if (auth()->user()->hasRole('customer')):
         <form method="POST" accept-charset="utf-8" name="form_remarks">
             <label for="remarks">Remarks:</label>
-            <input type="text" name="remarks" id="remarks">
+            <input type="text" name="remarks" id="remarks" value="{{$pic->remarks}}">
             <input type="button" class="btn btn-primary status" id="save-remarks" onClick="send_option(1)" value="save" />
         </form>
         
@@ -108,7 +108,7 @@
         </form>
         @else
         <h4>Customer Remarks:</h4>
-        <p id="par-remarks"></p> 
+        <p id="par-remarks">{{$pic->remarks}}</p> 
         @endif
     </div>
     <button id="zoom-button">zoom</button>
