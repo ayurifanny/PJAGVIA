@@ -44,7 +44,7 @@
                     </button>
                 @endguest
             <div class="container">
-                <a class="navbar-brand px-1 py-2" href="/home">
+                <a class="navbar-brand px-1 py-2" href="/">
                     <img width="90" height="40" class="d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
                     <span class ="h4 text-center font-italic my-auto ml-3" >PJA Group Virtual Inspection App</span>
                 </a>

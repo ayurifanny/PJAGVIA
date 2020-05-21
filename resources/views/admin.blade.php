@@ -52,11 +52,13 @@
                             </form>
                         </td>
                         <td>
+                            @if ($user->getRoleNames()[0] != 'admin')
                             <form action="/users/{{$user->id}}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit">Delete</button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

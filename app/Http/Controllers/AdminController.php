@@ -85,6 +85,9 @@ class AdminController extends Controller
             $user->syncRoles([$_POST["role"]]);
             return back();
         }
+        else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     /**
@@ -100,6 +103,9 @@ class AdminController extends Controller
             $user = User::findOrFail($id);
             $user->delete();
             return back();
+        }
+        else {
+            abort(403, 'Unauthorized action.');
         }
     }
 }

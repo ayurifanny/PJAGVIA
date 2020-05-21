@@ -28,7 +28,7 @@ class PictureCanvasController extends Controller
             return \View::make('canvas')
                 ->with(compact('pic'));
         } else {
-            return response('Unauthorized.', 401);
+            abort(403, 'Unauthorized action.');
         }
     }
 
