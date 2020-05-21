@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -46,7 +47,7 @@ class AdminController extends Controller
      * @param  \App\Meetings  $meetings
      * @return \Illuminate\Http\Response
      */
-    public function show(Users $users)
+    public function show(User $users)
     {
         //
     }
@@ -57,7 +58,7 @@ class AdminController extends Controller
      * @param  \App\Meetings  $meetings
      * @return \Illuminate\Http\Response
      */
-    public function edit(Users $Users)
+    public function edit(User $users)
     {
         //
     }
@@ -69,9 +70,12 @@ class AdminController extends Controller
      * @param  \App\Meetings  $meetings
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Users $Users)
+    public function update(Request $request)
     {
         //
+        $user = User::findOrFail($_POST["user_id"]);
+        $user->syncRoles([$_POST["role"]]);
+        return back();
     }
 
     /**
@@ -80,7 +84,7 @@ class AdminController extends Controller
      * @param  \App\Meetings  $meetings
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Users $Users)
+    public function destroy(User $User)
     {
         //
     }
