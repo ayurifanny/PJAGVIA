@@ -23,8 +23,9 @@ class AdminController extends Controller
             $users = User::all();
             return \View::make('admin')
                 ->with(compact('users'));
+        } else {
+            abort(403, 'Unauthorized action.');
         }
-        return;
     }
 
     /**
@@ -83,9 +84,8 @@ class AdminController extends Controller
         if (\Auth::user()->hasRole('admin')) {
             $user = User::findOrFail($_POST["user_id"]);
             $user->syncRoles([$_POST["role"]]);
-            return back();
-        }
-        else {
+            return back()->with('success', 'Succesfully changed ' . $user->name . ' role to "' . $user->getRoleNames()[0] . '".');
+        } else {
             abort(403, 'Unauthorized action.');
         }
     }
@@ -102,9 +102,8 @@ class AdminController extends Controller
         if (\Auth::user()->hasRole('admin')) {
             $user = User::findOrFail($id);
             $user->delete();
-            return back();
-        }
-        else {
+            return back()->with('success', 'Account deleted');
+        } else {
             abort(403, 'Unauthorized action.');
         }
     }

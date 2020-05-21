@@ -10,6 +10,11 @@
             <button class="btn btn-primary" onclick="window.location='/register'">Register New User</button>
             @endif
         </div>
+        @if (\Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                {!! \Session::get('success') !!}
+            </div>
+        @endif
         
         <table class="table table-striped">
             <thead>
