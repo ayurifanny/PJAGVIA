@@ -30,6 +30,9 @@
             opts.aspectRatio = opts.data.aspectRatio;
             strokes = opts.data.strokes || [];
         }
+        // if (opts.data) {
+        //     newRedraw(opts.data.strokes)
+        // }
 
         opts.aspectRatio = opts.aspectRatio || 1;
         opts.width = opts.width || el.clientWidth;
@@ -54,6 +57,7 @@
         // Create a canvas element
         var canvas = document.createElement("canvas");
         canvas.setAttribute("id", "canvas");
+        
 
         /**
          * Set the size of canvas
@@ -78,17 +82,6 @@
         setCanvasSize(opts.width, opts.height);
         el.appendChild(canvas);
         var context = canvas.getContext("2d");
-        if (opts.image != null) {
-            base_image = new Image();
-            base_image.src = opts.image;
-            base_image.onload = function() {
-                var pattern = context.createPattern(base_image, "no-repeat");
-                context.fillStyle = pattern;
-                context.fillRect(0, 0, canvas.width, canvas.height);
-                // context.drawImage(base_image, 0, 0);
-            };
-            
-        }
 
         /**
          * Returns a points x,y locations relative to the size of the canvase
@@ -207,7 +200,6 @@
         function newRedraw(strokes) {
             
             var jsonObjArray = [];
-            // alert(JSON.stringify(strokes));
             jsonObjArray.push(strokes[0]);
 
             that.strokes.push(strokes);
@@ -329,7 +321,8 @@
         if (typeof opts.onDrawEnd === "function") {
             this.onDrawEnd = opts.onDrawEnd;
         }
-
+        console.log(strokes)
+        
         // Public variables
         this.canvas = canvas;
         this.strokes = strokes;
@@ -344,8 +337,9 @@
         this.newRedraw = newRedraw;
 
         if (strokes) {
-            redraw();
+            this.redraw();
         }
+        
     }
 
     /**

@@ -21,9 +21,6 @@
             var canvas = document.getElementById("canvas");
             pad.newRedraw(data.stroke);
         }
-        
-
-        
         if (data.option !== null) {
             if (data.option == "undo"){
                 pad.undo();
