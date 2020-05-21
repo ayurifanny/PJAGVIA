@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
+<div class="container">
+<div class="row mt-5">
     <div class="col-sm-12">
         <h1 class="display-3">Users</h1>
-        @if(Route::has('register'))
-            <a href="{{ route('register') }}">Register</a>
-        @endif
+        <div class="row ml-2 mb-3">
+            @if(Route::has('register'))
+            <button class="btn btn-primary" onclick="window.location='/register'">Register New User</button>
+            @endif
+        </div>
+        
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -60,4 +64,5 @@
         </table>
         <div>
         </div>
+    </div>
         @endsection
