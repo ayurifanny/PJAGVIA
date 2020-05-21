@@ -34,7 +34,7 @@
                                 <form action="/update_role" method="post">
                                     @csrf
                                     <input name="user_id" id='hidden_data' type="hidden" value='{{$user->id}}' />
-                                    <select id="role" name="role" onchange="this.form.submit()">
+                                    <select id="role" name="role" class="form-control" onchange="this.form.submit()">
 
                                         @if ($user->getRoleNames()[0] == 'customer'):
                                         <option value="customer" selected="selected">Customer </option>
