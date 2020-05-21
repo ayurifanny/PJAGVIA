@@ -26,13 +26,13 @@
         
         if (data.option !== null) {
             if (data.option == "undo"){
-                undo();
+                pad.undo();
             }
             else if (data.option == "redo") {
-                redo();
+                pad.redo();
             }
             else if(data.option == "clear") {
-                clear();
+                pad.clear();
             }
             else {
                 var remarks = document.getElementById("par-remarks");
@@ -152,6 +152,7 @@
 
     }
 
+    @if (auth()->user()->hasRole('customer'))
     function setLineColor(e) {
         var color = e.target.value;
         if (!color.startsWith('#')) {
@@ -173,7 +174,7 @@
         send_option(2)
         pad.undo();
     }
-    $('#undo').one('click', undo);
+    $('#undo').off('click').on('click', undo);
     // document.getElementById('undo').onclick = undo;
 
     // redo
@@ -181,7 +182,7 @@
         send_option(3)
         pad.redo();
     }
-    $('#redo').one('click', redo);
+    $('#redo').off('click').on('click', redo);
     // document.getElementById('redo').onclick = redo;
 
     // clear
@@ -189,7 +190,7 @@
         send_option(4)
         pad.clear();
     }
-    $('#clear').one('click', clear);
+    $('#clear').off('click').on('click', clear);
     // document.getElementById('clear').onclick = clear;
 
     function toJSON() {
@@ -213,8 +214,6 @@
             });
     }
     function send_option(data) {
-        event.preventDefault();
-        event.stopPropagation();
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var remarks = document.getElementById("remarks");
         var opts
@@ -258,7 +257,7 @@
 
     
 
-
+    @endif
     $(document).ready(function () {
         var canvas = document.getElementById('canvas');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
