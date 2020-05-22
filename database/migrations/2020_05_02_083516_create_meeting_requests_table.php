@@ -17,7 +17,7 @@ class CreateMeetingRequestsTable extends Migration
             $table->id();
             $table->string('customer_name');
             $table->string('project_name');
-            $table->timestamp('request_date', 0);
+            $table->dateTime('request_date');
             $table->tinyInteger('approved');
             $table->timestamps();
         });
