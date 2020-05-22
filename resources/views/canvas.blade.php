@@ -38,70 +38,80 @@
 @endsection
 
 @section('content')
-<div class="container my-5">
-    <div class="row">
-        <div class="col-sm">
-            <div class="form-group">
-                <label for="line-color-input">Set Line Color</label>
-                <select id="line-color-input" class="form-control">
-                    <option value="#000000">Black</option>
-                    <option value="#FF0000">Red</option>
-                    <option value="#00FF00">Green</option>
-                    <option value="#0000FF">Blue</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="form-group">
-                <label for="line-size-input">Set Line Size</label>
-                <input class="form-control" type="number" value="5" id="line-size-input">
-            </div>
-        </div>
-
-        <div class="col-sm">
-            <button class="btn btn-dark" id="undo">Undo</button>
-        </div>
-        <div class="col-sm">
-
-            <button class="btn btn-dark" id="redo">Redo</button>
-
-        </div>
-        <div class="col-sm">
-            <button class="btn btn-dark" id="clear">Clear</button>
-        </div>
-
+<div class="container my-2">
+    <div class="row menu-canvas mx-1 my-2 py-3">
+        <div class="pr-3 border-right">
+            <button type="button" class="btn btn-light" id="undo" data-toggle="tooltip" data-placement="bottom" title="Undo">
+                <i class='fas fa-undo-alt'></i>
+            </button>
         
-
-        <div class="col-sm">
-            <input type="button" class="btn btn-primary" id="uploadPicture" value="Save" />
+            <button class="btn btn-light" id="redo" data-toggle="tooltip" data-placement="bottom" title="Redo">
+                <i class='fas fa-redo-alt'></i>
+            </button>
         </div>
-        <form method="post" accept-charset="utf-8" name="form1">
-            
-        </form>
+
+        <div class="px-3 border-right">
+            <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Eraser" id="eraser-button">
+                <i class='fas fa-eraser'></i>
+            </button>
+        </div>
+
+        <div class="px-3 border-right">
+            <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Zoom In" id="zoom-button">
+                <i class='fas fa-search-plus'></i>
+            </button>
+        </div>
+
+        <div class="px-3 border-right">
+            <select id="line-color-input" class="form-control" data-toggle="tooltip" data-placement="bottom" title="Line Color">
+                <option value="#000000">Black</option>
+                <option value="#FF0000">Red</option>
+                <option value="#00FF00">Green</option>
+                <option value="#0000FF">Blue</option>
+            </select>
+        </div>
+
+        <div class="pl-3">
+            <input class="form-control col-md-4" type="number" value="5" id="line-size-input" data-toggle="tooltip" data-placement="bottom" title="Line Size">
+        </div>
+
+        <div class="ml-auto float-right">
+            <button class="btn btn-secondary" id="clear">Clear</button>
+        </div>
 
     </div>
-    <div class="two-thirds column">
-        <div id="sketchpad" style="position: relative;">
-            <canvas id="canvas2" style="position: absolute; left: 0; top: 0; z-index: -1;"></canvas>
+    <div>
+        <div id="sketchpad" class="text-center py-2">
+            <canvas id="canvas2" style="position: absolute; top: 0; z-index: -1;"></canvas>
         </div>
-        <form method="POST" accept-charset="utf-8" name="form1">
-            <label for="remarks">Remarks:</label>
-            <input type="text" name="remarks" id="remarks">
-            <input name="hidden_data" id='hidden_data' type="hidden" />
-            <input type="button" class="btn btn-primary status" id="approve" value="approve" />
-            <input type="button" class="btn btn-primary status" id="decline" value="decline" />
-        </form>
+
+        <div class="py-3">
+            <form method="POST" accept-charset="utf-8" name="form1">
+                <div class="form-group row justify-content-center">
+                    <label for="remarks" class="col-form-label text-md-right">
+                        <strong>Remarks : </strong>
+                    </label>
+                
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" row="2" name="remarks" id="remarks">
+                        <input name="hidden_data" id='hidden_data' type="hidden" />
+                    </div>
+                </div>
+
+                <div class="row justify-content-center pt-2">
+                    <input type="button" class="btn btn-primary mr-5 status" id="approve" value="approve" />
+                    <input type="button" class="btn btn-secondary ml-1 status" id="decline" value="decline" />
+                </div>
+            </form>
+        </div>
     </div>
-    <button id="zoom-button">zoom</button>
+    
 </div>
 @endsection
 
 @section('additional_script')
-
-
 <script src="{{ asset('js/canvas.js') }}"></script>
 <script>
-
     var el = document.getElementById('sketchpad');
     base_image = new Image();
     base_image.src =
@@ -115,8 +125,6 @@
             image: this.src,
             data: x
         });
-
-
     }
 
     function setLineColor(e) {
@@ -174,12 +182,6 @@
             });
     }
     
-
-    
-
-    
-
-
     $(document).ready(function () {
         var canvas = document.getElementById('canvas');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -210,8 +212,7 @@
             });
         });
 
-        $("#zoom-button").click(function () {
-            
+        $("#zoom-button").click(function () { 
             if (canvas2.style.zIndex > 0) {
                 canvas2.style.zIndex = -1;
                 this.innerHTML="zoom";
@@ -219,11 +220,8 @@
             else {
                 canvas2.style.zIndex = 1;
                 this.innerHTML="unzoom";
-            }
-            
+            } 
         });
-
-
     });
 
 </script>
