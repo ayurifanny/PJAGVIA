@@ -107,13 +107,13 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-primary" id="exampleModalLongTitle">Confirm approval status</h5>
+                        <h5 class="modal-title text-primary" id="exampleModalLongTitle">Confirm photo status</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p class="text-dark">Approve this photo for the inspection?</p>
+                        <p class="text-dark">Approve this photo for inspection?</p>
                         <div class="mt-2 float-right">
                             <form method="POST" accept-charset="utf-8" name="form1">
                                 <input name="hidden_data" id='hidden_data' type="hidden" />
@@ -129,7 +129,7 @@
 
     <div>
         <div id="sketchpad" class="text-center pt-2" style="position: relative;">
-            <canvas id="canvas2" class="img-fluid" style="position: absolute; top: 0; z-index: -1;"></canvas>
+            <canvas id="canvas2" class="img-fluid" style="position: absolute; top: 1; z-index: -1;"></canvas>
         </div>
 
         <div class="py-3">
@@ -333,11 +333,9 @@
         $("#zoom-button").click(function () { 
             if (canvas2.style.zIndex > 0) {
                 canvas2.style.zIndex = -1;
-                this.innerHTML="zoom";
             }
             else {
                 canvas2.style.zIndex = 1;
-                this.innerHTML="unzoom";
             } 
         });
     });
