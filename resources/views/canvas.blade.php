@@ -56,7 +56,7 @@
 @endsection
 
 @section('content')
-<div class="container my-2">
+<div class="container">
     <div class="row menu-canvas mx-1 my-2 py-3">
         <div class="pr-3 border-right">
             <button type="button" class="btn btn-light" id="undo" data-toggle="tooltip" data-placement="bottom" title="Undo">
@@ -94,27 +94,64 @@
         </div>
 
         <div class="ml-auto float-right">
-            <button class="btn btn-secondary" id="clear">Clear</button>
+            <button class="btn btn-secondary mr-3" id="clear">Clear</button>
+        
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+           Done
+            </button>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-primary" id="exampleModalLongTitle">Confirm approval status</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-dark">Approve this photo for the inspection?</p>
+                        <div class="mt-2 float-right">
+                            <form method="POST" accept-charset="utf-8" name="form1">
+                                <input name="hidden_data" id='hidden_data' type="hidden" />
+                                <input type="button" class="btn btn-secondary mr-2 status" id="decline" value="Decline" />
+                                <input type="button" class="btn btn-primary status" id="approve" value="Approve" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <div>
-        <div id="sketchpad" class="text-center py-2">
-            <canvas id="canvas2" style="position: absolute; top: 0; z-index: -1;"></canvas>
+        <div id="sketchpad" class="text-center pt-2">
+            <canvas id="canvas2" class="img-fluid" style="position: absolute; top: 0; z-index: -1;"></canvas>
         </div>
 
         <div class="py-3">
-            @if (auth()->user()->hasRole('customer')):
+            @if (auth()->user()->hasRole('customer'))
             <form method="POST" accept-charset="utf-8" name="form_remarks">
-                <label for="remarks">Remarks:</label>
-                <input type="text" name="remarks" id="remarks" value="{{$pic->remarks}}">
-                <input type="button" class="btn btn-primary status" id="save-remarks" onClick="send_option(1)" value="save" />
-            </form>
-            
-            <form method="POST" accept-charset="utf-8" name="form1">
-                <input name="hidden_data" id='hidden_data' type="hidden" />
-                <input type="button" class="btn btn-primary status" id="approve" value="approve" />
-                <input type="button" class="btn btn-primary status" id="decline" value="decline" />
+                <div class="row justify-content-center">    
+                    <div class="col-md-9">
+                        <div class="form-group row">
+                            <label for="remarks" class="col-form-label text-md-right">
+                                Remarks:
+                            </label>
+
+                            <div class="col">
+                                <input type="text" class="form-control mr-5" row="2" name="remarks" id="remarks" value="{{$pic->remarks}}">
+                            </div>
+
+                            <div class="float-right">
+                                <input type="button" class="btn btn-primary status" id="save-remarks" onClick="send_option(1)" value="Send" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
             @else
                 <h4>Customer Remarks:</h4>

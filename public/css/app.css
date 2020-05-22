@@ -1757,6 +1757,15 @@ th {
 label {
   display: inline-block;
   margin-bottom: 0.5rem;
+  padding: 1px;
+}
+
+.label-success {
+  background-color: var(--success);
+}
+
+.label-danger {
+  background-color: var(--danger);
 }
 
 button {
