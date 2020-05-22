@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Event;
 use App\MeetingRequests;
 use App\Meetings;
-use App\Event;
 use Calendar;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -30,80 +30,82 @@ class HomeController extends Controller
     {
         if (auth()->user()->hasRole('customer')) {
             return view('request_meeting');
-        }
-        else if (auth()->user()->hasRole('inspector')) {
+        } else if (auth()->user()->hasRole('inspector')) {
             return $this->show_calendar();
-        }   
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
-    
+
     public function show_calendar()
     {
-        $events = [];
-        $data = Event::where('user_id', \Auth::id())->get();
-        if($data->count())
-            {
-            foreach ($data as $key => $value) 
-            {
-                $events[] = Calendar::event(
-                    $value->title,
-                    false,
-                    new \DateTime($value->start),
-                    new \DateTime($value->end),
-                    null,
-                    // Add color
-                    [
-                        'color' => '#000080',
-                        'textColor' => '#FFFFFF',
-                        'backgroundColor' => '#f8f9f9',
-                        'borderColor' => '#f8f9f9',
-                        'url' => '/meetings/detail/'.$value->meeting_id
-                    ]
-                );
+        if (auth()->user()->hasRole('inspector')) {
+            $events = [];
+            $data = Event::where('user_id', \Auth::id())->get();
+            if ($data->count()) {
+                foreach ($data as $key => $value) {
+                    $events[] = Calendar::event(
+                        $value->title,
+                        false,
+                        new \DateTime($value->start),
+                        new \DateTime($value->end),
+                        null,
+                        // Add color
+                        [
+                            'color' => '#000080',
+                            'textColor' => '#FFFFFF',
+                            'backgroundColor' => '#f8f9f9',
+                            'borderColor' => '#f8f9f9',
+                            'url' => '/meetings/detail/' . $value->meeting_id,
+                        ]
+                    );
+                }
             }
-        }
-        $calendar = Calendar::addEvents($events);
+            $calendar = Calendar::addEvents($events);
 
-        return view('dashboard', compact('calendar'));
+            return view('dashboard', compact('calendar'));
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
+
     }
 
-
-    public function list_request() {
-        $meeting_requests =  MeetingRequests::where('approved', 0)->latest()->get();
+    public function list_request()
+    {
+        $meeting_requests = MeetingRequests::where('approved', 0)->latest()->get();
         return view('list_of_requests', compact('meeting_requests'));
     }
 
     public function history_meeting()
     {
         if (auth()->user()->hasRole('customer')) {
-            $meeting_requests =  MeetingRequests::where('user_id', \Auth::id())->where('approved', 0)->latest()->get();
-            $meeting_history =  Meetings::where('user_id', \Auth::id())->orderBy('meeting_date', 'DESC')->get();     
+            $meeting_requests = MeetingRequests::where('user_id', \Auth::id())->where('approved', 0)->latest()->get();
+            $meeting_history = Meetings::where('user_id', \Auth::id())->orderBy('meeting_date', 'DESC')->get();
+        } else if (auth()->user()->hasRole('inspector')) {
+            $meeting_history = Meetings::where('host_id', \Auth::id())->orderBy('meeting_date', 'DESC')->get();
+            $meeting_requests = null;
         }
-        else if (auth()->user()->hasRole('inspector')) {
-            $meeting_history =  Meetings::where('host_id', \Auth::id())->orderBy('meeting_date', 'DESC')->get();    
-            $meeting_requests = null;  
-        }
-            
+
         return \View::make('history')
             ->with(compact('meeting_requests'))
             ->with(compact('meeting_history'));
     }
 
-
-    public function request_meeting(Request $request) {
+    public function request_meeting(Request $request)
+    {
         if (auth()->user()->hasRole('customer')) {
             $request->validate([
                 'name' => 'required',
                 'project_name' => 'required',
                 'datepicker' => 'required',
-                'time' => 'required'
+                'time' => 'required',
             ], [
                 'name.required' => 'Name is required',
                 'project_name.required' => 'Project Name is required',
                 'datepicker.required' => 'Request Date is required',
-                'time.required' => 'Request Time is required'
+                'time.required' => 'Request Time is required',
             ]);
-            
-            
+
             $input = $request->all();
             $req_meeting = new MeetingRequests();
             $req_meeting->user_id = \Auth::id();
@@ -115,19 +117,18 @@ class HomeController extends Controller
             $req_meeting->request_date = $combinedDT;
             $req_meeting->approved = 0;
             $req_meeting->save();
-    
-            return back()->with('success',  'Request Meeting has been saved');
-        }
-        else {
-            return back()->with('error',  'Not Authorized');
+
+            return back()->with('success', 'Request Meeting has been saved');
+        } else {
+            return back()->with('error', 'Not Authorized');
         }
     }
 
-    public function approve_meeting(Request $request) {
+    public function approve_meeting(Request $request)
+    {
         if (auth()->user()->hasRole('inspector')) {
             $input = $request->all();
             $meeting_request = MeetingRequests::findOrFail($input['id']);
-            
 
             $meeting = new Meetings();
             $meeting->user_id = $meeting_request->user_id;
@@ -140,22 +141,20 @@ class HomeController extends Controller
             $meeting->approved_date = now();
             $meeting->save();
 
-            
             $this->store($meeting_request, $meeting->id);
 
             $meeting_request->approved = 1;
             $meeting_request->save();
-            return back()->with('success',  'Request Meeting has been saved');
-
+            return back()->with('success', 'Request Meeting has been saved');
         }
     }
 
     public function store($meeting_request, $meeting_id)
     {
-        
-        $event= new Event();
-        $event->title=$meeting_request->project_name;
-        $event->start= new \DateTime($meeting_request->request_date);
+
+        $event = new Event();
+        $event->title = $meeting_request->project_name;
+        $event->start = new \DateTime($meeting_request->request_date);
         $end_date = new \DateTime($meeting_request->request_date);
         $event->end = $end_date->modify('+ 1 hour');
         $event->user_id = \Auth::id();

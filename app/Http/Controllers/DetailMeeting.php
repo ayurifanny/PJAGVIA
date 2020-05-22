@@ -28,7 +28,7 @@ class DetailMeeting extends Controller
                 ->with(compact('meeting_data'))
                 ->with(compact('picture_data'));
         } else {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+            return abort(403, 'Unauthorized action.');
         }
     }
 
