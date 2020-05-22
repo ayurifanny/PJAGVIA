@@ -31,7 +31,6 @@
               
               <div class="card-body">
                 <table class="table">
-                  <?php $key = 0; ?>
                   <thead>
                     <tr>
                       <th scope="col">No.</th>

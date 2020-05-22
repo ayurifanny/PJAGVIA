@@ -56,3 +56,4 @@ Route::get('storage/{filename}', function ($filename) {
 
 Route::post('add_remarks', 'PictureCanvasController@add_remarks');
 Route::post('add_drawing', 'PictureCanvasController@add_drawing');
+Route::post('canvas_option', 'PictureCanvasController@canvas_option');

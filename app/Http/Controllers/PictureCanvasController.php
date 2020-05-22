@@ -60,7 +60,7 @@ class PictureCanvasController extends Controller
     public function call_event($data)
     {
         $id = explode("/", $this->id);
-        event(new DrawLine($data, end($id)));
+        event(new DrawLine($data, null, end($id)));
         return;
     }
 
@@ -88,5 +88,17 @@ class PictureCanvasController extends Controller
         $picture = Uploads::findOrFail($_POST['id']);
         $picture->drawings = $_POST['drawing'];
         $picture->save();
+    }
+
+    public function canvas_option()
+    {
+        if ($_POST['option'] != "undo" && $_POST['option'] != "redo" && $_POST['option'] != "clear") {
+            $picture = Uploads::findOrFail($this->id);
+            $picture->remarks = $_POST['option'];
+            $picture->save();
+        }
+        $id = explode("/", $this->id);
+        event(new DrawLine(null, $_POST['option'], end($id)));
+        return;
     }
 }

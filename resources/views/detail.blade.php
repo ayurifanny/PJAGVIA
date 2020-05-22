@@ -62,19 +62,66 @@
                 <div class="card-header">
                     <h4>Uploaded Photo Information</h4>
                 </div>
+                
                 <div class="card-body">
+                    @if (auth()->user->hasRole("inspector")):
                     <form method="POST" action="/upload" id="upload" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value={{ request()->route('id') }}>
                         <input type="file" name="file[]" multiple accept="image/*">
                         <input type="submit" value="Submit">
                     </form>
+                    @endif
+
+                    <table>
+                        <tr>
+                            <th>No</th>
+                            <th>Product ID</th>
+                            <th>Picture</th>
+                            <th>Remarks</th>
+                            <th>Edited Picture</th>
+                            <th>Action</th>
+                        </tr>
+
+                        @foreach($picture_data as $key => $pic)
 
 
-                    @foreach($picture_data as $pic)
-                        <button type="button"
-                            onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'">{{ $pic->photo }}</button>
-                    @endforeach
+                            <tr>
+                                <td>{{ ++$key }}</td>
+                                <td>II-{{ str_pad($pic->meeting_id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($key, 3, '0', STR_PAD_LEFT) }}
+                                </td>
+                                <td><img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo) }}'
+                                        alt={{ $pic->photo }}></td>
+                                <td>{{ $pic->remarks }}</td>
+
+
+
+                                @if($pic->photo_edited == null):
+                                    <td></td>
+                                @else
+                                    <td><img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo_edited) }}'
+                                            alt={{ $pic->photo }}></td>
+                                @endif
+
+                                <td>
+                                    @if($pic->approved == -1):
+                                        @if(auth()->user()->hasRole('inspector')):
+                                            Not Reviewed Yet
+                                        @else
+                                        <button type="button"
+                                        onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'">{{ $pic->photo }}</button>
+                                        @endif
+                                        
+                                    @elseif($pic->approved == 0):
+                                        label decline
+                                    @elseif($pic->approved == 1):
+                                        label approve
+                                    @endif
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    </table>
                 </div>
             </div>
             <div class="card mt-4">

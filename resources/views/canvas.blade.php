@@ -17,8 +17,26 @@
     var channel = pusher.subscribe('channel-' + '{{request()->route("id")}}');
     channel.bind('my-event', function (data) {
         // alert(JSON.stringify(data));
-        var canvas = document.getElementById("canvas");
-        pad.newRedraw(data.stroke);
+        if (data.stroke !== null) {
+            var canvas = document.getElementById("canvas");
+            pad.newRedraw(data.stroke);
+        }
+        if (data.option !== null) {
+            if (data.option == "undo"){
+                pad.undo();
+            }
+            else if (data.option == "redo") {
+                pad.redo();
+            }
+            else if(data.option == "clear") {
+                pad.clear();
+            }
+            else {
+                var remarks = document.getElementById("par-remarks");
+                remarks.innerHTML = data.option;
+            }
+        }
+        
     });
 
 </script>
@@ -86,23 +104,22 @@
         </div>
 
         <div class="py-3">
-            <form method="POST" accept-charset="utf-8" name="form1">
-                <div class="form-group row justify-content-center">
-                    <label for="remarks" class="col-form-label text-md-right">
-                        <strong>Remarks : </strong>
-                    </label>
-                
-                    <div class="col-md-6">
-                        <input class="form-control" type="text" row="2" name="remarks" id="remarks">
-                        <input name="hidden_data" id='hidden_data' type="hidden" />
-                    </div>
-                </div>
-
-                <div class="row justify-content-center pt-2">
-                    <input type="button" class="btn btn-primary mr-5 status" id="approve" value="approve" />
-                    <input type="button" class="btn btn-secondary ml-1 status" id="decline" value="decline" />
-                </div>
+            @if (auth()->user()->hasRole('customer')):
+            <form method="POST" accept-charset="utf-8" name="form_remarks">
+                <label for="remarks">Remarks:</label>
+                <input type="text" name="remarks" id="remarks" value="{{$pic->remarks}}">
+                <input type="button" class="btn btn-primary status" id="save-remarks" onClick="send_option(1)" value="save" />
             </form>
+            
+            <form method="POST" accept-charset="utf-8" name="form1">
+                <input name="hidden_data" id='hidden_data' type="hidden" />
+                <input type="button" class="btn btn-primary status" id="approve" value="approve" />
+                <input type="button" class="btn btn-primary status" id="decline" value="decline" />
+            </form>
+            @else
+                <h4>Customer Remarks:</h4>
+                <p id="par-remarks">{{$pic->remarks}}</p> 
+            @endif
         </div>
     </div>
     
@@ -118,15 +135,29 @@
         '{{ "/storage/" . $pic->meeting_id . "/" . $pic->photo }}';
     var x = {!!$pic->drawings!!}
     base_image.onload = function () {
+        @if (auth()->user()->hasRole('customer'))
         pad = new Sketchpad(el, {
             aspectRatio: this.width / this.height,
             width: this.width,
             height: this.height,
             image: this.src,
+            enable_draw: true,
             data: x
         });
+        @else
+        pad = new Sketchpad(el, {
+            aspectRatio: this.width / this.height,
+            width: this.width,
+            height: this.height,
+            image: this.src,
+            enable_draw: false,
+            data: x
+        });
+        @endif
+
     }
 
+    @if (auth()->user()->hasRole('customer'))
     function setLineColor(e) {
         var color = e.target.value;
         if (!color.startsWith('#')) {
@@ -145,21 +176,27 @@
 
     // undo
     function undo() {
+        send_option(2)
         pad.undo();
     }
-    document.getElementById('undo').onclick = undo;
+    $('#undo').off('click').on('click', undo);
+    // document.getElementById('undo').onclick = undo;
 
     // redo
     function redo() {
+        send_option(3)
         pad.redo();
     }
-    document.getElementById('redo').onclick = redo;
+    $('#redo').off('click').on('click', redo);
+    // document.getElementById('redo').onclick = redo;
 
     // clear
     function clear() {
+        send_option(4)
         pad.clear();
     }
-    document.getElementById('clear').onclick = clear;
+    $('#clear').off('click').on('click', clear);
+    // document.getElementById('clear').onclick = clear;
 
     function toJSON() {
         var json_data = pad.toJSON();
@@ -181,7 +218,46 @@
                 }
             });
     }
-    
+    function send_option(data) {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var remarks = document.getElementById("remarks");
+        var opts
+        if (data == 1) {
+            opts = remarks.value  
+        }
+        else if (data == 2) {
+            opts = "undo"
+        }
+        else if (data == 3) {
+            opts = "redo"
+        }
+        else if (data == 4) {
+            opts = "clear"
+        }
+        $.ajax({
+                /* the route pointing to the post function */
+                url: '/canvas_option',
+                type: 'POST',
+                /* send the csrf-token and the input to the controller */
+                data: {
+                    _token: CSRF_TOKEN,
+                    option: opts,
+                    id: '{{ request()->route('id') }}'
+                },
+                dataType: 'JSON',
+                /* remind that 'data' is the response of the AjaxController */
+                success: function (data) {
+                    $(".writeinfo").append(data.msg);
+                    loading = false;
+                },
+                error: function () {
+                loading = false;
+              }
+            });
+        return;
+    }
+    @endif
+
     $(document).ready(function () {
         var canvas = document.getElementById('canvas');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
