@@ -46,7 +46,6 @@ class PictureCanvasController extends Controller
         $upload = Uploads::where('photo', $file_name)->where('meeting_id', $meeting_id)->get();
         $upload[0]->photo_edited = $fn[0] . '_edited.png';
         $upload[0]->save();
-        dd("stored");
         return;
     }
 
@@ -69,18 +68,20 @@ class PictureCanvasController extends Controller
         $picture = Uploads::findOrFail($this->id);
         $picture->remarks = $_POST['remarks'];
         switch ($_POST['status']) {
-            case 'approve':
+            case 'Approve':
                 $picture->approved = 1;
                 break;
 
-            case 'decline':
+            case 'Decline':
                 $picture->approved = 0;
                 break;
         }
 
         $picture->save();
         $this->save_picture($_POST['hidden_data'], $_POST['file_name'], $_POST['meeting_id']);
-        return;
+        header('Content-Type: application/json');
+        echo json_encode(array('foo' => 'bar'));
+        exit;
     }
 
     public function add_drawing()

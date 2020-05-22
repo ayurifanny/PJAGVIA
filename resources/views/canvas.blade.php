@@ -117,8 +117,8 @@
                         <div class="mt-2 float-right">
                             <form method="POST" accept-charset="utf-8" name="form1">
                                 <input name="hidden_data" id='hidden_data' type="hidden" />
-                                <input type="button" class="btn btn-secondary mr-2 status" id="decline" value="Decline" />
-                                <input type="button" class="btn btn-primary status" id="approve" value="Approve" />
+                                <input type="button" class="btn btn-secondary mr-2 status_picture" id="decline" value="Decline" />
+                                <input type="button" class="btn btn-primary status_picture" id="approve" value="Approve" />
                             </form>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
     </div>
 
     <div>
-        <div id="sketchpad" class="text-center pt-2">
+        <div id="sketchpad" class="text-center pt-2" style="position: relative;">
             <canvas id="canvas2" class="img-fluid" style="position: absolute; top: 0; z-index: -1;"></canvas>
         </div>
 
@@ -298,7 +298,7 @@
     $(document).ready(function () {
         var canvas = document.getElementById('canvas');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $(".status").click(function () {
+        $(".status_picture").click(function () {
             var canvas = document.getElementById("canvas");
             context = canvas.getContext('2d');
             var dataURL = canvas.toDataURL("image/png");
@@ -308,6 +308,7 @@
                 /* the route pointing to the post function */
                 url: '/add_remarks',
                 type: 'POST',
+                async: false,
                 /* send the csrf-token and the input to the controller */
                 data: {
                     _token: CSRF_TOKEN,
@@ -318,10 +319,14 @@
                     status:status,
                 },
                 dataType: 'JSON',
-                /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
-                    $(".writeinfo").append(data.msg);
-                }
+                    window.location.href = '/meetings/detail/'+'{{$pic->meeting_id}}'
+                },
+                error: function () {
+                    alert('Something happened')
+              }
+                /* remind that 'data' is the response of the AjaxController */
+                
             });
         });
 
