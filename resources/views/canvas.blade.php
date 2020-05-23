@@ -154,10 +154,10 @@
                             <div class="float-right">
                                 <input type="button" class="btn btn-primary status" id="save-remarks" onClick="send_option(1)" value="Send" />
                                 <span id="alertSuccess" class="valid-feedback ml-3" role="alert">
-                                    <strong>Successful to send</strong>
+                                    <strong>Sent!! </strong>
                                 </span>
                                 <span id="alertFailed" class="invalid-feedback ml-3" role="alert">
-                                    <strong>Failed to send</strong>
+                                    <strong>Failed!!</strong>
                                 </span>
                             </div>
                         </div>
