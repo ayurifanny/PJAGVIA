@@ -32,35 +32,42 @@ class HomeController extends Controller
             return view('request_meeting');
         } else if (auth()->user()->hasRole('inspector')) {
             return $this->show_calendar();
+        } else {
+            abort(403, 'Unauthorized action.');
         }
     }
 
     public function show_calendar()
     {
-        $events = [];
-        $data = Event::where('user_id', \Auth::id())->get();
-        if ($data->count()) {
-            foreach ($data as $key => $value) {
-                $events[] = Calendar::event(
-                    $value->title,
-                    false,
-                    new \DateTime($value->start),
-                    new \DateTime($value->end),
-                    null,
-                    // Add color
-                    [
-                        'color' => '#000080',
-                        'textColor' => '#FFFFFF',
-                        'backgroundColor' => '#f8f9f9',
-                        'borderColor' => '#f8f9f9',
-                        'url' => '/meetings/detail/' . $value->meeting_id,
-                    ]
-                );
+        if (auth()->user()->hasRole('inspector')) {
+            $events = [];
+            $data = Event::where('user_id', \Auth::id())->get();
+            if ($data->count()) {
+                foreach ($data as $key => $value) {
+                    $events[] = Calendar::event(
+                        $value->title,
+                        false,
+                        new \DateTime($value->start),
+                        new \DateTime($value->end),
+                        null,
+                        // Add color
+                        [
+                            'color' => '#000080',
+                            'textColor' => '#FFFFFF',
+                            'backgroundColor' => '#f8f9f9',
+                            'borderColor' => '#f8f9f9',
+                            'url' => '/meetings/detail/' . $value->meeting_id,
+                        ]
+                    );
+                }
             }
-        }
-        $calendar = Calendar::addEvents($events);
+            $calendar = Calendar::addEvents($events);
 
-        return view('dashboard', compact('calendar'));
+            return view('dashboard', compact('calendar'));
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
+
     }
 
     public function list_request()
@@ -139,7 +146,6 @@ class HomeController extends Controller
             $meeting_request->approved = 1;
             $meeting_request->save();
             return back()->with('success', 'Request Meeting has been saved');
-
         }
     }
 
