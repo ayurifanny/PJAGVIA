@@ -64,7 +64,7 @@
                 </div>
                 
                 <div class="card-body">
-                    @if (auth()->user->hasRole("inspector")):
+                    @if (auth()->user()->hasRole("inspector")):
                     <form method="POST" action="/upload" id="upload" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value={{ request()->route('id') }}>
