@@ -1,22 +1,38 @@
 select option {
-    margin: 40px;
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-  }
-  
-  select option[value="#000000"] {
-    background: rgba(0, 0, 0, 1);
-  }
-  
-  select option[value="#FF0000"] {
-    background: rgba(255, 0, 0, 1);
-  }
-  
-  select option[value="#00FF00"] {
-    background: rgba(0, 255, 0, 1);
-  }
-  
-  select option[value="#0000FF"] {
-    background: rgba(0, 0, 255, 1);
-  }
+  margin: 40px;
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+select option[value="#000000"] {
+  background: rgba(0, 0, 0, 1);
+}
+
+select option[value="#FF0000"] {
+  background: rgba(255, 0, 0, 1);
+}
+
+select option[value="#00FF00"] {
+  background: rgba(0, 255, 0, 1);
+}
+
+select option[value="#0000FF"] {
+  background: rgba(0, 0, 255, 1);
+}
+
+.menu-canvas{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.menu-bottom{
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+#alertSuccess{
+  display:none;
+}
+
+#activeZoom {
+  display:none;
+}
