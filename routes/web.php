@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', function () {
+    if (\Auth::check()) {
+        if (auth()->user()->hasRole('admin')) {
+            return redirect('/admin');;
+        }
+        return redirect('/home');
+    }
     return view('welcome');
-    // auth()->user()->assignRole('customer');
 });
 
 Auth::routes();
@@ -47,6 +52,7 @@ Route::post('save_picture', 'PictureCanvasController@save_picture');
 Route::post('send_stroke', 'PictureCanvasController@send_stroke');
 
 Route::get('test1', 'PictureCanvasController@call_event');
+Route::get('admin', 'AdminController@index');
 
 Route::post('upload', 'UploadsController@upload');
 
@@ -57,3 +63,5 @@ Route::get('storage/{filename}', function ($filename) {
 Route::post('add_remarks', 'PictureCanvasController@add_remarks');
 Route::post('add_drawing', 'PictureCanvasController@add_drawing');
 Route::post('canvas_option', 'PictureCanvasController@canvas_option');
+Route::post('update_role', 'AdminController@update');
+Route::delete('users/{id}', 'AdminController@destroy');
