@@ -65,6 +65,31 @@
                 </div>
                 
                 <div class="card-body">
+                    @if (auth()->user()->hasRole("inspector"))
+                    <form method="POST" action="/upload" id="upload" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="border border-custom mx-1 mb-3 p-1">
+                            <div class="input-group my-3">
+                                <input type="hidden" name="id" value={{ request()->route('id') }}>
+                                
+                                <label class="col-form-label text-md-right ml-3">
+                                    Add Picture(s) :
+                                </label>
+                                
+                                <div class="col">
+                                    <span class="btn btn-default btn-file">
+                                        <input id="file" name="file[]" type="file" class="file m5-5" multiple accept="image/*" data-show-upload="true" data-show-caption="true">
+                                    </span>
+                                </div>
+                                
+                                <div class="float-right mr-3">
+                                    <button class="btn btn-success" type="submit">Upload</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    @endif
                     <table class="table">
                         <thead>
                             <tr>
@@ -109,7 +134,7 @@
                                                 </button>
                                             @endif
                                         @elseif($pic->approved == 0)
-                                            <span class="label label-danger p-2 text-white">Decline</span>
+                                            <span class="label label-danger p-2 text-white">Declined</span>
                                         @elseif($pic->approved == 1)
                                             <span class="label label-success p-2 text-white">Approved</span>
                                         @endif
@@ -118,17 +143,6 @@
                             @endforeach
                         </tbody>
                     </table>
-
-                    @if (auth()->user()->hasRole("inspector"))
-                    <form method="POST" action="/upload" id="upload" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="input-group my-3">
-                            <input type="hidden" name="id" value={{ request()->route('id') }}>
-                            <input type="file" name="file[]" multiple accept="image/*">
-                            <button class="btn btn-success" type="submit">Upload</button>
-                        </div>
-                        </form>
-                    @endif
                 </div>
             </div>
         </div>

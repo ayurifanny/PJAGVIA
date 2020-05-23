@@ -8650,6 +8650,11 @@ button.bg-dark:focus {
   border-color: #f8f9fa !important;
 }
 
+.border-custom {
+  color: #212529;
+  border-color: #dae0e5;
+}
+
 .border-dark {
   border-color: #343a40 !important;
 }

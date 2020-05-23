@@ -36,7 +36,6 @@
                 remarks.innerHTML = data.option;
             }
         }
-        
     });
 
 </script>
@@ -57,6 +56,7 @@
 
 @section('content')
 <div class="container">
+    @if(auth()->user()->hasRole('customer'))
     <div class="row menu-canvas mx-1 my-2 py-3">
         <div class="pr-3 border-right">
             <button type="button" class="btn btn-light" id="undo" data-toggle="tooltip" data-placement="bottom" title="Undo">
@@ -69,14 +69,9 @@
         </div>
 
         <div class="px-3 border-right">
-            <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Eraser" id="eraser-button">
-                <i class='fas fa-eraser'></i>
-            </button>
-        </div>
-
-        <div class="px-3 border-right">
             <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Zoom In" id="zoom-button">
-                <i class='fas fa-search-plus'></i>
+                <i class='fas fa-search-plus' id="activeLine"></i>
+                <i class='fas fa-pencil-alt' id="activeZoom"></i>
             </button>
         </div>
 
@@ -126,6 +121,16 @@
             </div>
         </div>
     </div>
+    @else
+    <div class="row justify-content-center my-4">
+        <div class="col-md-11">
+            <div class="row border border-custom p-1">
+                <h5 class="pr-2">Customer Remarks : </h5>
+                <span id="par-remarks">{{$pic->remarks}}</span>
+            </div>
+        </div>
+    </div>
+    @endif
 
     <div>
         <div id="sketchpad" class="text-center pt-2" style="position: relative;">
@@ -148,14 +153,17 @@
 
                             <div class="float-right">
                                 <input type="button" class="btn btn-primary status" id="save-remarks" onClick="send_option(1)" value="Send" />
+                                <span id="alertSuccess" class="valid-feedback ml-3" role="alert">
+                                    <strong>Successful to send</strong>
+                                </span>
+                                <span id="alertFailed" class="invalid-feedback ml-3" role="alert">
+                                    <strong>Failed to send</strong>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-            @else
-                <h4>Customer Remarks:</h4>
-                <p id="par-remarks">{{$pic->remarks}}</p> 
             @endif
         </div>
     </div>
@@ -271,7 +279,8 @@
         else if (data == 4) {
             opts = "clear"
         }
-        $.ajax({
+        $.ajax(
+            {
                 /* the route pointing to the post function */
                 url: '/canvas_option',
                 type: 'POST',
@@ -286,10 +295,16 @@
                 success: function (data) {
                     $(".writeinfo").append(data.msg);
                     loading = false;
+                    $("#alertFailed").fadeTo(2000, 500).slideUp(0, function(){
+                        $("#alertFailed").alert('close');
+                    });
                 },
                 error: function () {
-                loading = false;
-              }
+                    loading = false;
+                    $("#alertSuccess").fadeTo(2000, 500).slideUp(0, function(){
+                        $("#alertSuccess").alert('close');
+                    });
+                }
             });
         return;
     }
@@ -333,9 +348,15 @@
         $("#zoom-button").click(function () { 
             if (canvas2.style.zIndex > 0) {
                 canvas2.style.zIndex = -1;
+                $("#activeLine").show();
+                $("#activeZoom").hide();
+                // $(this).find("i").removeClass("fas fa-pencil-alt").addClass("fas fa-search-plus");
             }
             else {
                 canvas2.style.zIndex = 1;
+                // this.innerHTML="unzoom";
+                $("#activeLine").hide();
+                $("#activeZoom").show();
             } 
         });
     });
