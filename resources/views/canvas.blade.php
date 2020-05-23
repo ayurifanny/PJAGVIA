@@ -1,5 +1,27 @@
 @extends('layouts.app')
 
+@section('navbar')
+@if(auth()->user()->hasRole('customer'))
+    <li class="nav-item mb-3">
+        <a class="nav-link d-inline-block" href="/home"><i class="fas fa-calendar mr-2"></i>Request Inspection</a>
+    </li>
+    <li class="nav-item mb-3">
+        <a class="nav-link d-inline-block" href="/history_meeting"><i class="fas fa-history mr-2"></i>History</a>
+    </li>
+@elseif(auth()->user()->hasRole('inspector'))
+    <li class="nav-item mb-3">
+        <a class="nav-link" href="/home"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>
+    </li>
+    <li class="nav-item mb-3">
+        <a class="nav-link" href="/home"><i class="fas fa-list-ul mr-2"></i>List of Inspection Request</a>
+    </li>
+    <li class="nav-item mb-3">
+        <a class="nav-link" href="/history_meeting"><i class="fas fa-history mr-2"></i>History</a>
+    </li>
+@endif
+@endsection
+
+
 @section('styles')
 <link href="{{ asset('css/canvas.css') }}" rel="stylesheet">
 @endsection
@@ -36,7 +58,6 @@
                 remarks.innerHTML = data.option;
             }
         }
-        
     });
 
 </script>
@@ -44,83 +65,127 @@
 @endsection
 @endif
 
-@section('navbar')
-@if(auth()->user()->hasRole('customer'))
-    <li class="nav-item">
-        <a class="nav-link" href="/home">Request Meeting</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/history_meeting">History</a>
-    </li>
-@endif
-@endsection
 
 @section('content')
 <div class="container">
-    @if (auth()->user()->hasRole('customer')):
-    <div class="row">
-        <div class="col-sm">
-            <div class="form-group">
-                <label for="line-color-input">Set Line Color</label>
-                <select id="line-color-input" class="form-control">
-                    <option value="#000000">Black</option>
-                    <option value="#FF0000">Red</option>
-                    <option value="#00FF00">Green</option>
-                    <option value="#0000FF">Blue</option>
-                </select>
+    @if(auth()->user()->hasRole('customer'))
+    <div class="row menu-canvas mx-1 my-2 py-3">
+        <div class="pr-3 border-right">
+            <button type="button" class="btn btn-light" id="undo" data-toggle="tooltip" data-placement="bottom" title="Undo">
+                <i class='fas fa-undo-alt'></i>
+            </button>
+        
+            <button class="btn btn-light" id="redo" data-toggle="tooltip" data-placement="bottom" title="Redo">
+                <i class='fas fa-redo-alt'></i>
+            </button>
+        </div>
+
+        <div class="px-3 border-right">
+            <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Zoom In" id="zoom-button">
+                <i class='fas fa-search-plus' id="activeLine"></i>
+                <i class='fas fa-pencil-alt' id="activeZoom"></i>
+            </button>
+        </div>
+
+        <div class="px-3 border-right">
+            <select id="line-color-input" class="form-control" data-toggle="tooltip" data-placement="bottom" title="Line Color">
+                <option value="#000000">Black</option>
+                <option value="#FF0000">Red</option>
+                <option value="#00FF00">Green</option>
+                <option value="#0000FF">Blue</option>
+            </select>
+        </div>
+
+        <div class="pl-3">
+            <input class="form-control col-md-4" type="number" value="5" id="line-size-input" data-toggle="tooltip" data-placement="bottom" title="Line Size">
+        </div>
+
+        <div class="ml-auto float-right">
+            <button class="btn btn-secondary mr-3" id="clear">Clear</button>
+        
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+           Done
+            </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-primary" id="exampleModalLongTitle">Confirm photo status</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-dark">Approve this photo for inspection?</p>
+                        <div class="mt-2 float-right">
+                            <form method="POST" accept-charset="utf-8" name="form1">
+                                <input name="hidden_data" id='hidden_data' type="hidden" />
+                                <input type="button" class="btn btn-secondary mr-2 status_picture" id="decline" value="Decline" />
+                                <input type="button" class="btn btn-primary status_picture" id="approve" value="Approve" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-sm">
-            <div class="form-group">
-                <label for="line-size-input">Set Line Size</label>
-                <input class="form-control" type="number" value="5" id="line-size-input">
+    </div>
+    @else
+    <div class="row justify-content-center my-4">
+        <div class="col-md-11">
+            <div class="row border border-custom p-1">
+                <h5 class="pr-2">Customer Remarks : </h5>
+                <span id="par-remarks">{{$pic->remarks}}</span>
             </div>
-        </div>
-
-        <div class="col-sm">
-            <button class="btn btn-dark" id="undo">Undo</button>
-        </div>
-        <div class="col-sm">
-
-            <button class="btn btn-dark" id="redo">Redo</button>
-
-        </div>
-        <div class="col-sm">
-            <button class="btn btn-dark" id="clear">Clear</button>
         </div>
     </div>
     @endif
-    <div class="two-thirds column">
-        <div id="sketchpad" style="position: relative;">
-            <canvas id="canvas2" style="position: absolute; left: 0; top: 0; z-index: -1;"></canvas>
+
+    <div>
+        <div id="sketchpad" class="text-center pt-2" style="position: relative;">
+            <canvas id="canvas2" class="img-fluid" style="position: absolute; top: 1; z-index: -1;"></canvas>
         </div>
-        @if (auth()->user()->hasRole('customer')):
-        <form method="POST" accept-charset="utf-8" name="form_remarks">
-            <label for="remarks">Remarks:</label>
-            <input type="text" name="remarks" id="remarks" value="{{$pic->remarks}}">
-            <input type="button" class="btn btn-primary status" id="save-remarks" onClick="send_option(1)" value="save" />
-        </form>
-        
-        <form method="POST" accept-charset="utf-8" name="form1">
-            <input name="hidden_data" id='hidden_data' type="hidden" />
-            <input type="button" class="btn btn-primary status" id="approve" value="approve" />
-            <input type="button" class="btn btn-primary status" id="decline" value="decline" />
-        </form>
-        @else
-        <h4>Customer Remarks:</h4>
-        <p id="par-remarks">{{$pic->remarks}}</p> 
-        @endif
+
+        <div class="py-3">
+            @if (auth()->user()->hasRole('customer'))
+            <form method="POST" accept-charset="utf-8" name="form_remarks">
+                <div class="row justify-content-center">    
+                    <div class="col-md-9">
+                        <div class="form-group row">
+                            <label for="remarks" class="col-form-label text-md-right">
+                                Remarks:
+                            </label>
+
+                            <div class="col">
+                                <input type="text" class="form-control mr-5" row="2" name="remarks" id="remarks" value="{{$pic->remarks}}">
+                            </div>
+
+                            <div class="float-right">
+                                <input type="button" class="btn btn-primary status" id="save-remarks" onClick="send_option(1)" value="Send" />
+                                <span id="alertSuccess" class="valid-feedback ml-3" role="alert">
+                                    <strong>Sent!! </strong>
+                                </span>
+                                <span id="alertFailed" class="invalid-feedback ml-3" role="alert">
+                                    <strong>Failed!!</strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            @endif
+        </div>
     </div>
-    <button id="zoom-button">zoom</button>
+    
 </div>
 @endsection
 
 @section('additional_script')
-
-
 <script src="{{ asset('js/canvas.js') }}"></script>
 <script>
-
     var el = document.getElementById('sketchpad');
     base_image = new Image();
     base_image.src =
@@ -226,7 +291,8 @@
         else if (data == 4) {
             opts = "clear"
         }
-        $.ajax({
+        $.ajax(
+            {
                 /* the route pointing to the post function */
                 url: '/canvas_option',
                 type: 'POST',
@@ -241,24 +307,25 @@
                 success: function (data) {
                     $(".writeinfo").append(data.msg);
                     loading = false;
+                    $("#alertFailed").fadeTo(2000, 500).slideUp(0, function(){
+                        $("#alertFailed").alert('close');
+                    });
                 },
                 error: function () {
-                loading = false;
-              }
+                    loading = false;
+                    $("#alertSuccess").fadeTo(2000, 500).slideUp(0, function(){
+                        $("#alertSuccess").alert('close');
+                    });
+                }
             });
         return;
     }
-    
-
-    
-
-    
-
     @endif
+
     $(document).ready(function () {
         var canvas = document.getElementById('canvas');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-        $(".status").click(function () {
+        $(".status_picture").click(function () {
             var canvas = document.getElementById("canvas");
             context = canvas.getContext('2d');
             var dataURL = canvas.toDataURL("image/png");
@@ -268,6 +335,7 @@
                 /* the route pointing to the post function */
                 url: '/add_remarks',
                 type: 'POST',
+                async: false,
                 /* send the csrf-token and the input to the controller */
                 data: {
                     _token: CSRF_TOKEN,
@@ -278,27 +346,31 @@
                     status:status,
                 },
                 dataType: 'JSON',
-                /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
-                    $(".writeinfo").append(data.msg);
-                }
+                    window.location.href = '/meetings/detail/'+'{{$pic->meeting_id}}'
+                },
+                error: function () {
+                    alert('Something happened')
+              }
+                /* remind that 'data' is the response of the AjaxController */
+                
             });
         });
 
-        $("#zoom-button").click(function () {
-            
+        $("#zoom-button").click(function () { 
             if (canvas2.style.zIndex > 0) {
                 canvas2.style.zIndex = -1;
-                this.innerHTML="zoom";
+                $("#activeLine").show();
+                $("#activeZoom").hide();
+                // $(this).find("i").removeClass("fas fa-pencil-alt").addClass("fas fa-search-plus");
             }
             else {
                 canvas2.style.zIndex = 1;
-                this.innerHTML="unzoom";
-            }
-            
+                // this.innerHTML="unzoom";
+                $("#activeLine").hide();
+                $("#activeZoom").show();
+            } 
         });
-
-
     });
 
 </script>
