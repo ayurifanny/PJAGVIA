@@ -89,7 +89,7 @@
                       @if (auth()->user()->hasRole('inspector'))
                         <td>{{$meeting->customer_name}}</td>
                       @else   
-                      <td>{{$meeting->user()->name}}</td>
+                      <td>{{$meeting->user->name}}</td>
                       @endif
                       
                       <?php $dt = strtotime($meeting->meeting_date); ?>
