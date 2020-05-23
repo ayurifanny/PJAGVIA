@@ -130,7 +130,7 @@ class HomeController extends Controller
             $meeting->meeting_date = $meeting_request->request_date;
             $meeting->host_id = \Auth::id();
             $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
-            $meeting->meeting_link = env('JISTI_URL', '35.170.24.185') . '/' . substr(str_shuffle($permitted_chars), 0, 10);
+            $meeting->meeting_link = 'http://' . env('JISTI_URL', '35.170.24.185') . '/' . substr(str_shuffle($permitted_chars), 0, 10);
             $meeting->approved_date = now();
             $meeting->save();
 
