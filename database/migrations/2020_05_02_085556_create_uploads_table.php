@@ -18,14 +18,12 @@ class CreateUploadsTable extends Migration
             $table->unsignedBigInteger('meeting_id');
             $table->foreign('meeting_id')->references('id')->on('meetings')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->string('photo');
             $table->string('remarks')->nullable();
             $table->tinyInteger('type');
             $table->tinyInteger('approved');
             $table->timestamps();
 
-            
         });
     }
 

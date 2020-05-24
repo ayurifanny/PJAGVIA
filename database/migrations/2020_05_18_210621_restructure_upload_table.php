@@ -15,7 +15,6 @@ class RestructureUploadTable extends Migration
     {
         //
         Schema::table('uploads', function (Blueprint $table) {
-            $table->dropForeign('uploads_user_id_foreign');
             $table->dropColumn('user_id');
             $table->dropColumn('type');
             $table->string('photo_edited')->nullable()->after('photo');
@@ -35,8 +34,8 @@ class RestructureUploadTable extends Migration
         //
         Schema::table('uploads', function (Blueprint $table) {
             //
+
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->tinyInteger('type');
             // $table->renameColumn('status', 'approved');
             $table->dropColumn('photo_edited');
