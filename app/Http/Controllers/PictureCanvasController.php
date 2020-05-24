@@ -80,7 +80,7 @@ class PictureCanvasController extends Controller
         $picture->save();
         $this->save_picture($_POST['hidden_data'], $_POST['file_name'], $_POST['meeting_id']);
         header('Content-Type: application/json');
-        echo json_encode(array('foo' => 'bar'));
+        echo json_encode(array('message' => 'success'));
         exit;
     }
 
@@ -100,6 +100,8 @@ class PictureCanvasController extends Controller
         }
         $id = explode("/", $this->id);
         event(new DrawLine(null, $_POST['option'], end($id)));
-        return;
+        header('Content-Type: application/json');
+        echo json_encode(array('message' => 'success'));
+        exit;
     }
 }

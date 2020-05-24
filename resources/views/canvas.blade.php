@@ -314,16 +314,17 @@
                 success: function (data) {
                     $(".writeinfo").append(data.msg);
                     loading = false;
-                    $("#alertFailed").fadeTo(2000, 500).slideUp(0, function(){
-                        $("#alertFailed").alert('close');
-                    });
-                },
-                error: function () {
-                    loading = false;
                     $("#alertSuccess").fadeTo(2000, 500).slideUp(0, function(){
                         $("#alertSuccess").alert('close');
                     });
-                }
+                    
+                },
+                error: function () {
+                    loading = false;
+                    $("#alertFailed").fadeTo(2000, 500).slideUp(0, function(){
+                        $("#alertFailed").alert('close');
+                    });
+                }   
             });
         return;
     }
