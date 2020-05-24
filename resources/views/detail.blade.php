@@ -126,7 +126,9 @@
                                     <td>
                                         @if($pic->approved == -1)
                                             @if(auth()->user()->hasRole('inspector'))
-                                                Not Reviewed Yet
+                                                <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Detail Picture"
+                                                    onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'"> In Review
+                                                </button>
                                             @else
                                                 <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Edit"
                                                     onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'">

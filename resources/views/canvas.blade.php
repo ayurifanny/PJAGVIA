@@ -68,6 +68,12 @@
 
 @section('content')
 <div class="container">
+    <div class="row justify-content-center my-4">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" onclick='window.location.href="/meetings/detail/{{$pic->meeting_id}}"'>Back to Inspection Detail</button>
+        </div>
+    </div>
+    
     @if(auth()->user()->hasRole('customer'))
     <div class="row menu-canvas mx-1 my-2 py-3">
         <div class="pr-3 border-right">
@@ -134,11 +140,12 @@
         </div>
     </div>
     @else
+    
     <div class="row justify-content-center my-4">
         <div class="col-md-11">
             <div class="row border border-custom p-1">
-                <h5 class="pr-2">Customer Remarks : </h5>
-                <span id="par-remarks">{{$pic->remarks}}</span>
+                <h5 class="pr-2"><strong>Customer Remarks :  </strong></h5>
+                <span id="par-remarks"><h5>{{$pic->remarks}}</h5></span>
             </div>
         </div>
     </div>
