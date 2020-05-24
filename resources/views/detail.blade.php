@@ -128,6 +128,12 @@
                                                 <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Detail Picture"
                                                     onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'"> In Review
                                                 </button>
+                                                <span> <form action="/photo/{{$pic->id}}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                                </form>
+                                            </span>
                                             @else
                                                 <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Edit"
                                                     onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'">

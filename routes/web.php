@@ -65,3 +65,5 @@ Route::post('add_drawing', 'PictureCanvasController@add_drawing');
 Route::post('canvas_option', 'PictureCanvasController@canvas_option');
 Route::post('update_role', 'AdminController@update');
 Route::delete('users/{id}', 'AdminController@destroy');
+
+Route::delete('photo/{id}', 'UploadsController@destroy');

@@ -80,9 +80,17 @@ class UploadsController extends Controller
      * @param  \App\Uploads  $uploads
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Uploads $uploads)
+    public function destroy($id)
     {
-        //
+        if (\Auth::user()->hasRole('inspector')) {
+            $upload = Uploads::findOrFail($id);
+            if ($upload->approved == -1) {
+                Storage::disk('public')->delete($upload->meeting_id . "/" . $upload->photo);
+                $upload->delete();
+                return back()->with('success', 'Picture Deleted deleted');
+            }
+        }
+        abort(403, 'Unauthorized action.');
     }
 
     public function upload(Request $request)
