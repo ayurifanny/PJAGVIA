@@ -56,7 +56,7 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
-    'jitsi_url' => 'http://meet.jit.si',
+    'jitsi_url' => 'meet.jit.si',
 
     /*
     |--------------------------------------------------------------------------
