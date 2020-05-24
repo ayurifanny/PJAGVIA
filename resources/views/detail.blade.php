@@ -106,8 +106,7 @@
                             @foreach($picture_data as $key => $pic)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td>II-{{ str_pad($pic->meeting_id, 3, '0', STR_PAD_LEFT) }}-{{ str_pad($key, 3, '0', STR_PAD_LEFT) }}
-                                    </td>
+                                    <td>{{ $pic->photo }}</td>
                                     <td>
                                         <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo) }}'
                                     class="img-fluid img-thumbnail" alt={{ $pic->photo }}>

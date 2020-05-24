@@ -89,23 +89,35 @@ class UploadsController extends Controller
     {
         $files = $request->file('file');
         if (!empty($files)):
+            $x = 0;
             foreach ($files as $file):
+                $x++;
+                $filename = "II-" . str_pad($request['id'], 3, '0', STR_PAD_LEFT) . "-" . $file->getClientOriginalName();
                 $image = Image::make($file);
-                if ($image->height() > 1000 || $image->width() > 1000) {
+
+                if ($image->width() > 1000) {
                     $image->resize(1000, null, function ($constraint) {
                         $constraint->aspectRatio();
                     });
                     $image->stream();
-                }
+                    Storage::disk('public')->put($request['id'] . '/' . $filename, $image);
+                } else if ($image->height() > 1000) {
+                $image->resize(null, 1000, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $image->stream();
+                Storage::disk('public')->put($request['id'] . '/' . $filename, $image);
+            } else {
+                Storage::disk('public')->put($request['id'] . '/' . $filename, file_get_contents($file));
+            }
 
-                Storage::disk('public')->put($request['id'] . '/' . $file->getClientOriginalName(), $image);
+            $upload = new Uploads();
+            $upload->meeting_id = $request['id'];
+            $upload->photo = $filename;
+            $upload->approved = -1;
+            $upload->save();
 
-                $upload = new Uploads();
-                $upload->meeting_id = $request['id'];
-                $upload->photo = $file->getClientOriginalName();
-                $upload->approved = -1;
-                $upload->save();
-            endforeach;
+        endforeach;
         endif;
 
         return back();

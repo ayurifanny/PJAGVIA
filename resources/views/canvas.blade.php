@@ -69,8 +69,8 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center my-4">
-        <div class="col-md-12">
-            <button type="button" class="btn btn-primary" onclick='window.location.href="/meetings/detail/{{$pic->meeting_id}}"'>Back to Inspection Detail</button>
+        <div class="col-md">
+            <button type="button" class="btn btn-primary" onclick='window.location.href="/meetings/detail/{{$pic->meeting_id}}"'>Back to Inspection Detail</button> {{$pic->photo}}
         </div>
     </div>
     
@@ -142,10 +142,10 @@
     @else
     
     <div class="row justify-content-center my-4">
-        <div class="col-md-11">
-            <div class="row border border-custom p-1">
+        <div class="col-md">
+            <div class="row border border-custom p-2">
                 <h5 class="pr-2"><strong>Customer Remarks :  </strong></h5>
-                <span id="par-remarks"><h5>{{$pic->remarks}}</h5></span>
+                <span id="par-remarks"><h3>{{$pic->remarks}}</h3></span>
             </div>
         </div>
     </div>
