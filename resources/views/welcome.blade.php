@@ -90,7 +90,7 @@
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <div class="form-group justify-content-center">
-                                        <label for="email"><strong>{{ __('E-Mail Address') }}</strong></label>
+                                        <label for="email"><strong>{{ __('E-mail Address') }}</strong></label>
 
                                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
@@ -104,13 +104,13 @@
                                     <div class="form-group">
                                         <label for="password">{{ __('Password') }}</label>
                                         
-                                        <span class="float-right">
+                                        <!-- <span class="float-right">
                                             @if (Route::has('password.request'))
                                                 <a class="label-link" href="{{ route('password.request') }}">
                                                     {{ __('Forgot Your Password?') }}
                                                 </a>
                                             @endif
-                                        </span>
+                                        </span> -->
                                             
                                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
