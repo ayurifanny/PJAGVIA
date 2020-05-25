@@ -40,8 +40,10 @@ class DetailMeeting extends Controller
 
     public function download_pdf($id)
     {
-        $data = ['title' => 'Welcome to ItSolutionStuff.com'];
-        $pdf = PDF::loadView('pdf', $data);
+        $meeting_data = Meetings::findOrFail($id);
+        $picture_data = Uploads::where('meeting_id', $id)->get();
+
+        $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'picture_data' => $picture_data]);
 
         return $pdf->download('itsolutionstuff.pdf');
     }
