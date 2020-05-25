@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Meetings;
 use App\Uploads;
 use Illuminate\Http\Request;
+use PDF;
 
 class DetailMeeting extends Controller
 {
@@ -35,6 +36,14 @@ class DetailMeeting extends Controller
     public function is_user_authorized($detail)
     {
         return (auth()->user()->hasRole('customer') && $detail->user_id == \Auth::id()) || (auth()->user()->hasRole('inspector') && $detail->host_id == \Auth::id());
+    }
+
+    public function download_pdf($id)
+    {
+        $data = ['title' => 'Welcome to ItSolutionStuff.com'];
+        $pdf = PDF::loadView('pdf', $data);
+
+        return $pdf->download('itsolutionstuff.pdf');
     }
 
     /**

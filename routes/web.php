@@ -67,3 +67,5 @@ Route::post('update_role', 'AdminController@update');
 Route::delete('users/{id}', 'AdminController@destroy');
 
 Route::delete('photo/{id}', 'UploadsController@destroy');
+
+Route::get('/download_pdf/{id}', 'DetailMeeting@download_pdf');
