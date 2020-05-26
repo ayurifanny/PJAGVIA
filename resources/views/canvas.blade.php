@@ -151,9 +151,9 @@
     </div>
     @endif
 
-    <div>
+    <div class="justify-content-center">
         <div id="sketchpad" class="text-center pt-2" style="position: relative;">
-            <canvas id="canvas2" class="img-fluid" style="position: absolute; top: 1; z-index: -1;"></canvas>
+            <canvas id="canvas2" class="img-fluid" style="position: absolute; z-index: -1; display:none;"></canvas>
         </div>
 
         <div class="py-3">
@@ -366,8 +366,14 @@
         });
 
         $("#zoom-button").click(function () { 
+            var canvas = document.getElementById("canvas");
             if (canvas2.style.zIndex > 0) {
+                
                 canvas2.style.zIndex = -1;
+                canvas2.style.display = "none";
+                canvas2.style.top = canvas.style.top;
+                canvas2.style.left = canvas.style.left;
+                
                 $("#activeLine").show();
                 $("#activeZoom").hide();
                 // $(this).find("i").removeClass("fas fa-pencil-alt").addClass("fas fa-search-plus");
@@ -375,6 +381,11 @@
             else {
                 canvas2.style.zIndex = 1;
                 // this.innerHTML="unzoom";
+                canvas2.style.display = "block";
+                canvas2.style.top = "50%";
+                canvas2.style.left = "50%";
+                canvas2.style.transform = "translate(-50%, -50%)";
+                
                 $("#activeLine").hide();
                 $("#activeZoom").show();
             } 
