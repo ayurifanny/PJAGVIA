@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Reports;
-use Illuminate\Http\Request;
 use App\Meetings;
+use App\Reports;
 use App\Uploads;
+use Illuminate\Http\Request;
 
 class ReportsController extends Controller
 {
@@ -14,7 +14,7 @@ class ReportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
         //
         return view('report');

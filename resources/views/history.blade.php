@@ -96,7 +96,7 @@
                       <td>{{date('M d, Y', $dt)}}</td>
                       <td>{{date('H:i:s A', $dt)}}</td>
                       <td>{{$meeting->created_at}}</td>
-                      <td><a href='#'>view</a></td>
+                      <td><a href='/report/{{$meeting->id}}'>view</a></td>
                     </tr>
                   @endforeach
                 </tbody>
