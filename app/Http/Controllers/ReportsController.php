@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Reports;
 use Illuminate\Http\Request;
+use App\Meetings;
+use App\Uploads;
 
 class ReportsController extends Controller
 {
@@ -15,6 +17,7 @@ class ReportsController extends Controller
     public function index()
     {
         //
+        return view('report');
     }
 
     /**
@@ -81,5 +84,15 @@ class ReportsController extends Controller
     public function destroy(Reports $reports)
     {
         //
+    }
+
+    public function download_pdf($id)
+    {
+        $meeting_data = Meetings::findOrFail($id);
+        $picture_data = Uploads::where('meeting_id', $id)->get();
+
+        $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'picture_data' => $picture_data]);
+
+        return $pdf->download('itsolutionstuff.pdf');
     }
 }

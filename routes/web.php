@@ -68,4 +68,4 @@ Route::delete('users/{id}', 'AdminController@destroy');
 
 Route::delete('photo/{id}', 'UploadsController@destroy');
 
-Route::get('/download_pdf/{id}', 'DetailMeeting@download_pdf');
+Route::get('/download_pdf/{id}', 'ReportsController@download_pdf');

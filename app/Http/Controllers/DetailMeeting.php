@@ -38,16 +38,6 @@ class DetailMeeting extends Controller
         return (auth()->user()->hasRole('customer') && $detail->user_id == \Auth::id()) || (auth()->user()->hasRole('inspector') && $detail->host_id == \Auth::id());
     }
 
-    public function download_pdf($id)
-    {
-        $meeting_data = Meetings::findOrFail($id);
-        $picture_data = Uploads::where('meeting_id', $id)->get();
-
-        $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'picture_data' => $picture_data]);
-
-        return $pdf->download('itsolutionstuff.pdf');
-    }
-
     /**
      * Handle the incoming request.
      *
