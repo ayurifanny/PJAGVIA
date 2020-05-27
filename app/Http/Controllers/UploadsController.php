@@ -174,6 +174,8 @@ class UploadsController extends Controller
 
         endif;
 
-        return back();
+        header('Content-Type: application/json');
+        echo json_encode(array('message' => 'success'));
+        exit;
     }
 }

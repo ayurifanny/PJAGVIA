@@ -122,6 +122,8 @@ class ReportsController extends Controller
             $report->customer_signature = $filename;
         }
         $report->save();
-        return;
+        header('Content-Type: application/json');
+        echo json_encode(array('message' => 'success'));
+        exit;
     }
 }
