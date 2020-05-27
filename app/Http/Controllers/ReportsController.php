@@ -6,6 +6,7 @@ use App\Meetings;
 use App\Reports;
 use App\Uploads;
 use Illuminate\Http\Request;
+use Storage;
 
 class ReportsController extends Controller
 {
@@ -94,5 +95,33 @@ class ReportsController extends Controller
         $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'picture_data' => $picture_data]);
 
         return $pdf->download('itsolutionstuff.pdf');
+    }
+
+    public function save_sign(Request $request)
+    {
+        $report = Reports::findOrFail($request['id']);
+        $role = $request['role'];
+
+        if ($role == 'inspector') {
+            $user = $report->host_id;
+        } else {
+            $user = $report->user_id;
+        }
+
+        $img = $request['hidden_data'];
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+        $filename = 'sign-' . $request['id'] . '.png';
+
+        Storage::disk('public')->put('sign/' . $user . '/' . $filename, $data);
+
+        if ($role == 'inspector') {
+            $report->inspector_signature = $filename;
+        } else {
+            $report->customer_signature = $filename;
+        }
+        $report->save();
+        return;
     }
 }

@@ -96,7 +96,11 @@
                       <td>{{date('M d, Y', $dt)}}</td>
                       <td>{{date('H:i:s A', $dt)}}</td>
                       <td>{{$meeting->created_at}}</td>
-                      <td><a href='/report/{{$meeting->id}}'>view</a></td>
+                      @if ($meeting->meeting_date < Carbon\Carbon::now())
+                      <td><a href='/report/{{$meeting->report_id}}'>View</a></td>
+                      @else
+                      <td>Not Available Yet</td>
+                      @endif
                     </tr>
                   @endforeach
                 </tbody>

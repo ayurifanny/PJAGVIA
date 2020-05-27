@@ -45,17 +45,43 @@
                         </div>
                         <div class="modal-body">
                             <h4>Draw your signature</h4>
-                            <div id="sketchpad" style="border: 1px solid black; display:inline-block;"></div>
-
-                            <a href=#>or click here to upload your signature</a>
-
-                            
+                            <div id="sketchpad" style="border: 1px solid black; width:466px; height:300px;"></div>
                             <div class="mt-2 float-right">
                                 <form method="POST" accept-charset="utf-8" name="form1">
                                     <input name="hidden_data" id='hidden_data' type="hidden" />
-                                    <input type="button" class="btn btn-primary status_picture" id="approve" value="Save" />
+                                    <input type="button" class="btn btn-primary save_signature" id="approve" value="Save" />
                                 </form>
                             </div>
+                            <div><h6>Or</h6></div>
+                            <div>
+                                <form method="POST" action="/upload_sign" id="upload" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                <div class="border border-custom mx-1 mb-3 p-1">
+                                    <div class="input-group my-3">
+                                        <input type="hidden" name="id" value={{ request()->route('id') }}>
+                                        <input type="hidden" name="role" value={{ auth()->user()->getRoleNames()[0] }}>
+                                        
+                                        <label class="col-form-label text-md-right ml-3">
+                                            Add Picture (.png):
+                                        </label>
+                                        
+                                        <div class="col">
+                                            <span class="btn btn-default btn-file">
+                                                <input id="file" name="file" type="file" class="file m5-5" accept="image/*" data-show-upload="true" data-show-caption="true">
+                                            </span>
+                                        </div>
+                                        
+                                        <div class="float-right mr-3">
+                                            <button class="btn btn-success" type="submit">Upload</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            </div>
+                            
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -70,10 +96,9 @@
 <script>
     var el = document.getElementById('sketchpad');
     pad = new Sketchpad(el, {
-            aspectRatio: this.width / this.height,
-            width: 300,
-            height: 300,
-            enable_draw: true
+            enable_draw: true,
+            width: 466,
+            height: 300 
         });
     
     function setLineColor(e) {
@@ -118,5 +143,38 @@
     
     function toJSON() {
     }
+
+    $(document).ready(function () {
+        var canvas = document.getElementById('canvas');
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $(".save_signature").click(function () {
+            var canvas = document.getElementById("canvas");
+            context = canvas.getContext('2d');
+            var dataURL = canvas.toDataURL("image/png");
+            var status = $(this).val();
+            $.ajax({
+                /* the route pointing to the post function */
+                url: '/save_sign',
+                type: 'POST',
+                async: false,
+                /* send the csrf-token and the input to the controller */
+                data: {
+                    _token: CSRF_TOKEN,
+                    hidden_data: dataURL,
+                    role: '{{ auth()->user()->getRoleNames()[0] }}',
+                    id: '{{ request()->route('id') }}',
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    window.location.href = '/report/'+'{{request()->route('id')}}'
+                },
+                error: function () {
+                    alert('Something happened')
+              }
+                /* remind that 'data' is the response of the AjaxController */
+                
+            });
+        });
+    });
 </script>
 @endsection
