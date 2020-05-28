@@ -72,7 +72,7 @@
         <div class="col-md">
             <button type="button" class="btn btn-light mr-2" onclick='window.location.href="/meetings/detail/{{$pic->meeting_id}}"'>
                 <i class="fa fa-arrow-left"></i>
-            </button> {{$pic->photo}}
+            </button> <strong>{{$pic->photo}}</strong>
         </div> 
 
         @if(auth()->user()->hasRole('inspector'))
