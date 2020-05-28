@@ -18,7 +18,11 @@ class ReportsController extends Controller
     public function index($id)
     {
         //
-        return view('report');
+        $meeting_data = Meetings::where('report_id', $id)->get();
+        $upload_data = Uploads::where('meeting_id', $meeting_data[0]->id)->get();
+        return \View::make('report')
+            ->with(compact('meeting_data'))
+            ->with(compact('upload_data'));
     }
 
     /**

@@ -26,6 +26,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10 py-3">
             ha hao
+            @include('pdf')
             <div class="ml-auto float-right">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
