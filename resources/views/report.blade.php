@@ -32,6 +32,10 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                Signature
                 </button>
+                <button type="button" class="btn btn-primary" onClick="location.href='/download_pdf/{{ request()->route('id') }}'">
+                    Download
+                </button>
+                
             </div>
     
             <!-- Modal -->

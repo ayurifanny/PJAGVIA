@@ -6,6 +6,7 @@ use App\Meetings;
 use App\Reports;
 use App\Uploads;
 use Illuminate\Http\Request;
+use PDF;
 use Storage;
 
 class ReportsController extends Controller
@@ -19,7 +20,7 @@ class ReportsController extends Controller
     {
         //
         $meeting_data = Meetings::where('report_id', $id)->get();
-        $upload_data = Uploads::where('meeting_id', $meeting_data[0]->id)->get();
+        $upload_data = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->get();
         return \View::make('report')
             ->with(compact('meeting_data'))
             ->with(compact('upload_data'));
@@ -94,11 +95,11 @@ class ReportsController extends Controller
     public function download_pdf($id)
     {
         $meeting_data = Meetings::findOrFail($id);
-        $picture_data = Uploads::where('meeting_id', $id)->get();
+        $upload_data = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $id)->get();
 
-        $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'picture_data' => $picture_data]);
+        $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'upload_data' => $upload_data]);
 
-        return $pdf->download('itsolutionstuff.pdf');
+        return $pdf->download('report' . $meeting_data->project_name . '.pdf');
     }
 
     public function save_sign(Request $request)
