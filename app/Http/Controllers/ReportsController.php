@@ -8,7 +8,6 @@ use App\Uploads;
 use Illuminate\Http\Request;
 use PDF;
 use Storage;
-use Barryvdh\DomPDF\Facade as PDF;
 
 class ReportsController extends Controller
 {
@@ -21,10 +20,12 @@ class ReportsController extends Controller
     {
         //
         $meeting_data = Meetings::where('report_id', $id)->get();
-        $upload_data = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->get();
+        $upload_data_approved = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 1)->get();
+        $upload_data_declined = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 0)->get();
         return \View::make('report')
             ->with(compact('meeting_data'))
-            ->with(compact('upload_data'));
+            ->with(compact('upload_data_approved'))
+            ->with(compact('upload_data_declined'));
     }
 
     /**

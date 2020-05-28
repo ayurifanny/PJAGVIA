@@ -25,7 +25,6 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10 py-3">
-            ha hao
             @include('pdf')
             <div class="ml-auto float-right">
                 <!-- Button trigger modal -->
