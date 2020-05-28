@@ -11,6 +11,10 @@
     @endif
 @endsection
 
+@section('styles')
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row justify-content-center">
@@ -44,22 +48,29 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="">Request Inspection Date:</label>
-                            <div class='input-group date' id='datepicker'>
-                                <input type='text' autocomplete="off" class="form-control datepicker" name="datepicker" placeholder="mm/dd/yyyy"/>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="">Request Inspection Date:</label>
+                                    <div class='input-group date' id='datepicker'>
+                                        <input type='text' autocomplete="off" class="form-control datepicker" name="datepicker" placeholder="mm/dd/yyyy"/>
+                                    </div>
+                                    @if ($errors->has('datepicker'))
+                                        <span class="text-danger">{{ $errors->first('datepicker') }}</span>
+                                    @endif
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Request Inspection Time:</label>
+                                    <div class='input-group date' id='timepicker' name="time">
+                                        <input type='text' autocomplete="off" class="form-control timepicker" name="time" placeholder="HH:MM"/>
+                                    </div>
+                                    @if ($errors->has('time'))
+                                        <span class="text-danger">{{ $errors->first('time') }}</span>
+                                    @endif
+                                </div>
                             </div>
-                            @if ($errors->has('datepicker'))
-                                <span class="text-danger">{{ $errors->first('datepicker') }}</span>
-                            @endif
                         </div>
                         <div class="form-group mb-5">
-                            <label for="">Request Inspection Time:</label>
-                            <div class='input-group date' id='timepicker' name="time">
-                                {!! Form::time('time', null, ['class' => 'form-control']) !!}
-                            </div>
-                            @if ($errors->has('time'))
-                                <span class="text-danger">{{ $errors->first('time') }}</span>
-                            @endif
+                            
                         </div>
                     
                
@@ -75,15 +86,31 @@
 @endsection
 
 @section('additional_script')
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script>
     $('.datepicker').datepicker({
-        minDate:3
+        minDate:3,
+        beforeShowDay: function(date) {
+        var day = date.getDay();
+        return [day != 0,''];}
     });
 
+    $('.timepicker').timepicker({
+    timeFormat: 'h:mm p',
+    interval: 30,
+    minTime: '9',
+    maxTime: '7:00pm',
+    defaultTime: '10',
+    startTime: '9:00',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
     $(document).ready(function ()
     {
         var name = '<?=auth()->user()->name?>'
         $("#customer_name").val(name);
     });
+
 </script>
 @endsection
