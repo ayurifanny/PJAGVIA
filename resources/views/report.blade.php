@@ -25,18 +25,23 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10 py-3">
-            @include('pdf')
+            <button type="button" class="btn btn-primary mb-2" onClick="location.href='/download_pdf/{{ request()->route('id') }}'">
+                Download
+            </button>
+
+            <div class="bg-white py-2 px-2 mt-2 mb-4">
+                <div class="border my-3 mx-2 px-2">
+                @include('pdf')
+                </div>
+            </div>
+            
             <div class="ml-auto float-right">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-               Signature
+                    Signature
                 </button>
-                <button type="button" class="btn btn-primary" onClick="location.href='/download_pdf/{{ request()->route('id') }}'">
-                    Download
-                </button>
-                
             </div>
-    
+        
             <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -49,16 +54,23 @@
                         </div>
                         <div class="modal-body">
                             <h4>Draw your signature</h4>
-                            <div id="sketchpad" style="border: 1px solid black; width:466px; height:300px;"></div>
-                            <div class="mt-2 float-right">
-                                <button class="btn btn-secondary mr-3" id="clear">Clear</button>
+                            <div id="sketchpad" style="border: 1px solid black; width:466px; height:300px;">
+                            </div>
+                            
+                            <div class="row mt-3">
+                                <div class="ml-auto float-right">
+                                    <button class="btn btn-secondary mr-3" id="clear">Clear</button>
+                                </div>
+                                        
                                 <form method="POST" accept-charset="utf-8" name="form1">
                                     <input name="hidden_data" id='hidden_data' type="hidden" />
-                                    <input type="button" class="btn btn-primary save_signature" id="approve" value="Save" />
+                                    <input type="button" class="btn btn-primary save_signature mr-3" id="approve" value="Save" />
                                 </form>
                             </div>
-                            <div><h6>Or</h6></div>
+
                             <div>
+                                <h6>Or</h6>
+                            
                                 <form method="POST" action="/upload_sign" id="upload" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="border border-custom mx-1 mb-3 p-1">
@@ -84,9 +96,6 @@
                             </form>
 
                             </div>
-                            
-                            
-                            
                         </div>
                     </div>
                 </div>
