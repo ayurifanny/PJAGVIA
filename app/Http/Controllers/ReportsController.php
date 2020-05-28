@@ -7,6 +7,7 @@ use App\Reports;
 use App\Uploads;
 use Illuminate\Http\Request;
 use Storage;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ReportsController extends Controller
 {
