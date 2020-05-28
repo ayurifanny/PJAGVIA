@@ -30,7 +30,7 @@
                     <p class="h2 text-center p-2"><strong>Request Inspection</strong></p>
                 </div>
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table table-responsive">
                         <?php $key = 0; ?>
                         <thead>
                             <tr>

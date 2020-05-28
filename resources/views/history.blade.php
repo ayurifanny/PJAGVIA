@@ -30,7 +30,7 @@
               <div class="card-header"><p class="h3 p-1"><strong>Inspection Request</strong></p></div>
               
               <div class="card-body">
-                <table class="table">
+                <table class="table table-responsive">
                   <thead>
                     <tr>
                       <th scope="col">No.</th>
@@ -62,7 +62,7 @@
           <div class="card mt-4 pb-3">
             <div class="card-header"><p class="h3 p-1"><strong>Inspection History</strong></p></div>
             <div class="card-body">
-              <table class="table">
+              <table class="table table-responsive">
                 <?php $key = 0; ?>
                 <thead>
                   <tr>

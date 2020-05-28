@@ -30,7 +30,7 @@
             </button>
 
             <div class="bg-white py-2 px-2 mt-2 mb-4">
-                <div class="border my-3 mx-2 px-2">
+                <div class="border border-secondary my-3 mx-2 px-2">
                 @include('pdf')
                 </div>
             </div>

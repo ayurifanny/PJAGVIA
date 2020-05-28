@@ -6,11 +6,11 @@
     
         <div class="row menu-canvas mx-1 my-2 py-3">
             <div class="col-md px-0">
-                <h4><strong>{{$meeting_data[0]->project_name}} Inspection Report</strong></h4>
+                <h4 class="align-center"><strong>{{$meeting_data[0]->project_name}} Inspection Report</strong></h4>
             </div> 
 
             <div class="ml-auto float-right pr-0">
-                <img width="90" height="40" class="d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
+                <img width="90" height="40" class="img-responsive d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
             </div>
         </div>
 
@@ -47,7 +47,7 @@
             <strong>APPROVED MATERIAL</strong>
             
                 @if($upload_data_declined != null)  
-                <table class="table table-bordered px-0">
+                <table class="table table-bordered table-responsive px-0">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -87,7 +87,7 @@
             <strong>DECLINED MATERIAL</strong> 
             
                 @if(!empty($upload_data_declined))
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-responsive px-0">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -124,19 +124,19 @@
         <br>
         <div class="row justify-content-center">
             <div class="col-md-9">
-                <div class="ml-5 mr-auto float-left">
-                    <p class="text-center">Inspector</p>
-                    <img width="90" height="40" class="d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
-                    <p class="text-center pt-3"><u>INSPECTOR NAME</u></p>
+                <div class="ml-5 mr-auto float-left text-center">
+                    <p>Inspector</p>
+                    <img width="90" height="40" class="img-responsive d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
+                    <p class="pt-3"><u>INSPECTOR NAME</u></p>
                 </div>
 
                 <div class="col">
                 </div>
 
-                <div class="mr-5 ml-auto float-right">
-                    <p class="text-center">Customer</p>
-                    <img width="90" height="40" class="d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
-                    <p class="text-center pt-3"><u>{{$meeting_data[0]->customer_name}}</u></p>
+                <div class="mr-5 ml-auto float-right text-center">
+                    <p>Customer</p>
+                    <img width="90" height="40" class="img-responsive d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
+                    <p class="pt-3"><u>{{$meeting_data[0]->customer_name}}</u></p>
                 </div>
             </div>
         </div>
