@@ -68,10 +68,21 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center my-4">
+    <div class="row justify-content-center mt-4">
         <div class="col-md">
-            <button type="button" class="btn btn-primary" onclick='window.location.href="/meetings/detail/{{$pic->meeting_id}}"'>Back to Inspection Detail</button> {{$pic->photo}}
+            <button type="button" class="btn btn-light mr-2" onclick='window.location.href="/meetings/detail/{{$pic->meeting_id}}"'>
+                <i class="fa fa-arrow-left"></i>
+            </button> {{$pic->photo}}
+        </div> 
+
+        @if(auth()->user()->hasRole('inspector'))
+        <div class="px-3">
+            <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Zoom In" id="zoom-button">
+                <i class='fas fa-search-plus' id="activeLine"></i>
+                <i class='fas fa-pencil-alt' id="activeZoom"></i>
+            </button>
         </div>
+        @endif
     </div>
     
     @if(auth()->user()->hasRole('customer'))
@@ -141,15 +152,17 @@
     </div>
     @else
     
-    <div class="row justify-content-center my-4">
+    <div class="row menu-canvas justify-content-center mx-1 mt-3 mb-2 py-1">
         <div class="col-md">
-            <div class="row border border-custom p-2">
-                <h5 class="pr-2"><strong>Customer Remarks :  </strong></h5>
-                <span id="par-remarks"><h3>{{$pic->remarks}}</h3></span>
+            <div class="row ">
+                <h6 class="pr-2"><strong>Customer Remarks :  </strong></h6>
+                <span id="par-remarks"><h6 class ="text-center">{{$pic->remarks}}</h6></span>
             </div>
         </div>
     </div>
     @endif
+
+
 
     <div class="justify-content-center">
         <div id="sketchpad" class="text-center pt-2" style="position: relative;">

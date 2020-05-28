@@ -3852,12 +3852,14 @@ textarea.form-control {
   position: relative;
   display: block;
   padding-left: 1.25rem;
+  cursor : pointer;
 }
 
 .form-check-input {
   position: absolute;
   margin-top: 0.3rem;
   margin-left: -1.25rem;
+  cursor : pointer;
 }
 
 .form-check-input[disabled] ~ .form-check-label,
@@ -3867,6 +3869,7 @@ textarea.form-control {
 
 .form-check-label {
   margin-bottom: 0;
+  cursor : pointer;
 }
 
 .form-check-inline {
@@ -12537,6 +12540,10 @@ a.text-dark:focus {
 }
 
 .fc-content {
-  background-color: #3c91ca;
+  background-color: #263c4b;
   border-color: #34394d;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
 }
+
