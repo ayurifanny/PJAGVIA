@@ -6,7 +6,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="icon" 
+      type="image/png" 
+      href="http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png">
     <title>{{ config('app.name', 'PJA Group Virtual Inspection App') }}</title>
 
     <!-- Scripts -->
