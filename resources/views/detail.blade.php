@@ -125,8 +125,8 @@
                                     <td>
                                         @if($pic->approved == -1)
                                             @if(auth()->user()->hasRole('inspector'))
-                                                <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Detail Picture"
-                                                    onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'"> In Review
+                                                <button type="button" class="btn btn-primary mb-3" data-toggle="tooltip" data-placement="bottom" title="Detail Picture"
+                                                    onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'">In Review
                                                 </button>
                                                 <span> <form action="/photo/{{$pic->id}}" method="post">
                                                     @csrf

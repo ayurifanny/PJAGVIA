@@ -55,6 +55,14 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
 
+                            <div class="form-group mb-4">
+                                <label for="role">{{ __('Role') }}</label>
+                                <select id="role" name="role" class="form-control">
+                                    <option value="customer">Customer </option>
+                                    <option value="inspector">Inspector </option>
+                                </select>
+                            </div>
+
                             <button type="submit" class="btn btn-primary btn-lg btn-block">
                                 {{ __('Register') }}
                             </button>
