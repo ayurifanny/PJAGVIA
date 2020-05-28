@@ -23,7 +23,6 @@
 
 @section('content')
 <div class="container">
-    <a href="/download_pdf/{{$meeting_data->id}}"> donlod</a>
     <div class="row justify-content-center">
         <div class="col-md-12 py-3">
             <div class="card mt-4">
