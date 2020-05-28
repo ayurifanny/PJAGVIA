@@ -51,6 +51,7 @@
                             <h4>Draw your signature</h4>
                             <div id="sketchpad" style="border: 1px solid black; width:466px; height:300px;"></div>
                             <div class="mt-2 float-right">
+                                <button class="btn btn-secondary mr-3" id="clear">Clear</button>
                                 <form method="POST" accept-charset="utf-8" name="form1">
                                     <input name="hidden_data" id='hidden_data' type="hidden" />
                                     <input type="button" class="btn btn-primary save_signature" id="approve" value="Save" />
@@ -105,44 +106,11 @@
             height: 300 
         });
     
-    function setLineColor(e) {
-        var color = e.target.value;
-        if (!color.startsWith('#')) {
-            color = '#' + color;
-        }
-        pad.setLineColor(color);
-    }
-    // document.getElementById('line-color-input').oninput = setLineColor;
-
-    // setLineSize
-    function setLineSize(e) {
-        var size = e.target.value;
-        pad.setLineSize(size);
-    }
-    // document.getElementById('line-size-input').oninput = setLineSize;
-
-    // undo
-    function undo() {
-        send_option(2)
-        pad.undo();
-    }
-    // $('#undo').off('click').on('click', undo);
-    // document.getElementById('undo').onclick = undo;
-
-    // redo
-    function redo() {
-        send_option(3)
-        pad.redo();
-    }
-    // $('#redo').off('click').on('click', redo);
-    // document.getElementById('redo').onclick = redo;
-
     // clear
     function clear() {
-        send_option(4)
         pad.clear();
     }
-    // $('#clear').off('click').on('click', clear);
+    $('#clear').off('click').on('click', clear);
     // document.getElementById('clear').onclick = clear;
     
     function toJSON() {
