@@ -108,11 +108,19 @@ class ReportsController extends Controller
     public function download_pdf($id)
     {
         ini_set('max_execution_time', 300);
+        $report = Reports::findOrFail($id);
+        if ($report->inspector_name == null) {
+            $report->inspector_name = User::select('name')->where('id', $report->host_id)->first()['name'];
+        }
+
+        if ($report->customer_name == null) {
+            $report->customer_name = User::select('name')->where('id', $report->user_id)->first()['name'];
+        }
         $meeting_data = Meetings::where('report_id', $id)->get();
         $upload_data_approved = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 1)->get();
         $upload_data_declined = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 0)->get();
 
-        $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'upload_data_declined' => $upload_data_declined, 'upload_data_approved' => $upload_data_approved]);
+        $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'upload_data_declined' => $upload_data_declined, 'upload_data_approved' => $upload_data_approved, 'report' => $report]);
 
         return $pdf->download('Report-' . '.pdf');
     }
