@@ -103,6 +103,28 @@
                                 </form>
 
                             </div>
+
+                            <div>
+                                <h4 class="py-3">Change Your Data : </h4>
+                                <form>
+                                    @if (auth()->user()->hasRole('customer'))
+                                    <div class="form-group row">
+                                        <label for="staticEmail" class="col-sm-4 col-form-label">Customer Name</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" placeholder="{{$report->customer_name}}">
+                                        </div>
+                                    </div>
+
+                                    @elseif (auth()->user()->hasRole('inspector'))
+                                    <div class="form-group row">
+                                        <label for="inputPassword" class="col-sm-4 col-form-label">Inspector Name</label>
+                                        <div class="col-sm-8">
+                                            <input id="name" type="text" class="form-control" placeholder="{{$report->inspector_name}}">
+                                        </div>
+                                    </div>
+                                    @endif
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
