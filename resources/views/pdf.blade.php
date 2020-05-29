@@ -136,8 +136,13 @@
         <div class="col-md-9">
             <div class="ml-5 mr-auto float-left text-center">
                 <p>Inspector</p>
+                @if ($report->inspector_signature == null)
                 <img width="90" height="40" class="img-responsive d-inline-block align-center"
-                    src="http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
+                    src="#" alt="">
+                @else
+                <img width="90" height="40" class="img-responsive d-inline-block align-center"
+                    src='{{ url("storage/sign/" . $report->host_id . "/sign-" . $report->id . ".png") }}' alt="">
+                @endif
                 <p class="pt-3"><u>{{ $report->inspector_name }}</u></p>
             </div>
 
@@ -146,8 +151,13 @@
 
             <div class="mr-5 ml-auto float-right text-center">
                 <p>Customer</p>
+                @if ($report->customer_signature == null)
                 <img width="90" height="40" class="img-responsive d-inline-block align-center"
-                    src="http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
+                    src="#" alt="">
+                @else
+                <img width="90" height="40" class="img-responsive d-inline-block align-center"
+                    src='{{ url("storage/sign/" . $report->user_id . "/sign-" . $report->id . ".png") }}' alt="">
+                @endif
                 <p class="pt-3"><u>{{ $report->customer_name }}</u></p>
             </div>
         </div>
