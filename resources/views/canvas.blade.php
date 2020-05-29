@@ -68,10 +68,21 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center my-4">
+    <div class="row justify-content-center mt-4">
         <div class="col-md">
-            <button type="button" class="btn btn-primary" onclick='window.location.href="/meetings/detail/{{$pic->meeting_id}}"'>Back to Inspection Detail</button> {{$pic->photo}}
+            <button type="button" class="btn btn-light mr-2" onclick='window.location.href="/meetings/detail/{{$pic->meeting_id}}"'>
+                <i class="fa fa-arrow-left"></i>
+            </button> <strong>{{$pic->photo}}</strong>
+        </div> 
+
+        @if(auth()->user()->hasRole('inspector'))
+        <div class="px-3">
+            <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="Zoom In" id="zoom-button">
+                <i class='fas fa-search-plus' id="activeLine"></i>
+                <i class='fas fa-pencil-alt' id="activeZoom"></i>
+            </button>
         </div>
+        @endif
     </div>
     
     @if(auth()->user()->hasRole('customer'))
@@ -141,19 +152,21 @@
     </div>
     @else
     
-    <div class="row justify-content-center my-4">
+    <div class="row menu-canvas justify-content-center mx-1 mt-3 mb-2 py-1">
         <div class="col-md">
-            <div class="row border border-custom p-2">
-                <h5 class="pr-2"><strong>Customer Remarks :  </strong></h5>
-                <span id="par-remarks"><h3>{{$pic->remarks}}</h3></span>
+            <div class="row ">
+                <h6 class="pr-2"><strong>Customer Remarks :  </strong></h6>
+                <span id="par-remarks"><h6 class ="text-center">{{$pic->remarks}}</h6></span>
             </div>
         </div>
     </div>
     @endif
 
-    <div>
+
+
+    <div class="justify-content-center">
         <div id="sketchpad" class="text-center pt-2" style="position: relative;">
-            <canvas id="canvas2" class="img-fluid" style="position: absolute; top: 1; z-index: -1;"></canvas>
+            <canvas id="canvas2" class="img-fluid" style="position: absolute; z-index: -1; display:none;"></canvas>
         </div>
 
         <div class="py-3">
@@ -366,8 +379,14 @@
         });
 
         $("#zoom-button").click(function () { 
+            var canvas = document.getElementById("canvas");
             if (canvas2.style.zIndex > 0) {
+                
                 canvas2.style.zIndex = -1;
+                canvas2.style.display = "none";
+                canvas2.style.top = canvas.style.top;
+                canvas2.style.left = canvas.style.left;
+                
                 $("#activeLine").show();
                 $("#activeZoom").hide();
                 // $(this).find("i").removeClass("fas fa-pencil-alt").addClass("fas fa-search-plus");
@@ -375,6 +394,11 @@
             else {
                 canvas2.style.zIndex = 1;
                 // this.innerHTML="unzoom";
+                canvas2.style.display = "block";
+                canvas2.style.top = "50%";
+                canvas2.style.left = "50%";
+                canvas2.style.transform = "translate(-50%, -50%)";
+                
                 $("#activeLine").hide();
                 $("#activeZoom").show();
             } 
