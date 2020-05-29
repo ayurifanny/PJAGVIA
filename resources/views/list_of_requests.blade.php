@@ -30,39 +30,43 @@
                     <p class="h2 text-center p-2"><strong>Request Inspection</strong></p>
                 </div>
                 <div class="card-body">
-                    <table class="table table-responsive">
-                        <?php $key = 0; ?>
-                        <thead>
-                            <tr>
-                                <th scope="col">No.</th>
-                                <th scope="col">Project Name</th>
-                                <th scope="col">Customer Name</th>
-                                <th scope="col">Inspection Date</th>
-                                <th scope="col">Inspection Time</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($meeting_requests as $key => $meeting_request)
+                    <div class="table-responsive">
+                        <table class="table" >
+                            <?php $key = 0; ?>
+                            <thead>
                                 <tr>
-                                    <td scope="row">{{ ++$key }}</td>
-                                    <td>{{ $meeting_request->project_name }}</td>
-                                    <td>{{ $meeting_request->customer_name }}</td>
-                                    <?php $dt = strtotime($meeting_request->request_date); ?>
-                                    <td>{{ date('M d, Y', $dt) }}</td>
-                                    <td>{{ date('H:i:s A', $dt) }}</td>
-                                    <td>
-                                        <form method="POST"
-                                            action="{{ url('meetings/approve_meeting') }}">
-                                            {{ csrf_field() }}
-                                            <input type="hidden" name="id" value="{{ $meeting_request->id }}" />
-                                            <button class="btn btn-success btn-submit">Approve</button>
-                                        </form>
-                                        {{-- <a href=# type="button" class="btn btn-danger">Decline</a></td> --}}
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Project Name</th>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Inspection Date</th>
+                                    <th scope="col">Inspection Time</th>
+                                    <th scope="col">Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach($meeting_requests as $key => $meeting_request)
+                                    <tr>
+                                        <td scope="row">{{ ++$key }}</td>
+                                        <td>{{ $meeting_request->project_name }}</td>
+                                        <td>{{ $meeting_request->customer_name }}</td>
+                                        <?php $dt = strtotime($meeting_request->request_date); ?>
+                                        <td>{{ date('M d, Y', $dt) }}</td>
+                                        <td>{{ date('H:i:s A', $dt) }}</td>
+                                        <td>
+                                            <form method="POST"
+                                                action="{{ url('meetings/approve_meeting') }}">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="id" value="{{ $meeting_request->id }}" />
+                                                <button class="btn btn-success btn-submit">Approve</button>
+                                            </form>
+                                            {{-- <a href=# type="button" class="btn btn-danger">Decline</a> --}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    
                 </div>
             </div>
         </div>

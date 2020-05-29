@@ -46,48 +46,9 @@
         <div>
             <strong>APPROVED MATERIAL</strong>
             
-                @if($upload_data_declined != null)  
-                <table class="table table-bordered table-responsive px-0">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Product ID</th>
-                            <th>Picture</th>
-                            <th>Remarks</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($upload_data_approved as $key => $pic)
-                        @if($pic->approved == 1)
-                            <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $pic->photo }}</td>
-                                @if($pic->photo_edited == null)
-                                    <td>
-                                        <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo) }}'
-                                        class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
-                                    </td>
-                                @else
-                                    <td>
-                                        <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo_edited) }}' 
-                                        class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
-                                    </td>
-                                @endif
-                                <td>{{ $pic->remarks }}</td>                          
-                            </tr>
-                        @endif
-                    @endforeach
-                    </tbody>
-                </table>
-                @endif
-        </div>
-
-        <br>
-        <div>
-            <strong>DECLINED MATERIAL</strong> 
-            
-                @if(!empty($upload_data_declined))
-                    <table class="table table-bordered table-responsive px-0">
+                @if($upload_data_declined != null) 
+                <div class="table-responsive">
+                    <table class="table table-bordered px-0">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -97,26 +58,70 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($upload_data_declined as $key => $picd)
-                            <tr>
-                                <td>{{ ++$key }}</td>
-                                <td>{{ $picd->photo }}</td>
-                                @if($picd->photo_edited == null)
-                                    <td>
-                                        <img max-width="307" max-height="240" src='{{ url("storage/" . $picd->meeting_id . "/" . $picd->photo) }}'
-                                        class="img-fluid img-thumbnail" alt={{ $picd->photo }}>
-                                    </td>
-                                @else
-                                    <td>
-                                        <img max-width="307" max-height="240" src='{{ url("storage/" . $picd->meeting_id . "/" . $picd->photo_edited) }}' 
-                                        class="img-fluid img-thumbnail" alt={{ $picd->photo }}>
-                                    </td>
-                                @endif
-                                <td>{{ $picd->remarks }}</td>                          
-                            </tr>
+                        @foreach($upload_data_approved as $key => $pic)
+                            @if($pic->approved == 1)
+                                <tr>
+                                    <td>{{ ++$key }}</td>
+                                    <td>{{ $pic->photo }}</td>
+                                    @if($pic->photo_edited == null)
+                                        <td>
+                                            <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo) }}'
+                                            class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
+                                        </td>
+                                    @else
+                                        <td>
+                                            <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo_edited) }}' 
+                                            class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
+                                        </td>
+                                    @endif
+                                    <td>{{ $pic->remarks }}</td>                          
+                                </tr>
+                            @endif
                         @endforeach
                         </tbody>
                     </table>
+                </div> 
+                
+                @endif
+        </div>
+
+        <br>
+        <div>
+            <strong>DECLINED MATERIAL</strong> 
+            
+                @if(!empty($upload_data_declined))
+                    <div class="table-responsive">
+                        <table class="table table-bordered px-0">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Product ID</th>
+                                    <th>Picture</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($upload_data_declined as $key => $picd)
+                                <tr>
+                                    <td>{{ ++$key }}</td>
+                                    <td>{{ $picd->photo }}</td>
+                                    @if($picd->photo_edited == null)
+                                        <td>
+                                            <img max-width="307" max-height="240" src='{{ url("storage/" . $picd->meeting_id . "/" . $picd->photo) }}'
+                                            class="img-fluid img-thumbnail" alt={{ $picd->photo }}>
+                                        </td>
+                                    @else
+                                        <td>
+                                            <img max-width="307" max-height="240" src='{{ url("storage/" . $picd->meeting_id . "/" . $picd->photo_edited) }}' 
+                                            class="img-fluid img-thumbnail" alt={{ $picd->photo }}>
+                                        </td>
+                                    @endif
+                                    <td>{{ $picd->remarks }}</td>                          
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 @endif
         </div>
 

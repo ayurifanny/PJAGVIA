@@ -90,66 +90,69 @@
                     </form>
 
                     @endif
-                    <table class="table table-responsive" >
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Product ID</th>
-                                <th>Picture</th>
-                                <th>Remarks</th>
-                                <th>Edited Picture</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach($picture_data as $key => $pic)
+                    <div class="table-responsive">
+                        <table class="table" >
+                            <thead>
                                 <tr>
-                                    <td>{{ ++$key }}</td>
-                                    <td>{{ $pic->photo }}</td>
-                                    <td>
-                                        <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo) }}'
-                                    class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
-                                    </td>
-                                    <td>{{ $pic->remarks }}</td>
-
-                                    @if($pic->photo_edited == null)
-                                        <td></td>
-                                    @else
-                                        <td>
-                                            <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo_edited) }}' 
-                                            class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
-                                        </td>
-                                    @endif
-
-                                    <td>
-                                        @if($pic->approved == -1)
-                                            @if(auth()->user()->hasRole('inspector'))
-                                                <button type="button" class="btn btn-primary mb-3" data-toggle="tooltip" data-placement="bottom" title="Detail Picture"
-                                                    onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'">In Review
-                                                </button>
-                                                <span> <form action="/photo/{{$pic->id}}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger" type="submit">Delete</button>
-                                                </form>
-                                            </span>
-                                            @else
-                                                <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Edit"
-                                                    onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'">
-                                                    <i class='fas fa-edit'></i>
-                                                </button>
-                                            @endif
-                                        @elseif($pic->approved == 0)
-                                            <span class="label label-danger p-2 text-white">Declined</span>
-                                        @elseif($pic->approved == 1)
-                                            <span class="label label-success p-2 text-white">Approved</span>
-                                        @endif
-                                    </td>                                    
+                                    <th>No</th>
+                                    <th>Product ID</th>
+                                    <th>Picture</th>
+                                    <th>Remarks</th>
+                                    <th>Edited Picture</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+    
+                            <tbody>
+                                @foreach($picture_data as $key => $pic)
+                                    <tr>
+                                        <td>{{ ++$key }}</td>
+                                        <td>{{ $pic->photo }}</td>
+                                        <td>
+                                            <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo) }}'
+                                        class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
+                                        </td>
+                                        <td>{{ $pic->remarks }}</td>
+    
+                                        @if($pic->photo_edited == null)
+                                            <td></td>
+                                        @else
+                                            <td>
+                                                <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo_edited) }}' 
+                                                class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
+                                            </td>
+                                        @endif
+    
+                                        <td>
+                                            @if($pic->approved == -1)
+                                                @if(auth()->user()->hasRole('inspector'))
+                                                    <button type="button" class="btn btn-primary mb-3" data-toggle="tooltip" data-placement="bottom" title="Detail Picture"
+                                                        onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'">In Review
+                                                    </button>
+                                                    <span> <form action="/photo/{{$pic->id}}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                                    </form>
+                                                </span>
+                                                @else
+                                                    <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Edit"
+                                                        onclick="window.location='{{ url("photo_detail/" . $pic->id) }}'">
+                                                        <i class='fas fa-edit'></i>
+                                                    </button>
+                                                @endif
+                                            @elseif($pic->approved == 0)
+                                                <span class="label label-danger p-2 text-white">Declined</span>
+                                            @elseif($pic->approved == 1)
+                                                <span class="label label-success p-2 text-white">Approved</span>
+                                            @endif
+                                        </td>                                    
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    
                 </div>
             </div>
         </div>
