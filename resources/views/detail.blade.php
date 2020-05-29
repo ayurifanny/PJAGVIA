@@ -13,7 +13,7 @@
         <a class="nav-link" href="/home"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>
     </li>
     <li class="nav-item mb-3">
-        <a class="nav-link" href="/home"><i class="fas fa-list-ul mr-2"></i>List of Inspection Request</a>
+        <a class="nav-link" href="/list_request"><i class="fas fa-list-ul mr-2"></i>List of Inspection Request</a>
     </li>
     <li class="nav-item mb-3">
         <a class="nav-link" href="/history_meeting"><i class="fas fa-history mr-2"></i>History</a>
@@ -95,6 +95,7 @@
                     </form>
 
                     @endif
+                    @if ($picture_data->count() > 0)
                     <div class="table-responsive">
                         <table class="table" >
                             <thead>
@@ -156,6 +157,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    @else
+                    <p class="text-secondary text-center">No Record</p>    
+                    @endif
                     </div>
                     
                 </div>
