@@ -96,12 +96,13 @@ class ReportsController extends Controller
 
     public function download_pdf($id)
     {
-        $meeting_data = Meetings::findOrFail($id);
-        $upload_data = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $id)->get();
+        $meeting_data = Meetings::where('report_id', $id)->get();
+        $upload_data_approved = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 1)->get();
+        $upload_data_declined = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 0)->get();
 
-        $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'upload_data' => $upload_data]);
+        $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'upload_data_declined' => $upload_data_declined, 'upload_data_approved' => $upload_data_approved]);
 
-        return $pdf->download('report' . $meeting_data->project_name . '.pdf');
+        return $pdf->download('Report-' . '.pdf');
     }
 
     public function save_sign(Request $request)
