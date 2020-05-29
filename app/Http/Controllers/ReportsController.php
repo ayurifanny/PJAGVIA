@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Meetings;
 use App\Reports;
 use App\Uploads;
+use App\User;
 use Illuminate\Http\Request;
 use PDF;
 use Storage;
@@ -19,13 +20,23 @@ class ReportsController extends Controller
     public function index($id)
     {
         //
+        $report = Reports::findOrFail($id);
+        if ($report->inspector_name == null) {
+            $report->inspector_name = User::select('name')->where('id', $report->host_id)->first()['name'];
+        }
+
+        if ($report->customer_name == null) {
+            $report->customer_name = User::select('name')->where('id', $report->user_id)->first()['name'];
+        }
+
         $meeting_data = Meetings::where('report_id', $id)->get();
         $upload_data_approved = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 1)->get();
         $upload_data_declined = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 0)->get();
         return \View::make('report')
             ->with(compact('meeting_data'))
             ->with(compact('upload_data_approved'))
-            ->with(compact('upload_data_declined'));
+            ->with(compact('upload_data_declined'))
+            ->with(compact('report'));
     }
 
     /**
@@ -96,6 +107,7 @@ class ReportsController extends Controller
 
     public function download_pdf($id)
     {
+        ini_set('max_execution_time', 300);
         $meeting_data = Meetings::where('report_id', $id)->get();
         $upload_data_approved = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 1)->get();
         $upload_data_declined = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 0)->get();

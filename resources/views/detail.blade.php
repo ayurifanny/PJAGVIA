@@ -56,6 +56,11 @@
                         <div class="col ">: <a href='{{ $meeting_data->meeting_link }}'
                                 target="_blank">{{ $meeting_data->meeting_link }}</a></div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-3 ">Report</div>
+                        <div class="col ">: <a href='/report/{{ $meeting_data->report_id }}'
+                                target="_blank">View Report</a></div>
+                    </div>
                 </div>
             </div>
 

@@ -31,14 +31,14 @@
         <div class="row">
             <div class="col-sm-2">Inspector Name</div>
             <div class="col ">: 
-                <span class="ml-2">INSPECTOR NAME</span>
+                <span class="ml-2">{{$report->inspector_name}}</span>
             </div>    
         </div>
 
         <div class="row">
             <div class="col-sm-2">Customer Name</div>
             <div class="col ">: 
-                <span class="ml-2">{{$meeting_data[0]->customer_name}}</span>
+                <span class="ml-2">{{$report->customer_name}}</span>
             </div>
         </div>
 
@@ -132,7 +132,7 @@
                 <div class="ml-5 mr-auto float-left text-center">
                     <p>Inspector</p>
                     <img width="90" height="40" class="img-responsive d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
-                    <p class="pt-3"><u>INSPECTOR NAME</u></p>
+                    <p class="pt-3"><u>{{$report->inspector_name}}</u></p>
                 </div>
 
                 <div class="col">
@@ -141,7 +141,7 @@
                 <div class="mr-5 ml-auto float-right text-center">
                     <p>Customer</p>
                     <img width="90" height="40" class="img-responsive d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
-                    <p class="pt-3"><u>{{$meeting_data[0]->customer_name}}</u></p>
+                    <p class="pt-3"><u>{{$report->customer_name}}</u></p>
                 </div>
             </div>
         </div>
