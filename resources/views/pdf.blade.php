@@ -65,12 +65,12 @@
                                     <td>{{ $pic->photo }}</td>
                                     @if($pic->photo_edited == null)
                                         <td>
-                                            <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo) }}'
+                                            <img src="{{'/storage/' . $pic->meeting_id . '/' . $pic->photo }}"
                                                 class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
                                         </td>
                                     @else
                                         <td>
-                                            <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo_edited) }}'
+                                            <img src="{{'/storage/' . $pic->meeting_id . '/' . $pic->photo_edited }}"
                                                 class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
                                         </td>
                                     @endif
@@ -109,13 +109,13 @@
                                 @if($picd->photo_edited == null)
                                     <td>
                                         <img max-width="307" max-height="240"
-                                            src='{{ url("storage/" . $picd->meeting_id . "/" . $picd->photo) }}'
+                                            src="{{'/storage/' . $picd->meeting_id . '/' . $picd->photo }}"
                                             class="img-fluid img-thumbnail" alt={{ $picd->photo }}>
                                     </td>
                                 @else
                                     <td>
                                         <img max-width="307" max-height="240"
-                                            src='{{ url("storage/" . $picd->meeting_id . "/" . $picd->photo_edited) }}'
+                                            src="{{'/storage/' . $picd->meeting_id . '/' . $picd->photo_edited }}"
                                             class="img-fluid img-thumbnail" alt={{ $picd->photo }}>
                                     </td>
                                 @endif
@@ -141,7 +141,7 @@
                     src="#" alt="">
                 @else
                 <img width="90" height="40" class="img-responsive d-inline-block align-center"
-                    src='{{ url("storage/sign/" . $report->host_id . "/sign-" . $report->id . ".png") }}' alt="">
+                    src="{{ '/storage/sign/' . $report->host_id . '/sign-' . $report->id . '.png' }}" alt="host_sign">
                 @endif
                 <p class="pt-3"><u>{{ $report->inspector_name }}</u></p>
             </div>
@@ -156,7 +156,7 @@
                     src="#" alt="">
                 @else
                 <img width="90" height="40" class="img-responsive d-inline-block align-center"
-                    src='{{ url("storage/sign/" . $report->user_id . "/sign-" . $report->id . ".png") }}' alt="">
+                    src="{{'/storage/sign/' . $report->user_id . '/sign-' . $report->id . '.png'}}" alt="user_sign">
                 @endif
                 <p class="pt-3"><u>{{ $report->customer_name }}</u></p>
             </div>
