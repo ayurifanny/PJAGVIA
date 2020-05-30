@@ -123,16 +123,15 @@ class ReportsController extends Controller
         // $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('pdf2', ['meeting_data' => $meeting_data, 'upload_data_declined' => $upload_data_declined, 'upload_data_approved' => $upload_data_approved, 'report' => $report]);
 
         // return $pdf->render('Report-' . '.pdf');
-        $html_content = \View::make('pdf')
+        $html_content = \View::make('pdf2')
             ->with(compact('meeting_data'))
             ->with(compact('upload_data_approved'))
             ->with(compact('upload_data_declined'))
             ->with(compact('report'));
-        PDF::SetTitle('Hello World');
+        PDF::SetTitle('Report-' . $meeting_data[0]->project_name);
         PDF::AddPage();
-
         PDF::writeHTML($html_content, true, false, true, false, '');
-        PDF::Output('hello_world.pdf');
+        PDF::Output('Report-' . $meeting_data[0]->project_name . '.pdf');
     }
 
     public function save_sign(Request $request)
