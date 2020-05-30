@@ -36,3 +36,8 @@ select option[value="#0000FF"] {
 #activeZoom {
   display:none;
 }
+
+.nameedit{
+  border: none;
+  text-decoration: underline;
+}
