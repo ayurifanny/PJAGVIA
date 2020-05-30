@@ -174,7 +174,7 @@
             <th class="remarks">Remarks</th>
         </tr>
         @foreach($upload_data_declined as $key => $pic)
-            @if($pic->approved == 1)
+            @if($pic->approved == 0)
                 <tr>
                     <td class="no">{{ ++$key }}</td>
                     <td class="prod-id">{{ $pic->photo }}</td>

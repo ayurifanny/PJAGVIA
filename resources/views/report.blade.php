@@ -63,15 +63,42 @@
                                 <div class="ml-auto float-right">
                                     <button class="btn btn-secondary mr-3" id="clear">Clear</button>
                                 </div>
+                            </div>
 
                                 <form method="POST" accept-charset="utf-8" name="form1">
                                     <input name="hidden_data" id='hidden_data' type="hidden" />
+                                        <h4 class="py-3">Change Name</h4>
+                                        
+                                        @if (auth()->user()->hasRole('customer'))
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-4 col-form-label">Name
+                                                <span class="ml-3">:</span>
+                                            </label>
+                                            
+                                            <div class="col-sm-8">
+                                                <input type="text" name="change_name" class="form-control nameedit" placeholder="{{$report->customer_name}}">
+                                            </div>
+                                        </div>
+        
+                                        @elseif (auth()->user()->hasRole('inspector'))
+                                        <div class="form-group row">
+                                            <label for="name" class="col-sm-4 col-form-label">Name 
+                                                <span class="ml-3">:</span>
+                                            </label>
+                                            
+                                            <div class="col-sm-8">
+                                                <input id="change_name" name="name" type="text" class="form-control border-top-0 border-left-0 border-right-0" placeholder="{{$report->inspector_name}}">
+                                            </div>
+                                        </div>
+                                        @endif
+                                       
+                                    
                                     <input type="button" class="btn btn-primary save_signature mr-3" id="approve"
                                         value="Save" />
                                 </form>
-                            </div>
+                           
 
-                            <div>
+                            <!-- <div>
                                 <h6>Or</h6>
 
                                 <form method="POST" action="/upload_sign" id="upload" enctype="multipart/form-data">
@@ -103,34 +130,8 @@
                                 </form>
 
                             </div>
+ -->
 
-                            <div>
-                                <h4 class="py-3">Change Your Data</h4>
-                                <form>
-                                    @if (auth()->user()->hasRole('customer'))
-                                    <div class="form-group row">
-                                        <label for="name" class="col-sm-4 col-form-label">Customer Name
-                                            <span class="ml-3">:</span>
-                                        </label>
-                                        
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control nameedit" placeholder="{{$report->customer_name}}">
-                                        </div>
-                                    </div>
-
-                                    @elseif (auth()->user()->hasRole('inspector'))
-                                    <div class="form-group row">
-                                        <label for="name" class="col-sm-4 col-form-label">Inspector Name 
-                                            <span class="ml-3">:</span>
-                                        </label>
-                                        
-                                        <div class="col-sm-8">
-                                            <input id="name" type="text" class="form-control border-top-0 border-left-0 border-right-0" placeholder="{{$report->inspector_name}}">
-                                        </div>
-                                    </div>
-                                    @endif
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -166,7 +167,8 @@
             var canvas = document.getElementById("canvas");
             context = canvas.getContext('2d');
             var dataURL = canvas.toDataURL("image/png");
-            var status = $(this).val();
+            var name = document.getElementById("change_name");
+            alert(name.value)
             $.ajax({
                 /* the route pointing to the post function */
                 url: '/save_sign',
@@ -176,6 +178,7 @@
                 data: {
                     _token: CSRF_TOKEN,
                     hidden_data: dataURL,
+                    name: name.value,
                     role: '{{ auth()->user()->getRoleNames()[0] }}',
                     id: '{{ request()->route('id') }}',
                 },

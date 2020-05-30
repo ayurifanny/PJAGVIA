@@ -155,8 +155,14 @@ class ReportsController extends Controller
 
         if ($role == 'inspector') {
             $report->inspector_signature = $filename;
+            if ($request['name'] != null) {
+                $report->inspector_name = $request['name'];
+            }
         } else {
             $report->customer_signature = $filename;
+            if ($request['name'] != null) {
+                $report->customer_name = $request['name'];
+            }
         }
         $report->save();
         header('Content-Type: application/json');
