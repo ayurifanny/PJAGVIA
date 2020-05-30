@@ -120,9 +120,19 @@ class ReportsController extends Controller
         $upload_data_approved = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 1)->get();
         $upload_data_declined = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 0)->get();
 
-        $pdf = PDF::loadView('pdf', ['meeting_data' => $meeting_data, 'upload_data_declined' => $upload_data_declined, 'upload_data_approved' => $upload_data_approved, 'report' => $report]);
+        // $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('pdf2', ['meeting_data' => $meeting_data, 'upload_data_declined' => $upload_data_declined, 'upload_data_approved' => $upload_data_approved, 'report' => $report]);
 
-        return $pdf->download('Report-' . '.pdf');
+        // return $pdf->render('Report-' . '.pdf');
+        $html_content = \View::make('pdf')
+            ->with(compact('meeting_data'))
+            ->with(compact('upload_data_approved'))
+            ->with(compact('upload_data_declined'))
+            ->with(compact('report'));
+        PDF::SetTitle('Hello World');
+        PDF::AddPage();
+
+        PDF::writeHTML($html_content, true, false, true, false, '');
+        PDF::Output('hello_world.pdf');
     }
 
     public function save_sign(Request $request)
