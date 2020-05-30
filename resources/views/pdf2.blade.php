@@ -8,7 +8,8 @@
         box-sizing: border-box;
         font-size: 1em;
         border: 0.3px solid grey;
-        margin: 20px 20px;
+        margin top: 20px;
+        position : relative;
     }
 
     .title {
@@ -18,9 +19,17 @@
 
     .align-center {
         display: flex;
+        
         justify-content: center;
         align-items: center;
-        /* padding: 10px !important; */
+    }
+
+    .coba {
+        display: flex;
+        float: left;
+        text-align: left;
+        vertical-align: middle;
+        margin-left : 0px;
     }
 
     .logo {
@@ -31,7 +40,6 @@
 
     .general-info {
         border: 0.3px solid grey;
-        margin-top: 200px !important;
     }
 
     .info {
@@ -42,27 +50,62 @@
         width: 30px;
     }
 
+    th, td {
+        vertical-align : center;
+    }
+
     .no {
-        width: 10%;
+        position : absolute;
+        width: 5%;
+        text-align: center;
+        border: 1px solid #6c757d;
+        border-radius: 0.25rem;
+        vertical-align : middle;
     }
 
     .prod-id {
-        width: 20%;
+        width: 25%;
+        text-align: center;
+        border: 1px solid #6c757d;
+        border-radius: 0.25rem;
+        vertical-align : middle;
     }
 
     .pic {
         width: 40%;
+        text-align: center;
+        border: 1px solid #6c757d;
+        border-radius: 0.25rem;
+        vertical-align : middle;
+        justify-content: center;
+        align-items: center;
     }
 
     .remarks {
         width: 30%;
+        border: 1px solid #6c757d;
+        border-radius: 0.25rem;
+        vertical-align: center;
+        text-align: center;
+    }
+
+    .sign-title{
+        text-align : center;
+    }
+
+    .sign-name{
+        text-align : center;
+    }
+
+    .noborder{
+        border : none;
     }
 
 </style>
 
-<table class="main">
+<table class="main noborder">
     <tr>
-        <td class="title align-center">
+        <td class="title">
             <strong>{{ $meeting_data[0]->project_name }} - Inspection Report</strong>
         </td>
         <td class="title logo">
@@ -72,7 +115,7 @@
     </tr>
 </table>
 
-<table class="main general-info">
+<table class="main general-info noborder">
     <tr>
         <td></td>
         <td></td>
@@ -81,7 +124,7 @@
     <tr>
         <td class="info">Project Name</td>
         <td class="semicolon">:</td>
-        <td class="info-content">haha</td>
+        <td class="info-content">{{ $meeting_data[0]->project_name }}</td>
     </tr>
     <tr>
         <td class="info">Inspection Date</td>
@@ -109,18 +152,13 @@
 
 <table>
     <tr>
-        <td></td>
-    </tr>
-</table>
-
-<table>
-    <tr>
         <td><strong>APPROVED MATERIAL</strong></td>
     </tr>
 </table>
 
-<table class="main">
-    @if($upload_data_approved->count() > 0)
+
+@if($upload_data_approved->count() > 0)
+    <table class="main align-center">
         <tr>
             <th class="no">No</th>
             <th class="prod-id">Product ID</th>
@@ -147,12 +185,22 @@
                 </tr>
             @endif
         @endforeach
-    @else
+    </table>
+@else
+    <table class="main noborder">
         <tr>
             <td>None</td>
         </tr>
-    @endif
+    </table>
+@endif
+
+
+<table>
+    <tr>
+        <td></td>
+    </tr>
 </table>
+
 
 <table>
     <tr>
@@ -165,8 +213,9 @@
         <td><strong>DECLINED MATERIAL</strong></td>
     </tr>
 </table>
-<table class="main">
-    @if($upload_data_declined->count() > 0)
+
+@if($upload_data_declined->count() > 0)
+    <table class="main">
         <tr>
             <th class="no">No</th>
             <th class="prod-id">Product ID</th>
@@ -193,11 +242,20 @@
                 </tr>
             @endif
         @endforeach
-    @else
+    </table>
+@else
+    <table class="main noborder">
         <tr>
             <td>None</td>
         </tr>
-    @endif
+    </table>
+@endif
+
+
+<table>
+    <tr>
+        <td></td>
+    </tr>
 </table>
 
 <table>
@@ -206,7 +264,13 @@
     </tr>
 </table>
 
-<table class="main">
+<table>
+    <tr>
+        <td></td>
+    </tr>
+</table>
+
+<table class="main noborder">
     <tr class="sign-title">
         <td></td>
         <td class="inspector_sign">Inspector</td>
