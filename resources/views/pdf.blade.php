@@ -6,7 +6,7 @@
 
     <div class="row menu-canvas mx-1 my-2 py-3">
         <div class="col-md px-0">
-            <h4 class="align-center"><strong>{{ $meeting_data[0]->project_name }} Inspection Report</strong></h4>
+            <h4 class="align-center"><strong>{{ $meeting_data[0]->project_name }} - Inspection Report</strong></h4>
         </div>
 
         <div class="ml-auto float-right pr-0">
