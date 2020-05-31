@@ -128,10 +128,10 @@ class ReportsController extends Controller
             ->with(compact('upload_data_approved'))
             ->with(compact('upload_data_declined'))
             ->with(compact('report'));
-        PDF::SetTitle('Report-' . $meeting_data[0]->project_name);
+        PDF::SetTitle('Report-' .$meeting_data[0]->project_name);
         PDF::AddPage();
         PDF::writeHTML($html_content, true, false, true, false, '');
-        PDF::Output('Report-' . $meeting_data[0]->project_name . '.pdf');
+        PDF::Output('Report-' .$meeting_data[0]->project_name . '.pdf');
     }
 
     public function save_sign(Request $request)

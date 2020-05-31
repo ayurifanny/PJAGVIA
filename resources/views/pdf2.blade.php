@@ -8,8 +8,8 @@
         box-sizing: border-box;
         font-size: 1em;
         border: 0.3px solid grey;
-        margin top: 20px;
         position : relative;
+        padding-left : 0px;
     }
 
     .title {
@@ -19,17 +19,8 @@
 
     .align-center {
         display: flex;
-        
-        justify-content: center;
+        justify-content: center !important;
         align-items: center;
-    }
-
-    .coba {
-        display: flex;
-        float: left;
-        text-align: left;
-        vertical-align: middle;
-        margin-left : 0px;
     }
 
     .logo {
@@ -39,6 +30,7 @@
     }
 
     .general-info {
+        color: #2c2c2c;
         border: 0.3px solid grey;
     }
 
@@ -54,39 +46,48 @@
         vertical-align : center;
     }
 
+    .table-content{
+        color: #2c2c2c;
+        padding-top : 3px;
+        margin-right : 2px;
+        margin-top: 2px;
+        margin-bottom : 2px;
+        padding-left: 0px;
+    }
+
     .no {
-        position : absolute;
-        width: 5%;
+        vertical-align : middle;
         text-align: center;
         border: 1px solid #6c757d;
         border-radius: 0.25rem;
-        vertical-align : middle;
+        width: 5%;
     }
 
     .prod-id {
-        width: 25%;
-        text-align: center;
         border: 1px solid #6c757d;
         border-radius: 0.25rem;
         vertical-align : middle;
+        text-align: center;
+        width: 25%;
     }
 
     .pic {
-        width: 40%;
-        text-align: center;
         border: 1px solid #6c757d;
         border-radius: 0.25rem;
         vertical-align : middle;
+        text-align: center;
         justify-content: center;
         align-items: center;
+        width: 40%;
+        padding-top: 5px !important;
     }
 
     .remarks {
-        width: 30%;
         border: 1px solid #6c757d;
         border-radius: 0.25rem;
-        vertical-align: center;
+        vertical-align: middle !important;
         text-align: center;
+        width: 30%;
     }
 
     .sign-title{
@@ -103,7 +104,7 @@
 
 </style>
 
-<table class="main noborder">
+<table class="noborder">
     <tr>
         <td class="title">
             <strong>{{ $meeting_data[0]->project_name }} - Inspection Report</strong>
@@ -115,7 +116,7 @@
     </tr>
 </table>
 
-<table class="main general-info noborder">
+<table class="general-info noborder">
     <tr>
         <td></td>
         <td></td>
@@ -158,27 +159,27 @@
 
 
 @if($upload_data_approved->count() > 0)
-    <table class="main align-center">
+    <table class="table-content align-center">
         <tr>
-            <th class="no">No</th>
-            <th class="prod-id">Product ID</th>
-            <th class="pic">Picture</th>
-            <th class="remarks">Remarks</th>
+            <th class="no"><strong> No</strong></th>
+            <th class="prod-id"><strong>Product ID</strong></th>
+            <th class="pic"><strong>Picture</strong></th>
+            <th class="remarks"><strong>Remarks</strong></th>
         </tr>
         @foreach($upload_data_approved as $key => $pic)
             @if($pic->approved == 1)
                 <tr>
                     <td class="no">{{ ++$key }}</td>
-                    <td class="prod-id">{{ $pic->photo }}</td>
+                    <td class="prod-id"> {{ $pic->photo }}</td>
                     @if($pic->photo_edited == null)
                         <td class="pic">
                             <img src="{{ '/storage/' . $pic->meeting_id . '/' . $pic->photo }}"
-                                class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
+                                class="img-fluid img-thumbnail img-upload" alt={{ $pic->photo }}>
                         </td>
                     @else
                         <td class="pic">
                             <img src="{{ '/storage/' . $pic->meeting_id . '/' . $pic->photo_edited }}"
-                                class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
+                                class="img-fluid img-thumbnail img-upload" alt={{ $pic->photo }}>
                         </td>
                     @endif
                     <td class="remarks">{{ $pic->remarks }}</td>
@@ -187,7 +188,7 @@
         @endforeach
     </table>
 @else
-    <table class="main noborder">
+    <table class="noborder">
         <tr>
             <td>None</td>
         </tr>
@@ -215,9 +216,9 @@
 </table>
 
 @if($upload_data_declined->count() > 0)
-    <table class="main">
+    <table class="table-content align-center">
         <tr>
-            <th class="no">No</th>
+            <th class="no">No </th>
             <th class="prod-id">Product ID</th>
             <th class="pic">Picture</th>
             <th class="remarks">Remarks</th>
@@ -226,7 +227,7 @@
             @if($pic->approved == 0)
                 <tr>
                     <td class="no">{{ ++$key }}</td>
-                    <td class="prod-id">{{ $pic->photo }}</td>
+                    <td class="prod-id"> {{ $pic->photo }}</td>
                     @if($pic->photo_edited == null)
                         <td class="pic">
                             <img src="{{ '/storage/' . $pic->meeting_id . '/' . $pic->photo }}"
@@ -238,7 +239,7 @@
                                 class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
                         </td>
                     @endif
-                    <td class="remarks">{{ $pic->remarks }}</td>
+                    <td class="remarks align-center">{{ $pic->remarks }}</td>
                 </tr>
             @endif
         @endforeach
