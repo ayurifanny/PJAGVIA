@@ -1,20 +1,13 @@
 <style>
-    .main {
-        font-family: 'Open Sans';
-        font-weight: 400;
-        line-height: 1.6;
-        color: #2c2c2c;
-        text-align: left;
-        box-sizing: border-box;
-        font-size: 1em;
-        border: 0.3px solid grey;
-        position : relative;
-        padding-left : 0px;
-    }
 
     .title {
-        border-bottom: 0.3px solid grey;
+        
         font-size: 1.5em;
+        float: left;
+        width: 75%;
+    }
+    .border {
+        border-bottom: 0.3px solid grey;
     }
 
     .align-center {
@@ -27,8 +20,13 @@
         float: right;
         text-align: right;
         vertical-align: middle;
+        width: 25%;
+        
     }
 
+    .info-content {
+        width: fit-content;
+    }
     .general-info {
         color: #2c2c2c;
         border: 0.3px solid grey;
@@ -106,13 +104,15 @@
 
 <table class="noborder">
     <tr>
-        <td class="title">
-            <strong>{{ $meeting_data[0]->project_name }} - Inspection Report</strong>
-        </td>
-        <td class="title logo">
+        <td class="title"><strong>{{$meeting_data[0]->project_name}} - Inspection Report</strong></td>
+        <td class="logo">
             <img width="90" height="40" class="img-responsive d-inline-block align-center"
                 src="http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
         </td>
+    </tr>
+    <tr>
+        <td class="border"></td>
+        <td class="border"></td>
     </tr>
 </table>
 
@@ -274,9 +274,9 @@
 <table class="main noborder">
     <tr class="sign-title">
         <td></td>
-        <td class="inspector_sign">Inspector</td>
+        <td class="inspector_sign"><strong>Inspector</strong></td>
         <td></td>
-        <td class="customer_sign">Client</td>
+        <td class="customer_sign"><strong>Client</strong></td>
         <td></td>
     </tr>
     <tr class="sign">
