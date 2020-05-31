@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Meetings;
 use App\Uploads;
 use Illuminate\Http\Request;
+use PDF;
 
 class DetailMeeting extends Controller
 {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\MeetingRequests;
 use App\Meetings;
+use App\Reports;
 use Calendar;
 use Illuminate\Http\Request;
 
@@ -130,7 +131,13 @@ class HomeController extends Controller
             $input = $request->all();
             $meeting_request = MeetingRequests::findOrFail($input['id']);
 
+            $report = new Reports();
+            $report->user_id = $meeting_request->user_id;
+            $report->host_id = \Auth::id();
+            $report->save();
+
             $meeting = new Meetings();
+            $meeting->report_id = $report->id;
             $meeting->user_id = $meeting_request->user_id;
             $meeting->customer_name = $meeting_request->customer_name;
             $meeting->project_name = $meeting_request->project_name;
