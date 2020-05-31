@@ -87,7 +87,7 @@
 
                                     <th scope="col">Inspection Date</th>
                                     <th scope="col">Inspection Time</th>
-                                    <th scope="col">Created At</th>
+                                    <th scope="col">Requested At</th>
                                     <th scope="col">Report</th>
                                 </tr>
                             </thead>
@@ -108,11 +108,12 @@
                                         <td>{{ date('M d, Y', $dt) }}</td>
                                         <td>{{ date('H:i:s A', $dt) }}</td>
                                         <td>{{ $meeting->created_at }}</td>
-                                        @if($meeting->meeting_date < Carbon\Carbon::now())
-                                            <td><a href='/report/{{ $meeting->report_id }}'>View</a></td>
-                                        @else
-                                            <td>Not Available Yet</td>
-                                        @endif
+                                        <td><a href='/report/{{ $meeting->report_id }}'>View</a></td>
+                                        <!-- @if($meeting->meeting_date < Carbon\Carbon::now()) -->
+                                        
+                                        <!-- @else -->
+                                            <!-- <td>Not Available Yet</td> -->
+                                        <!-- @endif -->
                                     </tr>
                                 @endforeach
                             </tbody>

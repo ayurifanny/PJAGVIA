@@ -25,10 +25,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10 py-3">
-            <button type="button" class="btn btn-primary mb-2"
+            <button type="button" class="btn btn-dark mb-2"
                 onClick="location.href='/download_pdf/{{ request()->route('id') }}'">
-                Download
+                Generate PDF
             </button>
+
+            <div class="float-left mr-4">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Sign Report
+                </button>
+            </div>
 
             <div class="bg-white py-2 px-2 mt-2 mb-4">
                 <div class="border border-secondary my-3 mx-2 px-2">
@@ -36,12 +43,7 @@
                 </div>
             </div>
 
-            <div class="ml-auto float-right">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Signature
-                </button>
-            </div>
+            
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
@@ -71,22 +73,22 @@
                                         
                                         @if (auth()->user()->hasRole('customer'))
                                         <div class="form-group row">
-                                            <label for="name" class="col-sm-4 col-form-label">Name
+                                            <label for="name" class="col-sm-3 col-form-label">Name
                                                 <span class="ml-3">:</span>
                                             </label>
                                             
-                                            <div class="col-sm-8">
-                                                <input type="text" name="change_name" class="form-control nameedit" placeholder="{{$report->customer_name}}">
+                                            <div class="col-sm-9">
+                                                <input type="text" id="change_name" name="name" class="form-control nameedit" placeholder="{{$report->customer_name}}">
                                             </div>
                                         </div>
         
                                         @elseif (auth()->user()->hasRole('inspector'))
                                         <div class="form-group row">
-                                            <label for="name" class="col-sm-4 col-form-label">Name 
+                                            <label for="name" class="col-sm-3 col-form-label">Name 
                                                 <span class="ml-3">:</span>
                                             </label>
                                             
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-9">
                                                 <input id="change_name" name="name" type="text" class="form-control border-top-0 border-left-0 border-right-0" placeholder="{{$report->inspector_name}}">
                                             </div>
                                         </div>
@@ -168,7 +170,6 @@
             context = canvas.getContext('2d');
             var dataURL = canvas.toDataURL("image/png");
             var name = document.getElementById("change_name");
-            alert(name.value)
             $.ajax({
                 /* the route pointing to the post function */
                 url: '/save_sign',
