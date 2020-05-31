@@ -32,15 +32,19 @@ class ReportsController extends Controller
         $meeting_data = Meetings::where('report_id', $id)->get();
         $upload_data_approved = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 1)->get();
         $upload_data_declined = Uploads::select("id", "meeting_id", "photo", "photo_edited", "remarks", "approved")->where('meeting_id', $meeting_data[0]->id)->where('approved', 0)->get();
-        // if ($meeting_data[0]->meeting_date < Carbon::now()) {
-        return \View::make('report')
-            ->with(compact('meeting_data'))
-            ->with(compact('upload_data_approved'))
-            ->with(compact('upload_data_declined'))
-            ->with(compact('report'));
-        // } else {
-        //     abort(403, 'Unauthorized action.');
-        // }
+        if (\Auth::id() == $report->user_id || \Auth::id() == $report->host_id) {
+            // if ($meeting_data[0]->meeting_date < Carbon::now()) {
+            return \View::make('report')
+                ->with(compact('meeting_data'))
+                ->with(compact('upload_data_approved'))
+                ->with(compact('upload_data_declined'))
+                ->with(compact('report'));
+            // } else {
+            //     abort(403, 'Unauthorized action.');
+            // }
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
 
     }
 
@@ -128,20 +132,25 @@ class ReportsController extends Controller
         // $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('pdf2', ['meeting_data' => $meeting_data, 'upload_data_declined' => $upload_data_declined, 'upload_data_approved' => $upload_data_approved, 'report' => $report]);
 
         // return $pdf->render('Report-' . '.pdf');
-        // if ($meeting_data[0]->meeting_date < Carbon::now()) {
+        if (\Auth::id() == $report->user_id || \Auth::id() == $report->host_id) {
 
-        $html_content = \View::make('pdf2')
-            ->with(compact('meeting_data'))
-            ->with(compact('upload_data_approved'))
-            ->with(compact('upload_data_declined'))
-            ->with(compact('report'));
-        PDF::SetTitle('Report-' . $meeting_data[0]->project_name);
-        PDF::AddPage();
-        PDF::writeHTML($html_content, true, false, true, false, '');
-        PDF::Output('Report-' . $meeting_data[0]->project_name . '.pdf');
-        // } else {
-        //     abort(403, 'Unauthorized action.');
-        // }
+            // if ($meeting_data[0]->meeting_date < Carbon::now()) {
+
+            $html_content = \View::make('pdf2')
+                ->with(compact('meeting_data'))
+                ->with(compact('upload_data_approved'))
+                ->with(compact('upload_data_declined'))
+                ->with(compact('report'));
+            PDF::SetTitle('Report-' . $meeting_data[0]->project_name);
+            PDF::AddPage();
+            PDF::writeHTML($html_content, true, false, true, false, '');
+            PDF::Output('Report-' . $meeting_data[0]->project_name . '.pdf');
+            // } else {
+            //     abort(403, 'Unauthorized action.');
+            // }
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
     }
 
     public function save_sign(Request $request)
