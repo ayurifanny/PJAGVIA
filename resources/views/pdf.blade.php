@@ -10,7 +10,7 @@
         </div>
 
         <div class="ml-auto float-right pr-0">
-            <img width="90" height="40" class="img-responsive d-inline-block align-center"
+            <img width="70" height="40" class="img-responsive d-inline-block align-center"
                 src="/storage/logo.png" alt="">
         </div>
     </div>

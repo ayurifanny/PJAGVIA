@@ -106,7 +106,7 @@
     <tr>
         <td class="title"><strong>{{$meeting_data[0]->project_name}} - Inspection Report</strong></td>
         <td class="logo">
-            <img width="90" height="40" class="img-responsive d-inline-block align-center"
+            <img width="70" height="40" class="img-responsive d-inline-block align-center"
                 src="/storage/logo.png" alt="">
         </td>
     </tr>
