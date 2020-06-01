@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Reports;
 use App\Uploads;
 use Illuminate\Http\Request;
 use Image;
@@ -129,5 +130,50 @@ class UploadsController extends Controller
         endif;
 
         return back();
+    }
+
+    public function upload_sign(Request $request)
+    {
+
+        $file = $request->file('file');
+        $report = Reports::findOrFail($request['id']);
+        $role = $request['role'];
+
+        if ($role == 'inspector') {
+            $user = $report->host_id;
+        } else {
+            $user = $report->user_id;
+        }
+
+        if (!empty($file)):
+            $filename = "sign-" . $request['id'] . '.png';
+            $image = Image::make($file);
+
+            if ($image->width() > 500) {
+                $image->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $image->stream();
+                Storage::disk('public')->put('sign/' . $user . '/' . $filename, $image);
+            } else if ($image->height() > 500) {
+            $image->resize(null, 500, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $image->stream();
+            Storage::disk('public')->put('sign/' . $user . '/' . $filename, $image);
+        } else {
+            Storage::disk('public')->put('sign/' . $user . '/' . $filename, file_get_contents($file));
+        }
+
+        if ($role == 'inspector') {
+            $report->inspector_signature = $filename;
+        } else {
+            $report->customer_signature = $filename;
+        }
+        $report->save();
+
+        endif;
+
+        return redirect()->back();
     }
 }

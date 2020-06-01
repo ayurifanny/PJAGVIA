@@ -276,7 +276,9 @@
                 x: cursor.x,
                 y: cursor.y
             });
-            sendPusherData(strokes[strokes.length - 1])
+            if (opts.image != null) {
+                sendPusherData(strokes[strokes.length - 1]);
+            }
             
             that.redraw();
 

@@ -19,7 +19,8 @@
         "laravelcollective/html": "~6.0",
         "pusher/pusher-php-server": "^4.1",
         "qlick/laravel-full-calendar": "~1.0",
-        "spatie/laravel-permission": "^3.11"
+        "spatie/laravel-permission": "^3.11",
+        "elibyy/tcpdf-laravel": "7.0.*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
