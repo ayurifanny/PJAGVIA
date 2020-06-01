@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'PJA Group Virtual Inspection App') }}</title>
+    <title>{{ config('app.name', 'Virtual Galvanize Inspection App') }}</title>
 
     <!-- Scripts -->
     
@@ -50,8 +50,8 @@
                 @endguest
             <div class="container">
                 <a class="navbar-brand px-1 py-2" href="/">
-                    <img width="90" height="40" class="d-inline-block align-center"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
-                    <span class ="h4 text-center font-italic my-auto ml-3" >PJA Group Virtual Inspection App</span>
+                    <img width="90" height="40" class="d-inline-block align-center"  src = "/storage/logo.png" alt="">
+                    <span class ="h4 text-center font-italic my-auto ml-3" >Virtual Galvanize Inspection App</span>
                 </a>
 
 

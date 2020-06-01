@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>PJAGVIA</title>
+        <title>Virtual Galvanize Inspection App</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -73,14 +73,14 @@
 
                 <div class="top-left links">
                     <a class="mr-4" href="/">
-                        <img width="110" height="45" class="d-inline-block align-top"  src = "http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
+                        <img width="110" height="45" class="d-inline-block align-top"  src = "/storage/logo.png" alt="">
                     </a>
                 </div>  
 
                 <div class="row w-75 mt-5 pt-5">
                     <div class="col">  
                         <h1 class="text-white font-weight-bolder"><strong>
-                            PJA Group Virtual Inspection App</strong>
+                            Virtual Galvanize Inspection App</strong>
                         </h1>
                     </div>
 
