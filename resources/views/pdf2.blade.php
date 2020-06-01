@@ -107,7 +107,7 @@
         <td class="title"><strong>{{$meeting_data[0]->project_name}} - Inspection Report</strong></td>
         <td class="logo">
             <img width="90" height="40" class="img-responsive d-inline-block align-center"
-                src="http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
+                src="/storage/logo.png" alt="">
         </td>
     </tr>
     <tr>

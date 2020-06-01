@@ -9,7 +9,7 @@
     <link rel="icon" 
       type="image/png" 
       href="/storage/logo.png">
-    <title>{{ config('app.name', 'PJA Group Virtual Inspection App') }}</title>
+    <title>{{ config('app.name', 'Virtual Galvanize Inspection App') }}</title>
 
     <!-- Scripts -->
     

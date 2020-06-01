@@ -11,7 +11,7 @@
 
         <div class="ml-auto float-right pr-0">
             <img width="90" height="40" class="img-responsive d-inline-block align-center"
-                src="http://www.pjagroup.com/wp-content/uploads/2019/06/PJA-logo.png" alt="">
+                src="/storage/logo.png" alt="">
         </div>
     </div>
 
