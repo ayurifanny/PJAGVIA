@@ -53,8 +53,13 @@
                     <br>
                     <div class="row">
                         <div class="col-sm-3 ">Inspection Link</div>
-                        <div class="col ">: <a href='{{ $meeting_data->meeting_link }}'
+                        @if(auth()->user()->hasRole('inspector'))
+                        <div class="col ">: <a href='{{ $meeting_data->meeting_link }}#userInfo.displayName=%22{{ $meeting_data->user->name }}%22'
                                 target="_blank">{{ $meeting_data->meeting_link }}</a></div>
+                        @else
+                        <div class="col ">: <a href='{{ $meeting_data->meeting_link }}#userInfo.displayName=%22{{ $meeting_data->customer_name }}%22'
+                            target="_blank">{{ $meeting_data->meeting_link }}</a></div>
+                        @endif
                     </div>
                     <div class="row">
                         <div class="col-sm-3 ">Report</div>
