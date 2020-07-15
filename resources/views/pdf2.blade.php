@@ -145,6 +145,12 @@
         <td class="info-content">{{ $report->inspector_name }}</td>
     </tr>
     <tr>
+        <td class="info">Quantity</td>
+        <td class="semicolon">:</td>
+        <td class="info-content">{{ $meeting_data[0]->quantity }} Kg / {{ $meeting_data[0]->quantity / 1000 }} Ton</td>
+    </tr>
+    
+    <tr>
         <td></td>
         <td></td>
         <td></td>

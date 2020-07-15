@@ -41,6 +41,7 @@
                                         <th scope="col">Customer Name</th>
                                         <th scope="col">Inspection Date</th>
                                         <th scope="col">Inspection Time</th>
+                                        <th scope="col">Qty (Kg)</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -53,6 +54,7 @@
                                             <?php $dt = strtotime($meeting_request->request_date); ?>
                                             <td>{{ date('M d, Y', $dt) }}</td>
                                             <td>{{ date('H:i:s A', $dt) }}</td>
+                                            <td>{{$meeting_request->quantity }}</td>
                                             <td>
                                                 <form method="POST"
                                                     action="{{ url('meetings/approve_meeting') }}">

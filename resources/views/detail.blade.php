@@ -50,6 +50,10 @@
                         <div class="col-sm-3 ">Time</div>
                         <div class="col ">: {{ date('H:i:s A', $dt) }}</div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-3 ">Quantity</div>
+                        <div class="col ">: {{ $meeting_data->quantity }} Kg / {{ $meeting_data->quantity / 1000 }} Ton</div>
+                    </div>
                     <br>
                     <div class="row">
                         <div class="col-sm-3 ">Inspection Link</div>

@@ -69,11 +69,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mb-5">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>Quantity:</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <input type="number" id="qty" name="quantity" class="form-control" placeholder="Qty">
+                                    @if ($errors->has('quantity'))
+                                        <span class="text-danger">{{ $errors->first('quantity') }}</span>
+                                    @endif
+                                </div>
+                                <div class="col-sm-8">
+                                    <h5 id="ton_label">Kg  /  - Ton</h5>
+                                </div>
+                            </div>
                             
                         </div>
-                    
-               
+                                  
                         <div class="form-group">
                             <button class="btn btn-primary btn-submit btn-block">Submit</button>
                         </div>
@@ -111,6 +126,13 @@
         var name = '<?=auth()->user()->name?>'
         $("#customer_name").val(name);
     });
+
+    var onChange = function(evt) {
+        number = this.value / 1000
+        document.getElementById('ton_label').innerHTML = 'Kg  / ' + number + "  Ton";
+    };
+    var input = document.getElementById('qty');
+    input.addEventListener('input', onChange, false);
 
 </script>
 @endsection

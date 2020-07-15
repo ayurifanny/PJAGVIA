@@ -100,11 +100,13 @@ class HomeController extends Controller
                 'project_name' => 'required',
                 'datepicker' => 'required',
                 'time' => 'required',
+                'quantity' => 'required',
             ], [
                 'name.required' => 'Name is required',
                 'project_name.required' => 'Project Name is required',
                 'datepicker.required' => 'Request Date is required',
                 'time.required' => 'Request Time is required',
+                'quantity.required' => 'Quantity is required',
             ]);
 
             $input = $request->all();
@@ -117,6 +119,7 @@ class HomeController extends Controller
             $combinedDT = date('Y-m-d H:i:s', strtotime("$request_date $request_time"));
             $req_meeting->request_date = $combinedDT;
             $req_meeting->approved = 0;
+            $req_meeting->quantity = $input['quantity'];
             $req_meeting->save();
 
             return back()->with('success', 'Request Meeting has been saved');
@@ -142,6 +145,7 @@ class HomeController extends Controller
             $meeting->customer_name = $meeting_request->customer_name;
             $meeting->project_name = $meeting_request->project_name;
             $meeting->meeting_date = $meeting_request->request_date;
+            $meeting->quantity = $meeting_request->quantity;
             $meeting->host_id = \Auth::id();
             $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
             $meeting->meeting_link = 'http://' . env('JISTI_URL', 'meet.jit.si') . '/' . substr(str_shuffle($permitted_chars), 0, 10);
