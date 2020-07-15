@@ -102,7 +102,7 @@ class UploadsController extends Controller
             foreach ($files as $file):
                 $x++;
                 $filename = "II-" . str_pad($request['id'], 3, '0', STR_PAD_LEFT) . "-" . $file->getClientOriginalName();
-                $image = Image::make($file);
+                $image = Image::make($file->getRealPath());
 
                 if ($image->width() > 1000) {
                     $image->resize(1000, null, function ($constraint) {
