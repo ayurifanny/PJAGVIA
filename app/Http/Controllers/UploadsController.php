@@ -100,23 +100,27 @@ class UploadsController extends Controller
         if (!empty($files)):
             $x = 0;
             foreach ($files as $file):
-                $x++;
-                $filename = "II-" . str_pad($request['id'], 3, '0', STR_PAD_LEFT) . "-" . $file->getClientOriginalName();
-                $image = Image::make($file);
+                try {
+                    $x++;
+                    $filename = "II-" . str_pad($request['id'], 3, '0', STR_PAD_LEFT) . "-" . $file->getClientOriginalName();
+                    $image = Image::make($file);
 
-                if ($image->width() > 700) {
-                    $image->resize(700, null, function ($constraint) {
+                    if ($image->width() > 700) {
+                        $image->resize(700, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                        $image->save(Storage::disk('public')->path($request['id'] . '/' . $filename));
+                        #Storage::disk('public')->put($request['id'] . '/' . $filename, $image);
+                    } else if ($image->height() > 700) {
+                    $image->resize(null, 700, function ($constraint) {
                         $constraint->aspectRatio();
                     });
                     $image->save(Storage::disk('public')->path($request['id'] . '/' . $filename));
-                    #Storage::disk('public')->put($request['id'] . '/' . $filename, $image);
-                } else if ($image->height() > 700) {
-                $image->resize(null, 700, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-                $image->save(Storage::disk('public')->path($request['id'] . '/' . $filename));
-            } else {
-                Storage::disk('public')->put($request['id'] . '/' . $filename, file_get_contents($file));
+                } else {
+                    Storage::disk('public')->put($request['id'] . '/' . $filename, file_get_contents($file));
+                }
+            } catch (Throwable $e) {
+                abort(404, "Cannot Upload Photo");
             }
 
             $upload = new Uploads();
