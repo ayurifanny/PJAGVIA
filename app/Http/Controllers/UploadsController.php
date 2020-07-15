@@ -104,14 +104,14 @@ class UploadsController extends Controller
                 $filename = "II-" . str_pad($request['id'], 3, '0', STR_PAD_LEFT) . "-" . $file->getClientOriginalName();
                 $image = Image::make($file);
 
-                if ($image->width() > 1000) {
-                    $image->resize(1000, null, function ($constraint) {
+                if ($image->width() > 700) {
+                    $image->resize(700, null, function ($constraint) {
                         $constraint->aspectRatio();
                     });
                     $image->save(Storage::disk('public')->path($request['id'] . '/' . $filename));
                     #Storage::disk('public')->put($request['id'] . '/' . $filename, $image);
-                } else if ($image->height() > 1000) {
-                $image->resize(null, 1000, function ($constraint) {
+                } else if ($image->height() > 700) {
+                $image->resize(null, 700, function ($constraint) {
                     $constraint->aspectRatio();
                 });
                 $image->save(Storage::disk('public')->path($request['id'] . '/' . $filename));
