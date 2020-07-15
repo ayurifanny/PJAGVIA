@@ -348,6 +348,7 @@
         var canvas = document.getElementById('canvas');
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(".status_picture").click(function () {
+            $('#loader').show();
             var canvas = document.getElementById("canvas");
             context = canvas.getContext('2d');
             var dataURL = canvas.toDataURL("image/png");
@@ -474,16 +475,7 @@ $(function(){
 });
 
 $('#loader').hide();
-    
-    document.getElementById("approve").addEventListener("click", function(){
-        $('#loader').show();
-        $('#decline').prop( "disabled", true );
-    });
 
-    document.getElementById("decline").addEventListener("click", function(){
-        $('#loader').show();
-        $('#approve').prop( "disabled", true );
-    });
 </script>
 
 @endsection
