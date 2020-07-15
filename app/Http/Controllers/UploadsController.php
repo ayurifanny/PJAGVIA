@@ -102,20 +102,19 @@ class UploadsController extends Controller
             foreach ($files as $file):
                 $x++;
                 $filename = "II-" . str_pad($request['id'], 3, '0', STR_PAD_LEFT) . "-" . $file->getClientOriginalName();
-                $image = Image::make($file->getRealPath());
+                $image = Image::make($file);
 
                 if ($image->width() > 1000) {
                     $image->resize(1000, null, function ($constraint) {
                         $constraint->aspectRatio();
                     });
-                    $image->stream();
-                    Storage::disk('public')->put($request['id'] . '/' . $filename, $image);
+                    $image->save(Storage::disk('public')->path($request['id'] . '/' . $filename));
+                    #Storage::disk('public')->put($request['id'] . '/' . $filename, $image);
                 } else if ($image->height() > 1000) {
                 $image->resize(null, 1000, function ($constraint) {
                     $constraint->aspectRatio();
                 });
-                $image->stream();
-                Storage::disk('public')->put($request['id'] . '/' . $filename, $image);
+                $image->save(Storage::disk('public')->path($request['id'] . '/' . $filename));
             } else {
                 Storage::disk('public')->put($request['id'] . '/' . $filename, file_get_contents($file));
             }
