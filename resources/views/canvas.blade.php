@@ -137,10 +137,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p class="text-dark">Approve this photo for inspection?</p>
+                        <p class="text-dark">Approve this photo for inspection? </p>
                         <div class="mt-2 float-right">
                             <form method="POST" accept-charset="utf-8" name="form1">
                                 <input name="hidden_data" id='hidden_data' type="hidden" />
+                                <img src="/ajax-loader-blue.gif" id="loader" alt="" style="width:40px;height:40px;">
                                 <input type="button" class="btn btn-secondary mr-2 status_picture" id="decline" value="Decline" />
                                 <input type="button" class="btn btn-primary status_picture" id="approve" value="Approve" />
                             </form>
@@ -471,5 +472,18 @@ $(function(){
 
     setInterval(drawScene, 30); // loop drawScene
 });
+
+$('#loader').hide();
+    
+    document.getElementById("approve").addEventListener("click", function(){
+        $('#loader').show();
+        $('#decline').prop( "disabled", true );
+    });
+
+    document.getElementById("decline").addEventListener("click", function(){
+        $('#loader').show();
+        $('#approve').prop( "disabled", true );
+    });
 </script>
+
 @endsection
