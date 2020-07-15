@@ -97,7 +97,7 @@
                                 </div>
                                 
                                 <div class="float-right mr-3">
-                                    <button class="btn btn-success" type="submit">Upload</button>
+                                    <button class="btn btn-success" id="upload_btn" type="submit"><img src="/ajax-loader.gif" id="loader" alt="" style="width:30px;height:30px;">Upload</button>
                                 </div>
                             </div>
                         </div>
@@ -176,4 +176,14 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('additional_script')
+<script>
+    $('#loader').hide();
+    
+    document.getElementById("upload_btn").addEventListener("click", function(){
+        $('#loader').show();
+    });
+</script>
 @endsection
