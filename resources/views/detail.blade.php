@@ -127,7 +127,8 @@
                                             <img src='{{ url("storage/" . $pic->meeting_id . "/" . $pic->photo) }}'
                                         class="img-fluid img-thumbnail" alt={{ $pic->photo }}>
                                         </td>
-                                        <td>{{ $pic->remarks }}</td>
+
+                                        <td> {{ Str::of($pic->remarks)->limit(20) }}</td>
     
                                         @if($pic->photo_edited == null)
                                             <td></td>
