@@ -41,3 +41,11 @@ select option[value="#0000FF"] {
   border: none;
   text-decoration: underline;
 }
+
+.par-remarks{
+  word-wrap: break-word;
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+  margin-right: -30px;
+  margin-left: -15px;
+}

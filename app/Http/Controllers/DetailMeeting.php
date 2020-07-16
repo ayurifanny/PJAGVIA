@@ -6,6 +6,7 @@ use App\Meetings;
 use App\Uploads;
 use Illuminate\Http\Request;
 use PDF;
+use Illuminate\Support\Str;
 
 class DetailMeeting extends Controller
 {
@@ -37,6 +38,12 @@ class DetailMeeting extends Controller
     {
         return (auth()->user()->hasRole('customer') && $detail->user_id == \Auth::id()) || (auth()->user()->hasRole('inspector') && $detail->host_id == \Auth::id());
     }
+
+    //limit text to show in remark's column
+    // public function getShortDescriptionAttribute()
+    // {
+    //     return Str::words($this->description, 20, '...');
+    // }
 
     /**
      * Handle the incoming request.

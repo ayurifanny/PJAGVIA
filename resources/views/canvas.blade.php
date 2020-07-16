@@ -157,8 +157,8 @@
         <div class="col-md">
             <div class="row ">
                 <h6 class="pr-2"><strong>Customer Remarks :  </strong></h6>
-                <span id="par-remarks"><h6 class ="text-center">{{$pic->remarks}}</h6></span>
             </div>
+            <p class ="par-remarks pr-2">{{$pic->remarks}}</p>
         </div>
     </div>
     @endif
