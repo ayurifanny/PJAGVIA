@@ -82,8 +82,8 @@
                                         <span class="text-danger">{{ $errors->first('quantity') }}</span>
                                     @endif
                                 </div>
-                                <div class="col-sm-8">
-                                    <h5 id="ton_label">Kg  /  - Ton</h5>
+                                <div class="col-sm-8 py-2">
+                                    <h6 id="ton_label">Kg  /  - Ton</h6>
                                 </div>
                             </div>
                             

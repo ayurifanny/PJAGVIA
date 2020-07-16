@@ -54,7 +54,7 @@
         <strong>APPROVED MATERIAL</strong>
         @if($upload_data_approved->count() > 0)
             <div class="table-responsive">
-                <table class="table table-bordered px-0">
+                <table class="table-report table table-bordered px-0">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -98,7 +98,7 @@
 
         @if($upload_data_declined->count() > 0)
             <div class="table-responsive">
-                <table class="table table-bordered px-0">
+                <table class="table-report table table-bordered px-0">
                     <thead>
                         <tr>
                             <th>No</th>

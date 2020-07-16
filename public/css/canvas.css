@@ -49,3 +49,15 @@ select option[value="#0000FF"] {
   margin-right: -30px;
   margin-left: -15px;
 }
+
+.table-report{
+  table-layout: fixed;
+}
+
+.table-report td {
+  overflow-wrap: break-word;
+}
+
+.wrap-break{
+  word-wrap: break-word;
+}

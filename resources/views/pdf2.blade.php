@@ -50,7 +50,7 @@
         margin-right : 2px;
         margin-top: 2px;
         margin-bottom : 2px;
-        padding-left: 0px;
+        padding-left: 1px;
     }
 
     .no {
