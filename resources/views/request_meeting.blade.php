@@ -129,7 +129,7 @@
 
     var onChange = function(evt) {
         number = this.value / 1000
-        document.getElementById('ton_label').innerHTML = 'Kg  / ' + number + "  Ton";
+        document.getElementById('ton_label').innerHTML = 'Kg  / ' + parseFloat(number).toFixed(4) + "  Ton";
     };
     var input = document.getElementById('qty');
     input.addEventListener('input', onChange, false);

@@ -46,7 +46,7 @@
     <div class="row">
         <div class="col-sm-2">Quantity</div>
         <div class="col ">:
-            <span class="ml-2">{{ $meeting_data[0]->quantity }} Kg / {{ $meeting_data[0]->quantity / 1000 }} Ton</span>
+            <span class="ml-2">{{ $meeting_data[0]->quantity }} Kg / {{ round($meeting_data[0]->quantity / 1000, 4) }} Ton</span>
         </div>
     </div>
     <br>

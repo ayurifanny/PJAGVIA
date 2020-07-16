@@ -147,7 +147,7 @@
     <tr>
         <td class="info">Quantity</td>
         <td class="semicolon">:</td>
-        <td class="info-content">{{ $meeting_data[0]->quantity }} Kg / {{ $meeting_data[0]->quantity / 1000 }} Ton</td>
+        <td class="info-content">{{ $meeting_data[0]->quantity }} Kg / {{ round($meeting_data[0]->quantity / 1000, 4) }} Ton</td>
     </tr>
     
     <tr>
