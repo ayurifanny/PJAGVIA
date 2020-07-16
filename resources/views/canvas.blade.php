@@ -349,6 +349,7 @@
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(".status_picture").click(function () {
             $('#loader').show();
+            $('.status_picture').prop('disabled', true);
             var canvas = document.getElementById("canvas");
             context = canvas.getContext('2d');
             var dataURL = canvas.toDataURL("image/png");
@@ -371,9 +372,11 @@
                 success: function (data) {
                     $('#loader').hide();
                     window.location.href = '/meetings/detail/'+'{{$pic->meeting_id}}'
+                    $('.status_picture').prop('disabled', false);
                 },
                 error: function () {
                     $('#loader').hide();
+                    $('.status_picture').prop('disabled', false);
                     alert('Something happened')
               }
                 /* remind that 'data' is the response of the AjaxController */
