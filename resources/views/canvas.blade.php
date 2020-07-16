@@ -358,7 +358,6 @@
                 /* the route pointing to the post function */
                 url: '/add_remarks',
                 type: 'POST',
-                async: false,
                 /* send the csrf-token and the input to the controller */
                 data: {
                     _token: CSRF_TOKEN,
@@ -370,9 +369,11 @@
                 },
                 dataType: 'JSON',
                 success: function (data) {
+                    $('#loader').hide();
                     window.location.href = '/meetings/detail/'+'{{$pic->meeting_id}}'
                 },
                 error: function () {
+                    $('#loader').hide();
                     alert('Something happened')
               }
                 /* remind that 'data' is the response of the AjaxController */

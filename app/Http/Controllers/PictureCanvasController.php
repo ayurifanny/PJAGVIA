@@ -43,9 +43,9 @@ class PictureCanvasController extends Controller
 
         Storage::disk('public')->put($filename, $data);
 
-        $upload = Uploads::where('photo', $file_name)->where('meeting_id', $meeting_id)->get();
-        $upload[0]->photo_edited = $fn[0] . '_edited.png';
-        $upload[0]->save();
+        // $upload = Uploads::where('photo', $file_name)->where('meeting_id', $meeting_id)->get();
+        // $upload[0]->photo_edited = $fn[0] . '_edited.png';
+        // $upload[0]->save();
         return;
     }
 
@@ -76,9 +76,11 @@ class PictureCanvasController extends Controller
                 $picture->approved = 0;
                 break;
         }
-
-        $picture->save();
         $this->save_picture($_POST['hidden_data'], $_POST['file_name'], $_POST['meeting_id']);
+
+        $fn = explode('.', $_POST['file_name']);
+        $picture->photo_edited = $fn[0] . '_edited.png';
+        $picture->save();
         header('Content-Type: application/json');
         echo json_encode(array('message' => 'success'));
         exit;
